@@ -455,63 +455,66 @@ function parseAmt(s) {
   return null;
 }
 
-/* ===== Shared storage sync ===== */
+/* ===== Google Sheet (GAS Web App) sync ===== */
+// 部署 Code.gs 後，把下面網址換成你自己的 .../exec 網址
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbz8IK9359EtuoLEIM9oSqVPzECGZmea2azSXeu5YbtUkfQDjHeHwi7bEscFW3QFoDqQog/exec';
+
 async function loadSharedData() {
   const statusEl = document.getElementById('syncStatus');
   try {
-    const ov = await window.storage.get('overrides', true);
-    if (ov && ov.value) {
-      const overrides = JSON.parse(ov.value);
-      DATA.forEach(d => {
-        if (overrides[d.id]) Object.assign(d, overrides[d.id], { amount_num: parseAmt(overrides[d.id].amount !== undefined ? overrides[d.id].amount : d.amount) });
-      });
-    }
-  } catch (e) { /* no overrides yet */ }
+    const res = await fetch(GAS_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const payload = await res.json();
 
-  try {
-    const nc = await window.storage.get('new_cases', true);
-    if (nc && nc.value) {
-      const added = JSON.parse(nc.value);
-      added.forEach(c => { if (!DATA.find(d => d.id === c.id)) DATA.push(c); });
-    }
-  } catch (e) { /* no new cases yet */ }
+    DATA.length = 0;
+    (payload.cases || []).forEach(c => {
+      c.amount_num = parseAmt(c.amount);
+      DATA.push(c);
+    });
 
-  statusEl.textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW');
+    TASKS.length = 0;
+    (payload.tasks || []).forEach(t => TASKS.push(t));
+
+    statusEl.textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW');
+  } catch (e) {
+    statusEl.textContent = '同步失敗，請確認網路連線或 GAS_URL 設定（' + e.message + '）';
+  }
   populateSelects();
   renderCards();
   render();
+  if (typeof renderTaskList === 'function') renderTaskList();
 }
 
 async function saveOverride(id, fields) {
-  let overrides = {};
   try {
-    const ov = await window.storage.get('overrides', true);
-    if (ov && ov.value) overrides = JSON.parse(ov.value);
-  } catch (e) {}
-  overrides[id] = { ...(overrides[id]||{}), ...fields };
-  try {
-    await window.storage.set('overrides', JSON.stringify(overrides), true);
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // 避免觸發 CORS 預檢請求
+      body: JSON.stringify({ action: 'update', id, fields })
+    });
+    const result = await res.json();
+    if (!result.ok) throw new Error(result.error || '更新失敗');
     return true;
   } catch (e) {
-    alert('儲存失敗，請確認網路連線後重試');
+    alert('儲存失敗，請確認網路連線後重試（' + e.message + '）');
     return false;
   }
 }
 
 async function addNewCase(caseObj) {
-  let added = [];
-  try {
-    const nc = await window.storage.get('new_cases', true);
-    if (nc && nc.value) added = JSON.parse(nc.value);
-  } catch (e) {}
   caseObj.id = 'new-' + Date.now();
-  added.push(caseObj);
   try {
-    await window.storage.set('new_cases', JSON.stringify(added), true);
+    const res = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // 避免觸發 CORS 預檢請求
+      body: JSON.stringify(caseObj)
+    });
+    const result = await res.json();
+    if (!result.ok) throw new Error(result.error || '新增失敗');
     DATA.push(caseObj);
     return true;
   } catch (e) {
-    alert('新增失敗，請確認網路連線後重試');
+    alert('新增失敗，請確認網路連線後重試（' + e.message + '）');
     return false;
   }
 }
