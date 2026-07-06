@@ -672,6 +672,7 @@ function renderTable() {
         </div>
         <div style="margin-top:12px;"><div class="dt">進度說明</div><div class="dd">${d.progress || '—'}</div></div>
         ${d.notes ? `<div style="margin-top:12px;"><div class="dt">備註</div><div class="dd">${d.notes}</div></div>` : ''}
+        ${d.supervisor ? `<div style="margin-top:12px;"><div class="dt">主管意見</div><div class="dd">${d.supervisor}</div></div>` : ''}
         ${d.link ? `<div style="margin-top:12px;"><a href="${d.link}" target="_blank" rel="noopener" style="color:var(--blue); font-size:12.5px; font-weight:700;">🔗 相關連結</a></div>` : ''}
         ${issues.length ? `
           <div style="margin-top:16px; border-top:1px dashed var(--border); padding-top:12px;">
