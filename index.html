@@ -693,7 +693,7 @@ function renderTable() {
         <span class="edit-toggle" data-editid="${d.id}">&#9998; 編輯此案件</span>
         <div class="edit-fields" id="edit-${d.id}" style="display:none;">
           <div><label>階段</label><select class="ef-stage">${STAGE_ORDER.map(s=>`<option value="${s}" ${s===d.stage?'selected':''}>${s}</option>`).join('')}</select></div>
-          <div><label>時程</label><input class="ef-date" value="${(d.date||'').replace(/"/g,'&quot;')}"></div>
+          <div><label>時程</label><input class="ef-date" value="${String(d.date||'').replace(/"/g,'&quot;')}"></div>
           <div><label>預估金額</label><input class="ef-amount" value="${(d.amount||'').replace(/"/g,'&quot;')}"></div>
           <div class="full"><label>進度說明</label><textarea class="ef-progress" rows="2">${d.progress||''}</textarea></div>
           <div class="full"><label>備註</label><textarea class="ef-notes" rows="2">${d.notes||''}</textarea></div>
