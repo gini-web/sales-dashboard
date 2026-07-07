@@ -317,7 +317,7 @@ async function loadSharedData() {
   const statusEl = document.getElementById('syncStatus');
   statusEl.textContent = '載入中...';
   try {
-    const res = await fetch(GAS_URL);
+    const res = await fetch(GAS_URL + '?_t=' + Date.now(), { cache: 'no-store' });
     const data = await res.json();
     if (data.error) throw new Error(data.message);
     data.cases.forEach(c => { c.amount_num = parseAmt(c.amount); });
