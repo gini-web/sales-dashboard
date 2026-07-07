@@ -174,7 +174,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 
   <div class="hdr">
     <div>
-      <div class="eyebrow">DBSAFER&FaceLocker&AppGuard &middot; 業務週會快照</div>
+      <div class="eyebrow">DBSAFER & FaceLocker & AppGuard &middot; 業務週會快照</div>
       <h1>業務案件儀表板</h1>
       <div class="sub" id="hdrSub">載入中...</div>
     </div>
@@ -203,6 +203,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 
   <div class="funnel" id="funnel"></div>
   <div style="font-size:11px; color:var(--ink-soft); margin: -14px 0 18px; font-family: var(--mono);">
+    ＊ DVS專案案件已從此清單移除
   </div>
 
   <div class="cards">
@@ -234,7 +235,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     <div class="full"><label>進度說明</label><textarea id="nc_progress" rows="2"></textarea></div>
     <div class="actions">
       <button id="nc_cancel">取消</button>
-      <button class="primary" id="nc_submit">儲存案件(不使用)</button>
+      <button class="primary" id="nc_submit">儲存案件</button>
     </div>
   </div>
 
@@ -290,7 +291,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbz8IK9359EtuoLEIM9oSqVPzECGZmea2azSXeu5YbtUkfQDjHeHwi7bEscFW3QFoDqQog/exec';
 const SOURCE_FILE_ID = '1-lhZnyMXyGOZlHYiIyk2DnRm_C34zUkI';
 
-const STAGE_ORDER = ['registered', 'queued', 'testing', 'closed_pending', 'dvs'];
+const STAGE_ORDER = ['registered', 'queued', 'testing', 'closed_pending'];
 const STAGE_LABELS = { registered: '報備清單', queued: '排測中', testing: '測試中', closed_pending: '成交待驗收', dvs: 'DVS專案' };
 const STAGE_COLOR = { registered: '#8A8F87', queued: '#C97A2B', testing: '#1F7A5C', closed_pending: '#2B6CB0', dvs: '#6B4E9E' };
 const STAGE_TARGET = { registered: 125, queued: 50, testing: 12.5, closed_pending: null, dvs: null };
@@ -351,7 +352,7 @@ function getData() { return dashboardData ? dashboardData.cases : []; }
 
 function getFiltered() {
   return getData().filter(d => {
-    if (!state.stage && d.stage === 'dvs') return false;
+    if (d.stage === 'dvs') return false; // DVS專案已從業務案件清單移除
     if (state.stage && d.stage !== state.stage) return false;
     if (state.rep && d.salesRep !== state.rep) return false;
     if (state.category && !(d.productCategories || [d.productCategory]).includes(state.category)) return false;
