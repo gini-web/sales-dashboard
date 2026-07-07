@@ -311,6 +311,7 @@
     <div class="meta" id="metaInfo">載入中...</div>
   </div>
   <div>
+    <button class="btn secondary" onclick="openSourceSheet()">📄 開啟原始表格</button>
     <button class="btn secondary" onclick="openNewCaseForm()">＋ 新增案件</button>
     <button class="btn secondary" onclick="loadData()">重新整理</button>
   </div>
@@ -384,6 +385,11 @@
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbz8IK9359EtuoLEIM9oSqVPzECGZmea2azSXeu5YbtUkfQDjHeHwi7bEscFW3QFoDqQog/exec';
+const SOURCE_FILE_ID = '1-lhZnyMXyGOZlHYiIyk2DnRm_C34zUkI';
+
+function openSourceSheet() {
+  window.open('https://docs.google.com/spreadsheets/d/' + SOURCE_FILE_ID + '/edit', '_blank');
+}
 
 const STAGE_LABELS = {
   registered: '報備清單',
