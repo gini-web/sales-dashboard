@@ -174,7 +174,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 
   <div class="hdr">
     <div>
-      <div class="eyebrow">&middot; 業務週會快照</div>
+      <div class="eyebrow">DBSAFER&FaceLocker&AppGuard &middot; 業務週會快照</div>
       <h1>業務案件儀表板</h1>
       <div class="sub" id="hdrSub">載入中...</div>
     </div>
@@ -203,7 +203,6 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 
   <div class="funnel" id="funnel"></div>
   <div style="font-size:11px; color:var(--ink-soft); margin: -14px 0 18px; font-family: var(--mono);">
-    
   </div>
 
   <div class="cards">
@@ -223,7 +222,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 
   <div class="rep-panel" id="repPanel" style="display:none;"></div>
 
-  <button class="addcase-btn" id="addCaseBtn">＋ 新增案件</button>
+  <button class="addcase-btn" id="addCaseBtn">＋ 新增案件(不使用)</button>
   <div class="addcase-form" id="addCaseForm">
     <div><label>階段</label><select id="nc_stage"></select></div>
     <div><label>業務</label><input id="nc_rep" placeholder="例如 Chloe"></div>
@@ -235,7 +234,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     <div class="full"><label>進度說明</label><textarea id="nc_progress" rows="2"></textarea></div>
     <div class="actions">
       <button id="nc_cancel">取消</button>
-      <button class="primary" id="nc_submit">儲存案件</button>
+      <button class="primary" id="nc_submit">儲存案件(不使用)</button>
     </div>
   </div>
 
@@ -355,7 +354,7 @@ function getFiltered() {
     if (!state.stage && d.stage === 'dvs') return false;
     if (state.stage && d.stage !== state.stage) return false;
     if (state.rep && d.salesRep !== state.rep) return false;
-    if (state.category && d.productCategory !== state.category) return false;
+    if (state.category && !(d.productCategories || [d.productCategory]).includes(state.category)) return false;
     if (state.q) {
       const hay = [d.customer, d.dealer, d.product, d.competitor, d.keyMan, d.progress, d.notes, d.salesRep].join(' ').toLowerCase();
       if (!hay.includes(state.q.toLowerCase())) return false;
@@ -407,7 +406,7 @@ function populateSelects() {
   const reps = [...new Set(DATA.map(d => d.salesRep))].filter(Boolean).sort();
   const repSel = document.getElementById('repFilter'); repSel.innerHTML = '<option value="">全部業務</option>';
   reps.forEach(r => repSel.appendChild(new Option(r, r)));
-  const cats = [...new Set(DATA.map(d => d.productCategory))].filter(Boolean).sort();
+  const cats = [...new Set(DATA.flatMap(d => d.productCategories || [d.productCategory]))].filter(Boolean).sort();
   const catSel = document.getElementById('categoryFilter'); catSel.innerHTML = '<option value="">全部產品</option>';
   cats.forEach(c => catSel.appendChild(new Option(c, c)));
   const ncStage = document.getElementById('nc_stage');
@@ -456,7 +455,7 @@ function renderTable() {
       <td class="partner">${escapeHtml(d.dealer) || '—'}</td>
       <td>${escapeHtml(d.keyDate) || '—'}</td>
       <td class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (escapeHtml(d.amount) || '—')}</td>
-      <td><span class="tag" style="background:var(--grey-soft); color:var(--ink-soft); font-weight:600;">${escapeHtml(d.productCategory)}</span> ${escapeHtml(d.product) || '—'}</td>
+      <td>${(d.productCategories || [d.productCategory]).map(cat => `<span class="tag" style="background:var(--grey-soft); color:var(--ink-soft); font-weight:600; margin-right:3px;">${escapeHtml(cat)}</span>`).join('')} ${escapeHtml(d.product) || '—'}</td>
       <td class="progress-cell">${escapeHtml(d.progress) || '—'}</td>
     `;
     tr.onclick = () => { if (state.expanded.has(key)) state.expanded.delete(key); else state.expanded.add(key); render(); };
@@ -470,7 +469,6 @@ function renderTable() {
           <div><div class="dt">Key Man</div><div class="dd">${escapeHtml(d.keyMan) || '—'}</div></div>
           <div><div class="dt">採購方式</div><div class="dd">${escapeHtml(d.procurement) || '—'}</div></div>
         </div>
-        <div style="margin-top:12px;"><div class="dt">進度說明</div><div class="dd">${escapeHtml(d.progress) || '—'}</div></div>
         ${d.notes ? `<div style="margin-top:12px;"><div class="dt">備註</div><div class="dd">${linkifyText(d.notes)}</div></div>` : ''}
         ${d.relatedLink ? `<div style="margin-top:12px;"><a href="${escapeHtml(d.relatedLink)}" target="_blank" rel="noopener" style="color:var(--blue); font-size:12.5px; font-weight:700;">🔗 相關連結</a></div>` : ''}
         ${issues.length ? `<div style="margin-top:16px; border-top:1px dashed var(--border); padding-top:12px;"><div class="dt" style="color:var(--rose);">🔧 相關技術問題 (${issues.length})</div>${issues.map(t => `<div style="margin-top:8px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px;"><div style="display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); font-family:var(--mono);"><span>${escapeHtml(t.reportedDate)}</span><span style="color:${t.status === '已解決' ? 'var(--accent)' : 'var(--amber)'}; font-weight:700;">${escapeHtml(t.status) || '處理中'}</span></div><div style="margin-top:4px;">${escapeHtml(t.issue)}</div></div>`).join('')}</div>` : ''}
