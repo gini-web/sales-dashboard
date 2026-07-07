@@ -2,822 +2,635 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>業務案件管理儀表板</title>
+<title>業務案件儀表板</title>
 <style>
-  :root {
-    --bg: #f6f7f9;
-    --panel: #ffffff;
-    --border: #e2e5ea;
-    --ink: #1f2430;
-    --muted: #6b7280;
-    --accent: #2b6cb0;
-    --accent-soft: #e8f1fb;
-    --warn: #b7791f;
-    --warn-soft: #fff6e0;
-    --danger: #b3441e;
-    --danger-soft: #fdece5;
-    --ok: #2f7a4f;
-    --ok-soft: #e7f6ec;
-    --radius: 10px;
-  }
-
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    font-family: -apple-system, "Segoe UI", "PingFang TC", "Noto Sans TC", sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    font-size: 14px;
-  }
-
-  header {
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-
-  header h1 {
-    font-size: 18px;
-    margin: 0;
-  }
-
-  header .meta {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  nav {
-    display: flex;
-    gap: 4px;
-    padding: 0 24px;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-  }
-
-  nav button {
-    padding: 12px 16px;
-    border: none;
-    background: none;
-    font-size: 14px;
-    cursor: pointer;
-    color: var(--muted);
-    border-bottom: 2px solid transparent;
-  }
-
-  nav button.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-    font-weight: 600;
-  }
-
-  main {
-    padding: 20px 24px 60px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
-
-  /* ---- 漏斗總覽 ---- */
-  .funnel {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-
-  .funnel-stage {
-    flex: 1;
-    min-width: 130px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    cursor: pointer;
-  }
-
-  .funnel-stage.selected { border-color: var(--accent); background: var(--accent-soft); }
-
-  .funnel-stage .count { font-size: 24px; font-weight: 700; }
-  .funnel-stage .label { font-size: 12px; color: var(--muted); margin-top: 2px; }
-
-  .funnel-stage.dvs { opacity: 0.85; }
-
-  /* ---- 摘要卡片 ---- */
-  .summary-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .summary-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-  }
-
-  .summary-card .value { font-size: 20px; font-weight: 700; }
-  .summary-card .label { font-size: 12px; color: var(--muted); }
-
-  /* ---- 篩選列 ---- */
-  .filter-bar {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 16px;
-    align-items: center;
-  }
-
-  .filter-bar select,
-  .filter-bar input {
-    padding: 8px 10px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 13px;
-    background: var(--panel);
-  }
-
-  .filter-bar input[type="text"] { min-width: 200px; }
-
-  .btn {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: 1px solid var(--accent);
-    background: var(--accent);
-    color: white;
-    font-size: 13px;
-    cursor: pointer;
-  }
-
-  .btn.secondary {
-    background: var(--panel);
-    color: var(--accent);
-  }
-
-  /* ---- 表格 ---- */
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  th, td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    vertical-align: top;
-  }
-
-  th {
-    background: #fafbfc;
-    font-size: 12px;
-    color: var(--muted);
-    cursor: pointer;
-    user-select: none;
-    white-space: nowrap;
-  }
-
-  tr.case-row:hover { background: #fafbfc; cursor: pointer; }
-
-  .amt-cell {
-    white-space: normal;
-    word-break: break-word;
-    max-width: 200px;
-  }
-
-  .badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 600;
-    margin-right: 4px;
-  }
-
-  .badge.update { background: var(--warn-soft); color: var(--warn); }
-  .badge.tech { background: var(--danger-soft); color: var(--danger); }
-  .badge.category { background: var(--accent-soft); color: var(--accent); }
-
-  .detail-row td {
-    background: #fafbfc;
-    padding: 16px 20px;
-  }
-
-  .detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
-  }
-
-  .detail-item .label { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
-  .detail-item .value { font-size: 13px; }
-
-  .tech-issue-list {
-    margin-top: 10px;
-    padding: 10px;
-    background: var(--danger-soft);
-    border-radius: 8px;
-  }
-
-  .edit-btn {
-    margin-top: 10px;
-    font-size: 12px;
-  }
-
-  /* ---- 經銷商統計 / PM任務 卡片 ---- */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 12px;
-  }
-
-  .stat-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-  }
-
-  .stat-card h3 { margin: 0 0 6px; font-size: 15px; }
-  .stat-card .count { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-  .stat-card ul { margin: 0; padding-left: 18px; font-size: 12px; color: var(--ink); }
-
-  .toggle-group {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 14px;
-  }
-
-  .toggle-group button {
-    padding: 6px 14px;
-    border: 1px solid var(--border);
-    background: var(--panel);
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 13px;
-  }
-
-  .toggle-group button.active {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-  }
-
-  /* ---- 規則說明面板 ---- */
-  .rules-panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 18px 20px;
-  }
-
-  .rules-panel h3 { font-size: 14px; margin: 18px 0 8px; }
-  .rules-panel h3:first-child { margin-top: 0; }
-  .rules-panel ul { margin: 0; padding-left: 20px; font-size: 13px; line-height: 1.7; }
-
-  .empty-state {
-    text-align: center;
-    padding: 40px;
-    color: var(--muted);
-    font-size: 13px;
-  }
-
-  .loading { text-align: center; padding: 60px; color: var(--muted); }
-
-  @media (max-width: 700px) {
-    main { padding: 14px; }
-    .filter-bar input[type="text"] { min-width: 140px; }
-  }
+:root {
+  --bg: #F6F7F3;
+  --panel: #FFFFFF;
+  --ink: #1B2B23;
+  --ink-soft: #5B6960;
+  --border: #E3E6DE;
+  --accent: #1F7A5C;
+  --accent-soft: #E4F1EA;
+  --amber: #C97A2B;
+  --amber-soft: #FBEEE0;
+  --rose: #B5484B;
+  --blue: #2B6CB0;
+  --blue-soft: #E7EEF6;
+  --purple: #6B4E9E;
+  --purple-soft: #EFE9F7;
+  --grey: #8A8F87;
+  --grey-soft: #ECEEE9;
+  --mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1320px; margin: 0 auto; padding: 28px 24px 60px; }
+.hdr { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 22px; flex-wrap: wrap; gap: 16px; }
+.hdr .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+.hdr h1 { font-size: 26px; margin: 0; font-weight: 800; letter-spacing: -0.01em; }
+.hdr .sub { color: var(--ink-soft); font-size: 13px; margin-top: 4px; }
+.hdr-right { text-align: right; font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
+.hdr-right .big { font-size: 20px; color: var(--ink); font-weight: 700; font-family: var(--sans); }
+.funnel { display:flex; gap: 10px; margin-bottom: 22px; }
+.funnel-step { flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; cursor: pointer; position: relative; transition: transform .15s ease, box-shadow .15s ease; }
+.funnel-step:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(27,43,35,0.08); }
+.funnel-step.active { border-color: var(--stage-color); box-shadow: 0 0 0 2px var(--stage-color) inset; }
+.funnel-step .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--stage-color); display:inline-block; margin-right: 6px; }
+.funnel-step .label { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+.funnel-step .count { font-size: 26px; font-weight: 800; font-family: var(--mono); margin-top: 6px; color: var(--ink); }
+.funnel-step .amt { font-size: 11px; color: var(--ink-soft); font-family: var(--mono); margin-top: 2px; }
+.funnel-arrow { align-self:center; color: var(--border); font-size: 18px; }
+.cards { display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
+.card { background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
+.card .k { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .06em; font-family: var(--mono);}
+.card .v { font-size: 22px; font-weight: 800; margin-top: 6px; }
+.rep-bars { margin-top: 10px; display:flex; flex-direction:column; gap:6px; }
+.rep-bar-row { display:flex; align-items:center; gap:8px; font-size:11px; }
+.rep-bar-row .name { width: 62px; flex-shrink:0; color: var(--ink-soft); font-family: var(--mono); }
+.rep-bar-row .track { flex:1; background: var(--grey-soft); border-radius: 4px; height: 8px; overflow:hidden; }
+.rep-bar-row .fill { background: var(--accent); height: 100%; border-radius: 4px; }
+.rep-bar-row .num { font-family: var(--mono); color: var(--ink-soft); width: 22px; text-align:right; }
+.filters { display:flex; gap: 10px; align-items:center; margin-bottom: 14px; flex-wrap: wrap; background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
+.filters input[type=text] { flex: 1; min-width: 180px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-family: var(--sans); background: var(--bg); }
+.filters select { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: var(--sans); background: var(--bg); color: var(--ink); }
+.filters .reset { font-size: 12px; color: var(--accent); cursor: pointer; font-weight: 600; white-space: nowrap; }
+.filters .count-badge { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
+.table-wrap { background: var(--panel); border:1px solid var(--border); border-radius: 10px; overflow: hidden; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+thead th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--grey-soft); font-family: var(--mono); cursor: pointer; user-select: none; white-space: nowrap; }
+thead th:hover { color: var(--ink); }
+tbody tr { border-bottom: 1px solid var(--border); cursor: pointer; }
+tbody tr:hover { background: var(--accent-soft); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 10px 14px; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
+.tag { display:inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.cust { font-weight: 700; }
+.partner { color: var(--ink-soft); font-size: 12px; }
+.amt-cell { font-family: var(--mono); font-weight: 700; white-space: normal; word-break: break-word; }
+.amt-cell.empty { color: var(--ink-soft); font-weight: 400; }
+.progress-cell { color: var(--ink-soft); font-size: 12.5px; line-height: 1.5; white-space: normal; word-break: break-word; }
+.detail-row td { background: var(--bg); padding: 16px 20px; font-size: 12.5px; line-height: 1.7; }
+.detail-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.detail-grid .dt { font-family: var(--mono); font-size: 10px; text-transform:uppercase; color: var(--ink-soft); letter-spacing:.05em; margin-bottom:2px;}
+.detail-grid .dd { color: var(--ink); }
+.empty-state { text-align:center; padding: 60px 20px; color: var(--ink-soft); }
+#caseTable col.col-stage { width: 8%; }
+#caseTable col.col-rep { width: 7%; }
+#caseTable col.col-customer { width: 13%; }
+#caseTable col.col-partner { width: 11%; }
+#caseTable col.col-date { width: 8%; }
+#caseTable col.col-amount { width: 10%; }
+#caseTable col.col-product { width: 13%; }
+#caseTable col.col-progress { width: 30%; }
+.rep-panel { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; display:flex; gap: 28px; align-items:center; flex-wrap: wrap; }
+.rep-panel .who { font-size: 15px; font-weight: 800; color: var(--accent); min-width: 90px; }
+.rep-panel .stat { text-align:center; }
+.rep-panel .stat .k { font-size: 10px; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; font-family: var(--mono); }
+.rep-panel .stat .v { font-size: 20px; font-weight: 800; font-family: var(--mono); }
+.rep-panel .stage-breakdown { display:flex; gap: 10px; flex-wrap: wrap; flex:1; }
+.rep-panel .stage-chip { display:flex; align-items:center; gap: 6px; background: var(--panel); border-radius: 999px; padding: 5px 12px; font-size: 12px; border: 1px solid var(--border); }
+.rep-panel .stage-chip .dot { width: 7px; height: 7px; border-radius: 50%; }
+.rep-panel .stage-chip b { font-family: var(--mono); }
+.tabbar { display:flex; gap: 4px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
+.tabbtn { padding: 10px 4px; margin-right: 22px; font-size: 14px; font-weight: 700; color: var(--ink-soft); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: var(--sans); }
+.tabbtn.active { color: var(--accent); border-bottom-color: var(--accent); }
+.view { display:none; }
+.view.active { display:block; }
+.toggle-group { display:inline-flex; background: var(--grey-soft); border-radius: 8px; padding: 3px; margin-bottom: 16px; }
+.toggle-group button { border:none; background:none; padding: 7px 16px; font-size: 13px; font-weight:700; color: var(--ink-soft); border-radius: 6px; cursor:pointer; font-family: var(--sans); }
+.toggle-group button.active { background: var(--panel); color: var(--accent); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.entity-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; align-items:start; }
+.entity-card { background: var(--panel); border:1px solid var(--border); border-radius: 10px; overflow:hidden; }
+.entity-card.open { grid-column: 1 / -1; }
+.entity-hdr { display:flex; flex-direction:column; align-items:flex-start; gap: 8px; padding: 14px 16px; cursor:pointer; position:relative; }
+.entity-card.open .entity-hdr { flex-direction:row; align-items:center; flex-wrap:wrap; gap:20px; }
+.entity-hdr:hover { background: var(--accent-soft); }
+.entity-hdr .name { font-weight: 800; font-size: 14px; }
+.entity-hdr .sub-tag { font-size: 11px; color: var(--ink-soft); font-family: var(--mono); }
+.entity-hdr .statrow { display:flex; gap: 14px; }
+.entity-hdr .stat { text-align:left; }
+.entity-card.open .entity-hdr .stat { text-align:center; }
+.entity-hdr .stat .k { font-size: 9px; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; font-family: var(--mono); }
+.entity-hdr .stat .v { font-size: 17px; font-weight: 800; font-family: var(--mono); }
+.entity-hdr .chips { display:flex; gap: 6px; flex-wrap: wrap; }
+.entity-card.open .entity-hdr .chips { flex:1; justify-content:flex-end; }
+.entity-hdr .chips .stage-chip { font-size: 10.5px; padding: 2px 8px; }
+.entity-hdr .caret { color: var(--ink-soft); font-size: 11px; position:absolute; top:14px; right:14px; }
+.entity-body { display:none; padding: 4px 18px 16px; border-top: 1px solid var(--border); }
+.entity-body.open { display:block; }
+.entity-body table { font-size: 12.5px; width:100%; table-layout: auto; }
+.entity-body th { background: transparent; padding: 8px 10px; }
+.entity-body td { padding: 8px 10px; }
+.entity-body .rep-list { font-size: 12px; color: var(--ink-soft); padding: 10px 0 4px; }
+.sync-bar { display:flex; align-items:center; gap:12px; background: var(--blue-soft); border:1px solid var(--blue); border-radius: 10px; padding: 10px 16px; margin-bottom: 14px; font-size: 12.5px; color: var(--ink); }
+.sync-bar b { color: var(--blue); }
+.sync-bar button, .sync-bar .sync-link-btn { border:1px solid var(--blue); background:var(--panel); color:var(--blue); font-weight:700; border-radius: 7px; padding: 6px 14px; font-size:12px; cursor:pointer; font-family: var(--sans); white-space:nowrap; text-decoration:none; display:inline-block; }
+.sync-bar .sync-link-btn { margin-left:auto; }
+.addcase-btn { border:1px solid var(--accent); background:var(--accent); color:#fff; font-weight:700; border-radius: 8px; padding: 8px 16px; font-size:13px; cursor:pointer; font-family: var(--sans); margin-bottom: 12px; }
+.addcase-form { display:none; background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.addcase-form.open { display:grid; }
+.addcase-form label { font-size: 10px; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-soft); font-family: var(--mono); display:block; margin-bottom:3px; }
+.addcase-form input, .addcase-form select, .addcase-form textarea { width:100%; border:1px solid var(--border); border-radius:6px; padding:7px 9px; font-size:13px; font-family: var(--sans); background: var(--bg); }
+.addcase-form .full { grid-column: 1 / -1; }
+.addcase-form .actions { grid-column: 1 / -1; display:flex; gap:10px; justify-content:flex-end; }
+.addcase-form .actions button { border-radius:7px; padding:8px 16px; font-size:13px; font-weight:700; cursor:pointer; border:1px solid var(--border); background:var(--bg); font-family: var(--sans); }
+.addcase-form .actions button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.edit-fields { display:grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 6px; }
+.edit-fields .full { grid-column: 1 / -1; }
+.edit-fields label { font-size: 10px; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-soft); font-family: var(--mono); display:block; margin-bottom:3px; }
+.edit-fields input, .edit-fields select, .edit-fields textarea { width:100%; border:1px solid var(--border); border-radius:6px; padding:6px 9px; font-size:12.5px; font-family: var(--sans); background: var(--panel); }
+.edit-actions { display:flex; gap:8px; margin-top:10px; }
+.edit-actions button { border-radius:6px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; border:1px solid var(--border); background:var(--panel); font-family: var(--sans); }
+.edit-actions button.primary { background: var(--accent); border-color: var(--accent); color:#fff; }
+.edit-toggle { font-size:11px; color: var(--accent); cursor:pointer; font-weight:700; margin-top:8px; display:inline-block; }
+.tech-badge { font-size: 11px; background: var(--rose); color: #fff; padding: 1px 7px; border-radius: 999px; font-weight: 700; }
+tbody tr.row-updated { background: #FFFDF0; }
+tbody tr.row-updated:hover { background: #FFF9DE; }
+tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
+.updated-tag { display:inline-flex; align-items:center; gap:4px; font-size: 10px; font-weight: 700; color: #8A6D1A; background: #FFF3C4; padding: 2px 8px; border-radius: 999px; margin-left: 6px; white-space: nowrap; }
+.updated-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #E8C547; }
+.rules-toggle { font-size: 11px; color: var(--accent); cursor: pointer; font-weight: 700; font-family: var(--sans); }
+.rules-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; font-size: 12.5px; line-height: 1.7; color: var(--ink-soft); }
+.rules-panel b { color: var(--ink); }
+.rules-panel ul { margin: 4px 0 12px 18px; padding: 0; }
+.rules-panel ul:last-child { margin-bottom: 0; }
+.owner-chip { display:inline-block; font-size: 10.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 1px 8px; border-radius: 999px; margin-left: 6px; cursor: pointer; }
+.owner-chip:hover { background: var(--accent); color: #fff; }
+@media (max-width: 900px) {
+  .cards { grid-template-columns: repeat(2,1fr); }
+  .funnel { flex-wrap: wrap; }
+  .funnel-arrow { display:none; }
+  .funnel-step { min-width: 45%; }
+  .detail-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+<div class="wrap">
 
-<header>
-  <div>
-    <h1>業務案件管理儀表板</h1>
-    <div class="meta" id="metaInfo">載入中...</div>
-  </div>
-  <div>
-    <button class="btn secondary" onclick="openSourceSheet()">📄 開啟原始表格</button>
-    <button class="btn secondary" onclick="openNewCaseForm()">＋ 新增案件</button>
-    <button class="btn secondary" onclick="loadData()">重新整理</button>
-  </div>
-</header>
-
-<nav>
-  <button class="tab-btn active" data-tab="cases">業務案件</button>
-  <button class="tab-btn" data-tab="dealers">經銷商統計</button>
-  <button class="tab-btn" data-tab="tasks">行銷/PM任務</button>
-  <button class="tab-btn" data-tab="rules">ⓘ 呈現規則說明</button>
-</nav>
-
-<main>
-
-  <!-- 業務案件分頁 -->
-  <div class="tab-panel active" id="tab-cases">
-
-    <div class="funnel" id="funnel"></div>
-
-    <div class="summary-cards" id="summaryCards"></div>
-
-    <div class="filter-bar">
-      <select id="filterStage"><option value="">全部階段</option></select>
-      <select id="filterRep"><option value="">全部業務</option></select>
-      <select id="filterCategory"><option value="">全部產品分類</option></select>
-      <input type="text" id="filterKeyword" placeholder="搜尋客戶／經銷商／備註關鍵字">
-      <button class="btn secondary" onclick="resetFilters()">清除篩選</button>
+  <div class="hdr">
+    <div>
+      <div class="eyebrow">VerdiMind &middot; 業務週會快照</div>
+      <h1>業務案件儀表板</h1>
+      <div class="sub" id="hdrSub">載入中...</div>
     </div>
+    <div class="hdr-right">
+      <div class="big" id="totalCasesHdr">-- 件案件</div>
+      追蹤中
+      <div><span class="rules-toggle" id="rulesToggle">ⓘ 呈現規則說明</span></div>
+    </div>
+  </div>
 
+  <div class="rules-panel" id="rulesPanel" style="display:none;">載入中...</div>
+
+  <div class="tabbar">
+    <button class="tabbtn active" data-view="cases">業務案件</button>
+    <button class="tabbtn" data-view="dealers">經銷商統計</button>
+    <button class="tabbtn" data-view="tasks">行銷/PM任務</button>
+  </div>
+
+  <div class="view active" id="view-cases">
+
+  <div class="sync-bar">
+    <span>&#128257; 即時連接 GAS 後端 &mdash; <b id="syncStatus">載入中...</b></span>
+    <a href="#" id="sourceSheetBtn" class="sync-link-btn">&#128196; 查看原始表格</a>
+    <button id="refreshBtn">重新整理共享資料</button>
+  </div>
+
+  <div class="funnel" id="funnel"></div>
+  <div style="font-size:11px; color:var(--ink-soft); margin: -14px 0 18px; font-family: var(--mono);">
+    ＊ DVS專案預設不顯示於下方列表，點擊上方「DVS專案」卡片即可展開查看
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="k">有金額案件加總</div><div class="v" id="totalAmount">--</div></div>
+    <div class="card"><div class="k">平均案件金額</div><div class="v" id="avgAmount">--</div></div>
+    <div class="card" style="grid-column: span 2;"><div class="k">各業務案件數</div><div class="rep-bars" id="repBars"></div></div>
+  </div>
+
+  <div class="filters">
+    <select id="stageFilter"><option value="">全部階段</option></select>
+    <select id="repFilter"><option value="">全部業務</option></select>
+    <select id="categoryFilter"><option value="">全部產品</option></select>
+    <input type="text" id="searchBox" placeholder="搜尋客戶／經銷商／方案／競爭對手／Key Man...">
+    <span class="count-badge" id="resultCount"></span>
+    <span class="reset" id="resetBtn">清除篩選</span>
+  </div>
+
+  <div class="rep-panel" id="repPanel" style="display:none;"></div>
+
+  <button class="addcase-btn" id="addCaseBtn">＋ 新增案件</button>
+  <div class="addcase-form" id="addCaseForm">
+    <div><label>階段</label><select id="nc_stage"></select></div>
+    <div><label>業務</label><input id="nc_rep" placeholder="例如 Chloe"></div>
+    <div><label>終端客戶</label><input id="nc_customer"></div>
+    <div><label>經銷商</label><input id="nc_partner"></div>
+    <div><label>時程</label><input id="nc_date"></div>
+    <div><label>預估金額</label><input id="nc_amount" placeholder="例如 NT$500,000"></div>
+    <div class="full"><label>方案</label><input id="nc_product"></div>
+    <div class="full"><label>進度說明</label><textarea id="nc_progress" rows="2"></textarea></div>
+    <div class="actions">
+      <button id="nc_cancel">取消</button>
+      <button class="primary" id="nc_submit">儲存案件</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
     <table id="caseTable">
+      <colgroup>
+        <col class="col-stage"><col class="col-rep"><col class="col-customer"><col class="col-partner">
+        <col class="col-date"><col class="col-amount"><col class="col-product"><col class="col-progress">
+      </colgroup>
       <thead>
         <tr>
-          <th data-sort="stage">階段</th>
-          <th data-sort="salesRep">業務</th>
-          <th data-sort="customer">客戶名稱</th>
-          <th data-sort="dealer">經銷商</th>
-          <th data-sort="productCategory">產品分類</th>
-          <th data-sort="progress">進度</th>
-          <th class="amt-cell" data-sort="amount">預估金額</th>
-          <th>標籤</th>
+          <th data-key="stage">階段</th>
+          <th data-key="rep">業務</th>
+          <th data-key="customer">終端客戶</th>
+          <th data-key="partner">經銷商</th>
+          <th data-key="date">時程</th>
+          <th data-key="amount_num">預估金額</th>
+          <th data-key="product">方案</th>
+          <th>進度說明</th>
         </tr>
       </thead>
-      <tbody id="caseTableBody"></tbody>
+      <tbody id="tbody"></tbody>
     </table>
-    <div class="empty-state" id="caseEmptyState" style="display:none;">沒有符合篩選條件的案件</div>
+    <div class="empty-state" id="emptyState" style="display:none;">找不到符合條件的案件</div>
   </div>
 
-  <!-- 經銷商統計分頁 -->
-  <div class="tab-panel" id="tab-dealers">
+  </div>
+
+  <div class="view" id="view-dealers">
     <div class="toggle-group">
-      <button class="active" id="dealerViewByDealer" onclick="setDealerView('byDealer')">依經銷商</button>
-      <button id="dealerViewByRep" onclick="setDealerView('byRep')">依業務</button>
+      <button class="active" data-mode="rep">依業務檢視</button>
+      <button data-mode="dealer">依經銷商檢視</button>
     </div>
-    <div class="card-grid" id="dealerCards"></div>
+    <div class="entity-list" id="entityList"></div>
   </div>
 
-  <!-- 行銷/PM任務分頁 -->
-  <div class="tab-panel" id="tab-tasks">
-    <div class="filter-bar">
-      <select id="taskOwnerFilter"><option value="">全部負責人</option></select>
+  <div class="view" id="view-tasks">
+    <div class="toggle-group">
+      <button class="active" data-taskmode="category">依產品分類</button>
+      <button data-taskmode="owner">依負責人分類</button>
     </div>
-    <div id="taskGroups"></div>
+    <div class="filters">
+      <input type="text" id="taskSearch" placeholder="搜尋主題／經銷商／進度...">
+      <span class="count-badge" id="taskCount"></span>
+      <span class="reset" id="taskOwnerResetBtn" style="display:none;">清除負責人篩選</span>
+    </div>
+    <div class="entity-list" id="taskList"></div>
   </div>
 
-  <!-- 規則說明分頁 -->
-  <div class="tab-panel" id="tab-rules">
-    <div class="rules-panel" id="rulesPanel">載入中...</div>
-  </div>
-
-</main>
+</div>
 
 <script>
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbz8IK9359EtuoLEIM9oSqVPzECGZmea2azSXeu5YbtUkfQDjHeHwi7bEscFW3QFoDqQog/exec';
 const SOURCE_FILE_ID = '1-lhZnyMXyGOZlHYiIyk2DnRm_C34zUkI';
 
-function openSourceSheet() {
-  window.open('https://docs.google.com/spreadsheets/d/' + SOURCE_FILE_ID + '/edit', '_blank');
-}
-
-const STAGE_LABELS = {
-  registered: '報備清單',
-  queued: '排測中',
-  testing: '測試中',
-  closed_pending: '成交待驗收',
-  dvs: 'DVS專案'
-};
-
 const STAGE_ORDER = ['registered', 'queued', 'testing', 'closed_pending', 'dvs'];
+const STAGE_LABELS = { registered: '報備清單', queued: '排測中', testing: '測試中', closed_pending: '成交待驗收', dvs: 'DVS專案' };
+const STAGE_COLOR = { registered: '#8A8F87', queued: '#C97A2B', testing: '#1F7A5C', closed_pending: '#2B6CB0', dvs: '#6B4E9E' };
+const STAGE_TARGET = { registered: 125, queued: 50, testing: 12.5, closed_pending: null, dvs: null };
 
 let dashboardData = null;
-let currentStageFilter = '';
-let currentSort = { field: null, asc: true };
-let dealerView = 'byDealer';
+let dealerMode = 'rep';
+let openEntities = new Set();
+let taskQuery = '';
+let taskMode = 'category';
+let openTaskGroups = new Set();
+let taskOwnerFilter = '';
+let state = { stage: '', rep: '', category: '', q: '', sortKey: null, sortDir: 1, expanded: new Set() };
 
-// ---------- 資料載入 ----------
+function fmtAmt(n) { if (n === null || n === undefined) return null; return 'NT$' + n.toLocaleString('en-US'); }
+function parseAmt(s) {
+  if (!s) return null;
+  let m = String(s).match(/(?:NT\$|NTD)\s*([\d,]{4,})/);
+  if (!m) m = String(s).match(/(\d{1,3}(?:,\d{3})+)/);
+  if (m) { const n = parseInt(m[1].replace(/,/g, '')); return isNaN(n) ? null : n; }
+  return null;
+}
+function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
 
-async function loadData() {
-  document.getElementById('metaInfo').textContent = '載入中...';
+async function loadSharedData() {
+  const statusEl = document.getElementById('syncStatus');
+  statusEl.textContent = '載入中...';
   try {
     const res = await fetch(GAS_URL);
     const data = await res.json();
     if (data.error) throw new Error(data.message);
+    data.cases.forEach(c => { c.amount_num = parseAmt(c.amount); });
     dashboardData = data;
-    render();
-  } catch (err) {
-    document.getElementById('metaInfo').textContent = '載入失敗：' + err.message;
-  }
+    document.getElementById('hdrSub').textContent = '報告日期／分頁：' + data.meta.sourceSheetName;
+    document.getElementById('sourceSheetBtn').onclick = (e) => { e.preventDefault(); window.open('https://docs.google.com/spreadsheets/d/' + SOURCE_FILE_ID + '/edit', '_blank'); };
+    statusEl.textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW');
+    populateSelects(); renderCards(); renderRules(); render();
+  } catch (err) { statusEl.textContent = '載入失敗：' + err.message; }
 }
 
-function render() {
-  const meta = dashboardData.meta;
-  document.getElementById('metaInfo').textContent =
-    '資料來源分頁：' + meta.sourceSheetName + '　更新時間：' + new Date(meta.generatedAt).toLocaleString('zh-TW');
-
-  populateFilterOptions();
-  renderFunnel();
-  renderSummaryCards();
-  renderCaseTable();
-  renderDealerStats();
-  renderTasks();
-  renderRules();
+async function postToGas(payload) {
+  const res = await fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+  return res.json();
 }
 
-// ---------- 篩選選單 ----------
+function getData() { return dashboardData ? dashboardData.cases : []; }
 
-function populateFilterOptions() {
-  const reps = new Set();
-  const categories = new Set();
-  dashboardData.cases.forEach(c => {
-    if (c.salesRep) reps.add(c.salesRep);
-    if (c.productCategory) categories.add(c.productCategory);
-  });
-
-  const repSelect = document.getElementById('filterRep');
-  const catSelect = document.getElementById('filterCategory');
-  const taskOwnerSelect = document.getElementById('taskOwnerFilter');
-
-  if (repSelect.options.length <= 1) {
-    reps.forEach(r => repSelect.appendChild(new Option(r, r)));
-  }
-  if (catSelect.options.length <= 1) {
-    categories.forEach(c => catSelect.appendChild(new Option(c, c)));
-  }
-
-  const stageSelect = document.getElementById('filterStage');
-  if (stageSelect.options.length <= 1) {
-    STAGE_ORDER.forEach(s => stageSelect.appendChild(new Option(STAGE_LABELS[s], s)));
-  }
-
-  if (taskOwnerSelect.options.length <= 1) {
-    const owners = new Set();
-    dashboardData.tasks.forEach(t => { if (t.owner) owners.add(t.owner); });
-    owners.forEach(o => taskOwnerSelect.appendChild(new Option(o, o)));
-  }
-
-  [repSelect, catSelect, stageSelect, taskOwnerSelect].forEach(el => {
-    el.onchange = () => { render(); };
-  });
-  document.getElementById('filterKeyword').oninput = debounce(renderCaseTable, 200);
-}
-
-function debounce(fn, ms) {
-  let t;
-  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
-}
-
-function resetFilters() {
-  document.getElementById('filterStage').value = '';
-  document.getElementById('filterRep').value = '';
-  document.getElementById('filterCategory').value = '';
-  document.getElementById('filterKeyword').value = '';
-  currentStageFilter = '';
-  renderFunnel();
-  renderCaseTable();
-}
-
-// ---------- 漏斗總覽 ----------
-
-function renderFunnel() {
-  const container = document.getElementById('funnel');
-  container.innerHTML = '';
-
-  STAGE_ORDER.forEach(stage => {
-    const count = dashboardData.cases.filter(c => c.stage === stage).length;
-    const div = document.createElement('div');
-    div.className = 'funnel-stage' + (stage === 'dvs' ? ' dvs' : '') + (currentStageFilter === stage ? ' selected' : '');
-    div.innerHTML = `<div class="count">${count}</div><div class="label">${STAGE_LABELS[stage]}</div>`;
-    div.onclick = () => {
-      currentStageFilter = currentStageFilter === stage ? '' : stage;
-      document.getElementById('filterStage').value = currentStageFilter;
-      renderFunnel();
-      renderCaseTable();
-    };
-    container.appendChild(div);
-  });
-}
-
-// ---------- 摘要卡片 ----------
-
-function renderSummaryCards() {
-  const cases = dashboardData.cases;
-  const container = document.getElementById('summaryCards');
-
-  const totalCases = cases.length;
-  const weeklyUpdates = cases.filter(c => c.isWeeklyUpdate).length;
-  const withTechIssues = cases.filter(c => c.techIssues && c.techIssues.length > 0).length;
-  const dvsCases = cases.filter(c => c.stage === 'dvs').length;
-
-  const cards = [
-    { label: '總案件數', value: totalCases },
-    { label: '本週更新', value: weeklyUpdates },
-    { label: '含技術問題', value: withTechIssues },
-    { label: 'DVS專案', value: dvsCases }
-  ];
-
-  container.innerHTML = cards.map(c =>
-    `<div class="summary-card"><div class="value">${c.value}</div><div class="label">${c.label}</div></div>`
-  ).join('');
-}
-
-// ---------- 案件表格 ----------
-
-function getFilteredCases() {
-  const stage = document.getElementById('filterStage').value;
-  const rep = document.getElementById('filterRep').value;
-  const category = document.getElementById('filterCategory').value;
-  const keyword = document.getElementById('filterKeyword').value.trim().toLowerCase();
-
-  return dashboardData.cases.filter(c => {
-    if (stage && c.stage !== stage) return false;
-    if (rep && c.salesRep !== rep) return false;
-    if (category && c.productCategory !== category) return false;
-    if (keyword) {
-      const haystack = [c.customer, c.dealer, c.notes, c.product].join(' ').toLowerCase();
-      if (haystack.indexOf(keyword) === -1) return false;
+function getFiltered() {
+  return getData().filter(d => {
+    if (!state.stage && d.stage === 'dvs') return false;
+    if (state.stage && d.stage !== state.stage) return false;
+    if (state.rep && d.salesRep !== state.rep) return false;
+    if (state.category && d.productCategory !== state.category) return false;
+    if (state.q) {
+      const hay = [d.customer, d.dealer, d.product, d.competitor, d.keyMan, d.progress, d.notes, d.salesRep].join(' ').toLowerCase();
+      if (!hay.includes(state.q.toLowerCase())) return false;
     }
     return true;
   });
 }
 
-function renderCaseTable() {
-  let cases = getFilteredCases();
-
-  if (currentSort.field) {
-    cases = cases.slice().sort((a, b) => {
-      const va = String(a[currentSort.field] || '');
-      const vb = String(b[currentSort.field] || '');
-      return currentSort.asc ? va.localeCompare(vb, 'zh-Hant') : vb.localeCompare(va, 'zh-Hant');
-    });
-  }
-
-  const tbody = document.getElementById('caseTableBody');
-  tbody.innerHTML = '';
-
-  document.getElementById('caseEmptyState').style.display = cases.length ? 'none' : 'block';
-
-  cases.forEach(c => {
-    const tr = document.createElement('tr');
-    tr.className = 'case-row';
-
-    const badges = [];
-    if (c.isWeeklyUpdate) badges.push('<span class="badge update">🟡 本週更新</span>');
-    if (c.techIssues && c.techIssues.length) badges.push(`<span class="badge tech">🔧 技術問題 ${c.techIssues.length}</span>`);
-
-    tr.innerHTML = `
-      <td>${STAGE_LABELS[c.stage] || escapeHtml(c.stage)}</td>
-      <td>${escapeHtml(c.salesRep)}</td>
-      <td>${escapeHtml(c.customer)}</td>
-      <td>${escapeHtml(c.dealer)}</td>
-      <td><span class="badge category">${escapeHtml(c.productCategory)}</span></td>
-      <td>${escapeHtml(c.progress)}</td>
-      <td class="amt-cell">${escapeHtml(c.amount)}</td>
-      <td>${badges.join('')}</td>
-    `;
-    tr.onclick = () => toggleDetail(c, tr);
-    tbody.appendChild(tr);
+function renderFunnel() {
+  const el = document.getElementById('funnel'); el.innerHTML = '';
+  const DATA = getData();
+  STAGE_ORDER.forEach((stage, i) => {
+    const items = DATA.filter(d => d.stage === stage);
+    const amt = items.reduce((s, d) => s + (d.amount_num || 0), 0);
+    const target = STAGE_TARGET[stage]; const label = STAGE_LABELS[stage];
+    const div = document.createElement('div');
+    div.className = 'funnel-step' + (state.stage === stage ? ' active' : '');
+    div.style.setProperty('--stage-color', STAGE_COLOR[stage]);
+    div.innerHTML = `<div class="label"><span class="dot"></span>${label}${target ? ' <span style="opacity:.6">／目標 ' + target + '</span>' : ''}</div><div class="count">${items.length}</div><div class="amt">${amt > 0 ? fmtAmt(amt) : '—'}</div>`;
+    div.onclick = () => { state.stage = (state.stage === stage) ? '' : stage; syncControls(); render(); };
+    el.appendChild(div);
+    if (i < STAGE_ORDER.length - 1) { const arrow = document.createElement('div'); arrow.className = 'funnel-arrow'; arrow.textContent = '→'; el.appendChild(arrow); }
   });
 }
 
-function toggleDetail(c, tr) {
-  const existing = tr.nextElementSibling;
-  if (existing && existing.classList.contains('detail-row')) {
-    existing.remove();
-    return;
-  }
-
-  document.querySelectorAll('.detail-row').forEach(el => el.remove());
-
-  const detailTr = document.createElement('tr');
-  detailTr.className = 'detail-row';
-  const td = document.createElement('td');
-  td.colSpan = 8;
-
-  const items = [
-    ['競爭對手', c.competitor],
-    ['KeyMan', c.keyMan],
-    ['採購方式', c.procurement],
-    ['備註', c.notes],
-    ['主管意見', c.managerComment],
-    ['相關連結', c.relatedLink ? `<a href="${escapeHtml(c.relatedLink)}" target="_blank">開啟連結</a>` : '']
-  ];
-
-  let html = '<div class="detail-grid">' + items.map(([label, value]) =>
-    `<div class="detail-item"><div class="label">${label}</div><div class="value">${value || '—'}</div></div>`
-  ).join('') + '</div>';
-
-  if (c.techIssues && c.techIssues.length) {
-    html += '<div class="tech-issue-list"><strong>🔧 相關技術問題</strong><ul>' +
-      c.techIssues.map(t => `<li>${escapeHtml(t.issue)}（${escapeHtml(t.status)}，回報日期：${escapeHtml(t.reportedDate)}）</li>`).join('') +
-      '</ul></div>';
-  }
-
-  html += `<button class="btn secondary edit-btn" onclick='openEditForm(${JSON.stringify(c.id)})'>編輯此案件</button>`;
-
-  td.innerHTML = html;
-  detailTr.appendChild(td);
-  tr.parentNode.insertBefore(detailTr, tr.nextSibling);
+function renderCards() {
+  const DATA = getData();
+  const withAmt = DATA.filter(d => d.amount_num);
+  const total = withAmt.reduce((s, d) => s + d.amount_num, 0);
+  document.getElementById('totalAmount').textContent = fmtAmt(total) || '—';
+  document.getElementById('avgAmount').textContent = withAmt.length ? fmtAmt(Math.round(total / withAmt.length)) : '—';
+  document.getElementById('totalCasesHdr').textContent = DATA.length + ' 件案件';
+  const repCounts = {};
+  DATA.forEach(d => { repCounts[d.salesRep] = (repCounts[d.salesRep] || 0) + 1; });
+  const maxCount = Math.max(...Object.values(repCounts), 1);
+  const sorted = Object.entries(repCounts).sort((a, b) => b[1] - a[1]);
+  const bars = document.getElementById('repBars'); bars.innerHTML = '';
+  sorted.forEach(([rep, count]) => {
+    const row = document.createElement('div'); row.className = 'rep-bar-row';
+    row.innerHTML = `<div class="name">${escapeHtml(rep)}</div><div class="track"><div class="fill" style="width:${(count / maxCount * 100)}%"></div></div><div class="num">${count}</div>`;
+    bars.appendChild(row);
+  });
 }
 
-// 表格排序
-document.addEventListener('click', e => {
-  const th = e.target.closest('th[data-sort]');
-  if (!th) return;
-  const field = th.dataset.sort;
-  if (currentSort.field === field) {
-    currentSort.asc = !currentSort.asc;
-  } else {
-    currentSort = { field, asc: true };
+function populateSelects() {
+  const DATA = getData();
+  const stageSel = document.getElementById('stageFilter'); stageSel.innerHTML = '<option value="">全部階段</option>';
+  STAGE_ORDER.forEach(s => stageSel.appendChild(new Option(STAGE_LABELS[s], s)));
+  const reps = [...new Set(DATA.map(d => d.salesRep))].filter(Boolean).sort();
+  const repSel = document.getElementById('repFilter'); repSel.innerHTML = '<option value="">全部業務</option>';
+  reps.forEach(r => repSel.appendChild(new Option(r, r)));
+  const cats = [...new Set(DATA.map(d => d.productCategory))].filter(Boolean).sort();
+  const catSel = document.getElementById('categoryFilter'); catSel.innerHTML = '<option value="">全部產品</option>';
+  cats.forEach(c => catSel.appendChild(new Option(c, c)));
+  const ncStage = document.getElementById('nc_stage');
+  if (!ncStage.options.length) { STAGE_ORDER.forEach(s => ncStage.appendChild(new Option(STAGE_LABELS[s], s))); }
+}
+
+function syncControls() {
+  document.getElementById('stageFilter').value = state.stage;
+  document.getElementById('repFilter').value = state.rep;
+  document.getElementById('categoryFilter').value = state.category;
+  document.getElementById('searchBox').value = state.q;
+}
+
+function stageBadgeStyle(stage) { const c = STAGE_COLOR[stage]; return `background:${c}1A; color:${c};`; }
+const SORT_KEY_MAP = { rep: 'salesRep', partner: 'dealer', date: 'keyDate' };
+
+function renderTable() {
+  let rows = getFiltered();
+  if (state.sortKey) {
+    const field = SORT_KEY_MAP[state.sortKey] || state.sortKey;
+    rows = rows.slice().sort((a, b) => {
+      let av = a[field], bv = b[field];
+      if (av === null || av === undefined) av = field === 'amount_num' ? -1 : '';
+      if (bv === null || bv === undefined) bv = field === 'amount_num' ? -1 : '';
+      if (typeof av === 'string') { av = av.toLowerCase(); bv = bv.toLowerCase(); }
+      if (av < bv) return -1 * state.sortDir; if (av > bv) return 1 * state.sortDir; return 0;
+    });
   }
-  renderCaseTable();
+  document.getElementById('resultCount').textContent = `顯示 ${rows.length} / ${getData().length} 筆`;
+  const tbody = document.getElementById('tbody'); tbody.innerHTML = '';
+  document.getElementById('emptyState').style.display = rows.length ? 'none' : 'block';
+
+  rows.forEach((d, idx) => {
+    const key = d.stage + '|' + d.customer + '|' + idx;
+    const tr = document.createElement('tr');
+    if (d.isWeeklyUpdate) tr.className = 'row-updated';
+    const issues = d.techIssues || [];
+    const badges = [
+      issues.length ? `<span class="tech-badge" title="有相關技術問題">🔧 ${issues.length}</span>` : '',
+      d.isWeeklyUpdate ? `<span class="updated-tag"><span class="dot"></span>本週更新</span>` : ''
+    ].filter(Boolean).join(' ');
+    tr.innerHTML = `
+      <td><span class="tag" style="${stageBadgeStyle(d.stage)}">${STAGE_LABELS[d.stage] || escapeHtml(d.stage)}</span></td>
+      <td>${escapeHtml(d.salesRep)}</td>
+      <td class="cust"><div>${escapeHtml(d.customer)}</div>${badges ? `<div style="margin-top:4px;">${badges}</div>` : ''}</td>
+      <td class="partner">${escapeHtml(d.dealer) || '—'}</td>
+      <td>${escapeHtml(d.keyDate) || '—'}</td>
+      <td class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (escapeHtml(d.amount) || '—')}</td>
+      <td><span class="tag" style="background:var(--grey-soft); color:var(--ink-soft); font-weight:600;">${escapeHtml(d.productCategory)}</span> ${escapeHtml(d.product) || '—'}</td>
+      <td class="progress-cell">${escapeHtml(d.progress) || '—'}</td>
+    `;
+    tr.onclick = () => { if (state.expanded.has(key)) state.expanded.delete(key); else state.expanded.add(key); render(); };
+    tbody.appendChild(tr);
+
+    if (state.expanded.has(key)) {
+      const dtr = document.createElement('tr'); dtr.className = 'detail-row';
+      dtr.innerHTML = `<td colspan="8">
+        <div class="detail-grid">
+          <div><div class="dt">競爭對手</div><div class="dd">${escapeHtml(d.competitor) || '—'}</div></div>
+          <div><div class="dt">Key Man</div><div class="dd">${escapeHtml(d.keyMan) || '—'}</div></div>
+          <div><div class="dt">採購方式</div><div class="dd">${escapeHtml(d.procurement) || '—'}</div></div>
+        </div>
+        <div style="margin-top:12px;"><div class="dt">進度說明</div><div class="dd">${escapeHtml(d.progress) || '—'}</div></div>
+        ${d.notes ? `<div style="margin-top:12px;"><div class="dt">備註</div><div class="dd">${escapeHtml(d.notes)}</div></div>` : ''}
+        ${d.relatedLink ? `<div style="margin-top:12px;"><a href="${escapeHtml(d.relatedLink)}" target="_blank" rel="noopener" style="color:var(--blue); font-size:12.5px; font-weight:700;">🔗 相關連結</a></div>` : ''}
+        ${issues.length ? `<div style="margin-top:16px; border-top:1px dashed var(--border); padding-top:12px;"><div class="dt" style="color:var(--rose);">🔧 相關技術問題 (${issues.length})</div>${issues.map(t => `<div style="margin-top:8px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px;"><div style="display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); font-family:var(--mono);"><span>${escapeHtml(t.reportedDate)}</span><span style="color:${t.status === '已解決' ? 'var(--accent)' : 'var(--amber)'}; font-weight:700;">${escapeHtml(t.status) || '處理中'}</span></div><div style="margin-top:4px;">${escapeHtml(t.issue)}</div></div>`).join('')}</div>` : ''}
+        <span class="edit-toggle" data-editid="${d.id}">&#9998; 編輯此案件</span>
+        <div class="edit-fields" id="edit-${d.id}" style="display:none;">
+          <div><label>階段</label><select class="ef-stage">${STAGE_ORDER.map(s => `<option value="${s}" ${s === d.stage ? 'selected' : ''}>${STAGE_LABELS[s]}</option>`).join('')}</select></div>
+          <div><label>時程</label><input class="ef-date" value="${escapeHtml(d.keyDate)}"></div>
+          <div><label>預估金額</label><input class="ef-amount" value="${escapeHtml(d.amount)}"></div>
+          <div class="full"><label>進度說明</label><textarea class="ef-progress" rows="2">${escapeHtml(d.progress)}</textarea></div>
+          <div class="full"><label>備註</label><textarea class="ef-notes" rows="2">${escapeHtml(d.notes)}</textarea></div>
+          <div class="edit-actions"><button class="ef-cancel">取消</button><button class="primary ef-save" data-id="${d.id}">儲存更新</button></div>
+        </div>
+      </td>`;
+      tbody.appendChild(dtr);
+      dtr.querySelector('.edit-toggle').onclick = (ev) => { ev.stopPropagation(); const box = dtr.querySelector('.edit-fields'); box.style.display = box.style.display === 'none' ? 'grid' : 'none'; };
+      dtr.querySelector('.ef-cancel').onclick = (ev) => { ev.stopPropagation(); dtr.querySelector('.edit-fields').style.display = 'none'; };
+      dtr.querySelector('.ef-save').onclick = async (ev) => {
+        ev.stopPropagation();
+        const fields = { stage: dtr.querySelector('.ef-stage').value, keyDate: dtr.querySelector('.ef-date').value, amount: dtr.querySelector('.ef-amount').value, progress: dtr.querySelector('.ef-progress').value, notes: dtr.querySelector('.ef-notes').value };
+        Object.assign(d, fields, { amount_num: parseAmt(fields.amount) });
+        const result = await postToGas({ action: 'edit', caseId: d.id, fields });
+        if (result.success) { document.getElementById('syncStatus').textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW'); } else { alert('儲存失敗：' + result.message); }
+        renderCards(); render();
+      };
+    }
+  });
+}
+
+function renderRepPanel() {
+  const panel = document.getElementById('repPanel');
+  if (!state.rep) { panel.style.display = 'none'; return; }
+  const DATA = getData();
+  const repItems = DATA.filter(d => d.salesRep === state.rep);
+  const dealers = new Set(repItems.map(d => d.dealer).filter(Boolean));
+  const stageCounts = {}; STAGE_ORDER.forEach(s => stageCounts[s] = 0);
+  repItems.forEach(d => { stageCounts[d.stage] = (stageCounts[d.stage] || 0) + 1; });
+  const chips = STAGE_ORDER.map(s => `<div class="stage-chip"><span class="dot" style="background:${STAGE_COLOR[s]}"></span>${STAGE_LABELS[s]} <b>${stageCounts[s]}</b></div>`).join('');
+  panel.style.display = 'flex';
+  panel.innerHTML = `<div class="who">${escapeHtml(state.rep)}</div><div class="stat"><div class="k">合作經銷商</div><div class="v">${dealers.size}</div></div><div class="stat"><div class="k">總案件數</div><div class="v">${repItems.length}</div></div><div class="stage-breakdown">${chips}</div>`;
+}
+
+function render() { renderFunnel(); renderRepPanel(); renderTable(); }
+
+document.getElementById('stageFilter').onchange = e => { state.stage = e.target.value; render(); };
+document.getElementById('repFilter').onchange = e => { state.rep = e.target.value; render(); };
+document.getElementById('categoryFilter').onchange = e => { state.category = e.target.value; render(); };
+document.getElementById('searchBox').oninput = e => { state.q = e.target.value; render(); };
+document.getElementById('resetBtn').onclick = () => { state = { ...state, stage: '', rep: '', category: '', q: '' }; syncControls(); render(); };
+document.querySelectorAll('thead th[data-key]').forEach(th => { th.onclick = () => { const key = th.dataset.key; if (state.sortKey === key) state.sortDir *= -1; else { state.sortKey = key; state.sortDir = 1; } render(); }; });
+
+function stageChipsHtml(stageCounts) { return STAGE_ORDER.map(s => `<div class="stage-chip"><span class="dot" style="background:${STAGE_COLOR[s]}"></span>${STAGE_LABELS[s]} <b>${stageCounts[s] || 0}</b></div>`).join(''); }
+function caseRowHtml(d) { return `<tr><td><span class="tag" style="${stageBadgeStyle(d.stage)}">${STAGE_LABELS[d.stage] || escapeHtml(d.stage)}</span></td><td>${escapeHtml(d.salesRep)}</td><td class="cust">${escapeHtml(d.customer)}</td><td class="partner">${escapeHtml(d.dealer) || '—'}</td><td class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (escapeHtml(d.amount) || '—')}</td><td>${escapeHtml(d.product) || '—'}</td></tr>`; }
+function caseTableHtml(items) { return `<table><thead><tr><th>階段</th><th>業務</th><th>終端客戶</th><th>經銷商</th><th>預估金額</th><th>方案</th></tr></thead><tbody>${items.map(caseRowHtml).join('')}</tbody></table>`; }
+
+function renderEntityList() {
+  const list = document.getElementById('entityList'); list.innerHTML = '';
+  const DATA = getData();
+  if (dealerMode === 'rep') {
+    const reps = [...new Set(DATA.map(d => d.salesRep))];
+    const rows = reps.map(rep => {
+      const items = DATA.filter(d => d.salesRep === rep);
+      const dealers = new Set(items.map(d => d.dealer).filter(Boolean));
+      const stageCounts = {}; items.forEach(d => stageCounts[d.stage] = (stageCounts[d.stage] || 0) + 1);
+      return { key: rep, label: rep, items, dealerCount: dealers.size, stageCounts };
+    }).sort((a, b) => b.items.length - a.items.length);
+    rows.forEach(r => {
+      const isOpen = openEntities.has(r.key);
+      const card = document.createElement('div'); card.className = 'entity-card' + (isOpen ? ' open' : '');
+      card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(r.label)}</div><div class="statrow"><div class="stat"><div class="k">經銷商</div><div class="v">${r.dealerCount}</div></div><div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div></div><div class="chips">${stageChipsHtml(r.stageCounts)}</div></div><div class="entity-body ${isOpen ? 'open' : ''}">${caseTableHtml(r.items)}</div>`;
+      card.querySelector('.entity-hdr').onclick = () => { if (openEntities.has(r.key)) openEntities.delete(r.key); else openEntities.add(r.key); renderEntityList(); };
+      list.appendChild(card);
+    });
+  } else {
+    const dealerMap = {};
+    DATA.forEach(d => { if (!d.dealer) return; if (!dealerMap[d.dealer]) dealerMap[d.dealer] = []; dealerMap[d.dealer].push(d); });
+    const rows = Object.entries(dealerMap).map(([base, items]) => {
+      const reps = [...new Set(items.map(d => d.salesRep))];
+      const stageCounts = {}; items.forEach(d => stageCounts[d.stage] = (stageCounts[d.stage] || 0) + 1);
+      return { key: base, label: base, items, reps, stageCounts };
+    }).sort((a, b) => b.items.length - a.items.length);
+    rows.forEach(r => {
+      const isOpen = openEntities.has(r.key);
+      const card = document.createElement('div'); card.className = 'entity-card' + (isOpen ? ' open' : '');
+      card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(r.label)}<div class="sub-tag">${r.reps.length > 1 ? '多位業務共同處理' : escapeHtml(r.reps[0])}</div></div><div class="statrow"><div class="stat"><div class="k">合作業務</div><div class="v">${r.reps.length}</div></div><div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div></div><div class="chips">${stageChipsHtml(r.stageCounts)}</div></div><div class="entity-body ${isOpen ? 'open' : ''}"><div class="rep-list">合作業務：${escapeHtml(r.reps.join('、'))}</div>${caseTableHtml(r.items)}</div>`;
+      card.querySelector('.entity-hdr').onclick = () => { if (openEntities.has(r.key)) openEntities.delete(r.key); else openEntities.add(r.key); renderEntityList(); };
+      list.appendChild(card);
+    });
+  }
+}
+
+function ownerChipsHtml(owner) { return String(owner || '').split('/').map(o => o.trim()).filter(Boolean).map(o => `<span class="owner-chip" data-owner="${escapeHtml(o)}">${escapeHtml(o)}</span>`).join(''); }
+function taskItemHtml(t) { return `<div class="task-item" style="padding:8px 0; border-top:1px solid var(--border); font-size:12.5px;"><div class="topic" style="font-weight:700;">${escapeHtml(t.item || t.activity)} ${ownerChipsHtml(t.owner || t.salesRep)}</div><div class="meta" style="color:var(--ink-soft); font-size:11px; margin-top:2px;">${[t.dealer, t.dueDate || t.period, t.amount].filter(Boolean).map(escapeHtml).join('　')}</div><div class="prog" style="color:var(--ink-soft); margin-top:4px; line-height:1.5;">${escapeHtml(t.notes) || ''}</div></div>`; }
+
+function wireOwnerChips(container) { container.querySelectorAll('.owner-chip').forEach(chip => { chip.onclick = (ev) => { ev.stopPropagation(); taskOwnerFilter = chip.dataset.owner; document.getElementById('taskOwnerResetBtn').style.display = 'inline'; renderTaskList(); }; }); }
+
+function renderTaskList() {
+  const list = document.getElementById('taskList');
+  const TASKS = dashboardData ? dashboardData.tasks : [];
+  const q = taskQuery.toLowerCase();
+  let filtered = TASKS.filter(t => {
+    const owner = t.owner || t.salesRep || '';
+    if (q && !([owner, t.item, t.activity, t.dealer, t.notes].join(' ').toLowerCase().includes(q))) return false;
+    if (taskOwnerFilter && !owner.includes(taskOwnerFilter)) return false;
+    return true;
+  });
+  document.getElementById('taskCount').textContent = `顯示 ${filtered.length} / ${TASKS.length} 筆` + (taskOwnerFilter ? `　（負責人：${taskOwnerFilter}）` : '');
+  const groupKey = taskMode === 'category' ? 'productCategory' : 'owner';
+  const groups = {};
+  filtered.forEach(t => {
+    const keys = groupKey === 'owner' ? String(t.owner || t.salesRep || '未指定').split('/').map(o => o.trim()) : [t.productCategory || '未分類'];
+    keys.forEach(k => { if (!groups[k]) groups[k] = []; groups[k].push(t); });
+  });
+  list.innerHTML = '';
+  Object.entries(groups).sort((a, b) => b[1].length - a[1].length).forEach(([key, items]) => {
+    const isOpen = openTaskGroups.has(key);
+    const card = document.createElement('div'); card.className = 'entity-card' + (isOpen ? ' open' : '');
+    card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(key)}</div><div class="statrow"><div class="stat"><div class="k">項目數</div><div class="v">${items.length}</div></div></div></div><div class="entity-body ${isOpen ? 'open' : ''}">${items.map(taskItemHtml).join('')}</div>`;
+    card.querySelector('.entity-hdr').onclick = () => { if (openTaskGroups.has(key)) openTaskGroups.delete(key); else openTaskGroups.add(key); renderTaskList(); };
+    wireOwnerChips(card);
+    list.appendChild(card);
+  });
+}
+
+document.querySelectorAll('.tabbtn').forEach(btn => {
+  btn.onclick = () => {
+    document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    if (btn.dataset.view === 'dealers') { openEntities = new Set(); renderEntityList(); }
+    if (btn.dataset.view === 'tasks') { renderTaskList(); }
+  };
 });
 
-// ---------- 經銷商統計 ----------
-
-function setDealerView(view) {
-  dealerView = view;
-  document.getElementById('dealerViewByDealer').classList.toggle('active', view === 'byDealer');
-  document.getElementById('dealerViewByRep').classList.toggle('active', view === 'byRep');
-  renderDealerStats();
-}
-
-function renderDealerStats() {
-  const stats = dashboardData.dealerStats[dealerView];
-  const container = document.getElementById('dealerCards');
-  container.innerHTML = '';
-
-  Object.keys(stats).sort((a, b) => stats[b].length - stats[a].length).forEach(key => {
-    const ids = stats[key];
-    const cases = ids.map(id => dashboardData.cases.find(c => c.id === id)).filter(Boolean);
-
-    const card = document.createElement('div');
-    card.className = 'stat-card';
-    card.innerHTML = `
-      <h3>${escapeHtml(key)}</h3>
-      <div class="count">共 ${ids.length} 件案件</div>
-      <ul>${cases.slice(0, 6).map(c => `<li>${escapeHtml(c.customer)}（${STAGE_LABELS[c.stage] || c.stage}）</li>`).join('')}</ul>
-      ${cases.length > 6 ? `<div style="font-size:12px;color:var(--muted);margin-top:4px;">還有 ${cases.length - 6} 筆…</div>` : ''}
-    `;
-    container.appendChild(card);
-  });
-}
-
-// ---------- 行銷 / PM 任務 ----------
-
-function renderTasks() {
-  const ownerFilter = document.getElementById('taskOwnerFilter').value;
-  let tasks = dashboardData.tasks;
-  if (ownerFilter) tasks = tasks.filter(t => t.owner === ownerFilter);
-
-  const groups = {};
-  tasks.forEach(t => {
-    const key = t.productCategory || '未分類';
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(t);
-  });
-
-  const container = document.getElementById('taskGroups');
-  container.innerHTML = '';
-
-  Object.keys(groups).forEach(category => {
-    const section = document.createElement('div');
-    section.innerHTML = `<h3 style="margin:20px 0 10px;">${escapeHtml(category)}</h3>`;
-    const grid = document.createElement('div');
-    grid.className = 'card-grid';
-
-    groups[category].forEach(t => {
-      const card = document.createElement('div');
-      card.className = 'stat-card';
-      if (t.type === 'marketing') {
-        card.innerHTML = `
-          <h3>${escapeHtml(t.dealer)}</h3>
-          <div class="value">${escapeHtml(t.activity)}</div>
-          <div class="count">期間：${escapeHtml(t.period)}</div>
-          <div style="font-size:12px;">${escapeHtml(t.notes)}</div>
-        `;
-      } else {
-        card.innerHTML = `
-          <h3>${escapeHtml(t.item)}</h3>
-          <div class="count">負責人：${escapeHtml(t.owner)}　狀態：${escapeHtml(t.status)}</div>
-          <div style="font-size:12px;">${escapeHtml(t.notes)}</div>
-        `;
-      }
-      grid.appendChild(card);
-    });
-
-    section.appendChild(grid);
-    container.appendChild(section);
-  });
-}
-
-// ---------- 規則說明面板 ----------
+document.getElementById('taskSearch').oninput = e => { taskQuery = e.target.value; renderTaskList(); };
+document.getElementById('taskOwnerResetBtn').onclick = () => { taskOwnerFilter = ''; document.getElementById('taskOwnerResetBtn').style.display = 'none'; renderTaskList(); };
+document.querySelectorAll('#view-dealers .toggle-group button').forEach(btn => { btn.onclick = () => { document.querySelectorAll('#view-dealers .toggle-group button').forEach(b => b.classList.remove('active')); btn.classList.add('active'); dealerMode = btn.dataset.mode; openEntities = new Set(); renderEntityList(); }; });
+document.querySelectorAll('#view-tasks .toggle-group button').forEach(btn => { btn.onclick = () => { document.querySelectorAll('#view-tasks .toggle-group button').forEach(b => b.classList.remove('active')); btn.classList.add('active'); taskMode = btn.dataset.taskmode; openTaskGroups = new Set(); renderTaskList(); }; });
+document.getElementById('refreshBtn').onclick = () => loadSharedData();
+document.getElementById('addCaseBtn').onclick = () => { document.getElementById('addCaseForm').classList.toggle('open'); };
+document.getElementById('nc_cancel').onclick = () => document.getElementById('addCaseForm').classList.remove('open');
+document.getElementById('nc_submit').onclick = async () => {
+  const stage = document.getElementById('nc_stage').value;
+  const salesRep = document.getElementById('nc_rep').value.trim();
+  const customer = document.getElementById('nc_customer').value.trim();
+  if (!salesRep || !customer) { alert('請至少填寫「業務」與「終端客戶」'); return; }
+  const payload = { action: 'create', stage, salesRep, customer, dealerRaw: document.getElementById('nc_partner').value.trim(), keyDate: document.getElementById('nc_date').value.trim(), amount: document.getElementById('nc_amount').value.trim(), product: document.getElementById('nc_product').value.trim(), progress: document.getElementById('nc_progress').value.trim(), competitor: '', keyMan: '', procurement: '', notes: '', managerComment: '', relatedLink: '' };
+  const result = await postToGas(payload);
+  if (result.success) {
+    document.getElementById('addCaseForm').classList.remove('open');
+    ['nc_rep', 'nc_customer', 'nc_partner', 'nc_date', 'nc_amount', 'nc_product', 'nc_progress'].forEach(id => document.getElementById(id).value = '');
+    await loadSharedData();
+  } else { alert('新增失敗：' + result.message); }
+};
 
 function renderRules() {
   const rules = dashboardData.rules;
   const panel = document.getElementById('rulesPanel');
-
-  let html = '<h3>產品分類規則</h3><ul>';
-  rules.categories.forEach(c => {
-    html += `<li><strong>${escapeHtml(c.name)}</strong>：${escapeHtml(c.desc)}</li>`;
-  });
-  html += '</ul>';
-
-  html += '<h3>經銷商別名對照</h3><ul>';
-  rules.dealerAlias.forEach(d => {
-    html += `<li>${escapeHtml(d.alias)} → ${escapeHtml(d.name)}</li>`;
-  });
-  html += '</ul>';
-
-  html += '<h3>其他判讀規則</h3><ul>';
+  let html = '<b>資料與更新</b><ul>';
+  html += '<li>本頁資料即時讀取 Google Drive 上的原始 xlsx，不需要人工轉譯，按「重新整理共享資料」即可拿到最新內容。</li>';
+  html += '<li><span class="updated-tag"><span class="dot"></span>本週更新</span> 標籤的判斷方式：逐格比對本週分頁與上週分頁的內容，任一欄位不同或本週新增即標記。</li>';
+  html += '</ul><b>產品分類規則</b><ul>';
+  rules.categories.forEach(c => { html += `<li><b>${escapeHtml(c.name)}</b>：${escapeHtml(c.desc)}</li>`; });
+  html += '</ul><b>經銷商別名對照</b><ul>';
+  rules.dealerAlias.forEach(d => { html += `<li>${escapeHtml(d.alias)} → ${escapeHtml(d.name)}</li>`; });
+  html += '</ul><b>其他判讀規則</b><ul>';
   rules.notes.forEach(n => { html += `<li>${escapeHtml(n)}</li>`; });
   html += '</ul>';
-
   panel.innerHTML = html;
 }
 
-// ---------- 分頁切換 ----------
+document.getElementById('rulesToggle').onclick = () => { const p = document.getElementById('rulesPanel'); p.style.display = p.style.display === 'none' ? 'block' : 'none'; };
 
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
-  };
-});
-
-document.getElementById('taskOwnerFilter').addEventListener('change', renderTasks);
-
-// ---------- 新增 / 編輯案件（POST，避免 CORS preflight）----------
-
-async function postToGas(payload) {
-  const res = await fetch(GAS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // 刻意用 text/plain 避免觸發 preflight OPTIONS
-    body: JSON.stringify(payload)
-  });
-  return res.json();
-}
-
-function openNewCaseForm() {
-  const customer = prompt('客戶名稱：');
-  if (!customer) return;
-  const dealerRaw = prompt('經銷商-業務窗口（例如：北祥-黃靖詠Eugene）：') || '';
-  const product = prompt('產品/方案：') || '';
-  const stage = prompt('階段代碼（registered / queued / testing / closed_pending / dvs）：') || 'registered';
-
-  postToGas({
-    action: 'create',
-    customer, dealerRaw, product, stage,
-    salesRep: '', competitor: '', keyMan: '', procurement: '',
-    progress: '', amount: '', notes: '', managerComment: '', relatedLink: ''
-  }).then(result => {
-    if (result.success) { alert('新增成功'); loadData(); }
-    else { alert('新增失敗：' + result.message); }
-  });
-}
-
-function openEditForm(caseId) {
-  const fieldName = prompt('要編輯的欄位名稱（例如：progress、notes、amount）：');
-  if (!fieldName) return;
-  const newValue = prompt('新的內容：');
-  if (newValue === null) return;
-
-  postToGas({
-    action: 'edit',
-    caseId: caseId,
-    fields: { [fieldName]: newValue },
-    updatedBy: ''
-  }).then(result => {
-    if (result.success) { alert('更新成功'); loadData(); }
-    else { alert('更新失敗：' + result.message); }
-  });
-}
-
-// ---------- 工具 ----------
-
-function escapeHtml(str) {
-  return String(str || '').replace(/[&<>"']/g, m => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[m]));
-}
-
-// ---------- 初始化 ----------
-
-loadData();
+loadSharedData();
 </script>
-
 </body>
 </html>
