@@ -344,11 +344,11 @@
     <table id="caseTable">
       <thead>
         <tr>
+          <th data-sort="stage">階段</th>
+          <th data-sort="salesRep">業務</th>
           <th data-sort="customer">客戶名稱</th>
           <th data-sort="dealer">經銷商</th>
-          <th data-sort="salesRep">業務</th>
           <th data-sort="productCategory">產品分類</th>
-          <th data-sort="stage">階段</th>
           <th data-sort="progress">進度</th>
           <th class="amt-cell" data-sort="amount">預估金額</th>
           <th>標籤</th>
@@ -577,11 +577,11 @@ function renderCaseTable() {
     if (c.techIssues && c.techIssues.length) badges.push(`<span class="badge tech">🔧 技術問題 ${c.techIssues.length}</span>`);
 
     tr.innerHTML = `
+      <td>${STAGE_LABELS[c.stage] || escapeHtml(c.stage)}</td>
+      <td>${escapeHtml(c.salesRep)}</td>
       <td>${escapeHtml(c.customer)}</td>
       <td>${escapeHtml(c.dealer)}</td>
-      <td>${escapeHtml(c.salesRep)}</td>
       <td><span class="badge category">${escapeHtml(c.productCategory)}</span></td>
-      <td>${STAGE_LABELS[c.stage] || escapeHtml(c.stage)}</td>
       <td>${escapeHtml(c.progress)}</td>
       <td class="amt-cell">${escapeHtml(c.amount)}</td>
       <td>${badges.join('')}</td>
