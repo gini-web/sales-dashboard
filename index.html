@@ -174,7 +174,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 
   <div class="hdr">
     <div>
-      <div class="eyebrow">DBSAFER & FaceLocker & AppGuard  &middot; 業務週會快照</div>
+      <div class="eyebrow">VerdiMind &middot; 業務週會快照</div>
       <h1>業務案件儀表板</h1>
       <div class="sub" id="hdrSub">載入中...</div>
     </div>
@@ -203,7 +203,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 
   <div class="funnel" id="funnel"></div>
   <div style="font-size:11px; color:var(--ink-soft); margin: -14px 0 18px; font-family: var(--mono);">
-    ＊ DVS專案案件已從此清單移除
+    ＊ DVS專案案件已從此清單移除，如需查看請至「經銷商統計」或「行銷/PM任務」分頁
   </div>
 
   <div class="cards">
@@ -224,6 +224,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
   <div class="rep-panel" id="repPanel" style="display:none;"></div>
 
   <button class="addcase-btn" id="addCaseBtn">＋ 新增(不使用)</button>
+  <span style="font-size:11px; color:var(--ink-soft); margin-left:8px;">＊ 本頁僅供會議展示與查詢，新增／編輯請回原始表格調整</span>
   <div class="addcase-form" id="addCaseForm">
     <div><label>階段</label><select id="nc_stage"></select></div>
     <div><label>業務</label><input id="nc_rep" placeholder="例如 Chloe"></div>
@@ -235,7 +236,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     <div class="full"><label>進度說明</label><textarea id="nc_progress" rows="2"></textarea></div>
     <div class="actions">
       <button id="nc_cancel">取消</button>
-      <button class="primary" id="nc_submit">儲存案件(不使用)</button>
+      <button class="primary" id="nc_submit">儲存案件</button>
     </div>
   </div>
 
@@ -628,7 +629,10 @@ document.getElementById('nc_submit').onclick = async () => {
 function renderRules() {
   const rules = dashboardData.rules;
   const panel = document.getElementById('rulesPanel');
-  let html = '<b>資料與更新</b><ul>';
+  let html = '<b>用途與限制</b><ul>';
+  html += '<li>本頁僅供會議展示與方便查詢案件使用，<b>不適合</b>進行任何新增或編輯操作；如需異動資料，仍請回到原始表格（週工作事項2026.xlsx）調整。</li>';
+  html += '<li>「新增(不使用)」與「編輯此案件」目前僅作為介面保留，實際儲存的內容不會寫回原始 xlsx，僅存在獨立的暫存區，容易造成資料來源不一致，暫不建議使用。</li>';
+  html += '</ul><b>資料與更新</b><ul>';
   html += '<li>本頁資料即時讀取 Google Drive 上的原始 xlsx，不需要人工轉譯，按「重新整理共享資料」即可拿到最新內容。</li>';
   html += '<li><span class="updated-tag"><span class="dot"></span>本週更新</span> 標籤的判斷方式：逐格比對本週分頁與上週分頁的內容，任一欄位不同或本週新增即標記。</li>';
   html += '</ul><b>產品分類規則</b><ul>';
