@@ -76,13 +76,14 @@ td { padding: 10px 14px; vertical-align: top; word-wrap: break-word; overflow-wr
 .detail-grid .dt { font-family: var(--mono); font-size: 10px; text-transform:uppercase; color: var(--ink-soft); letter-spacing:.05em; margin-bottom:2px;}
 .detail-grid .dd { color: var(--ink); }
 .empty-state { text-align:center; padding: 60px 20px; color: var(--ink-soft); }
-#caseTable col.col-stage { width: 8%; }
-#caseTable col.col-rep { width: 7%; }
-#caseTable col.col-customer { width: 13%; }
-#caseTable col.col-partner { width: 11%; }
-#caseTable col.col-date { width: 8%; }
-#caseTable col.col-amount { width: 10%; }
-#caseTable col.col-product { width: 13%; }
+#caseTable col.col-stage { width: 7%; }
+#caseTable col.col-rep { width: 6%; }
+#caseTable col.col-customer { width: 12%; }
+#caseTable col.col-partner { width: 9%; }
+#caseTable col.col-contact { width: 8%; }
+#caseTable col.col-date { width: 7%; }
+#caseTable col.col-amount { width: 9%; }
+#caseTable col.col-product { width: 12%; }
 #caseTable col.col-progress { width: 30%; }
 .rep-panel { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; display:flex; gap: 28px; align-items:center; flex-wrap: wrap; }
 .rep-panel .who { font-size: 15px; font-weight: 800; color: var(--accent); min-width: 90px; }
@@ -244,7 +245,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     <table id="caseTable">
       <colgroup>
         <col class="col-stage"><col class="col-rep"><col class="col-customer"><col class="col-partner">
-        <col class="col-date"><col class="col-amount"><col class="col-product"><col class="col-progress">
+        <col class="col-contact"><col class="col-date"><col class="col-amount"><col class="col-product"><col class="col-progress">
       </colgroup>
       <thead>
         <tr>
@@ -252,6 +253,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
           <th data-key="rep">業務</th>
           <th data-key="customer">終端客戶</th>
           <th data-key="partner">經銷商</th>
+          <th data-key="contact">經銷商業務</th>
           <th data-key="date">時程</th>
           <th data-key="amount_num">預估金額</th>
           <th data-key="product">方案</th>
@@ -423,7 +425,7 @@ function syncControls() {
 }
 
 function stageBadgeStyle(stage) { const c = STAGE_COLOR[stage]; return `background:${c}1A; color:${c};`; }
-const SORT_KEY_MAP = { rep: 'salesRep', partner: 'dealer', date: 'keyDate' };
+const SORT_KEY_MAP = { rep: 'salesRep', partner: 'dealer', contact: 'dealerContact', date: 'keyDate' };
 
 function renderTable() {
   let rows = getFiltered();
@@ -455,6 +457,7 @@ function renderTable() {
       <td>${escapeHtml(d.salesRep)}</td>
       <td class="cust"><div>${escapeHtml(d.customer)}</div>${badges ? `<div style="margin-top:4px;">${badges}</div>` : ''}</td>
       <td class="partner">${escapeHtml(d.dealer) || '—'}</td>
+      <td class="partner">${escapeHtml(d.dealerContact) || '—'}</td>
       <td>${escapeHtml(d.keyDate) || '—'}</td>
       <td class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (escapeHtml(d.amount) || '—')}</td>
       <td>${(d.productCategories || [d.productCategory]).map(cat => `<span class="tag" style="background:var(--grey-soft); color:var(--ink-soft); font-weight:600; margin-right:3px;">${escapeHtml(cat)}</span>`).join('')} ${escapeHtml(d.product) || '—'}</td>
@@ -465,7 +468,7 @@ function renderTable() {
 
     if (state.expanded.has(key)) {
       const dtr = document.createElement('tr'); dtr.className = 'detail-row';
-      dtr.innerHTML = `<td colspan="8">
+      dtr.innerHTML = `<td colspan="9">
         <div class="detail-grid">
           <div><div class="dt">競爭對手</div><div class="dd">${escapeHtml(d.competitor) || '—'}</div></div>
           <div><div class="dt">Key Man</div><div class="dd">${escapeHtml(d.keyMan) || '—'}</div></div>
@@ -554,7 +557,7 @@ function renderEntityList() {
     rows.forEach(r => {
       const isOpen = openEntities.has(r.key);
       const card = document.createElement('div'); card.className = 'entity-card' + (isOpen ? ' open' : '');
-      card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(r.label)}<div class="sub-tag">${r.reps.length > 1 ? '多位業務共同處理' : escapeHtml(r.reps[0])}</div></div><div class="statrow"><div class="stat"><div class="k">合作業務</div><div class="v">${r.reps.length}</div></div><div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div></div><div class="chips">${stageChipsHtml(r.stageCounts)}</div></div><div class="entity-body ${isOpen ? 'open' : ''}"><div class="rep-list">合作業務：${escapeHtml(r.reps.join('、'))}</div>${caseTableHtml(r.items)}</div>`;
+      card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(r.label)}<div class="sub-tag">${escapeHtml(r.reps.join('、'))}</div></div><div class="statrow"><div class="stat"><div class="k">合作業務</div><div class="v">${r.reps.length}</div></div><div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div></div><div class="chips">${stageChipsHtml(r.stageCounts)}</div></div><div class="entity-body ${isOpen ? 'open' : ''}">${caseTableHtml(r.items)}</div>`;
       card.querySelector('.entity-hdr').onclick = () => { if (openEntities.has(r.key)) openEntities.delete(r.key); else openEntities.add(r.key); renderEntityList(); };
       list.appendChild(card);
     });
