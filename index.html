@@ -477,7 +477,7 @@ function renderTable() {
         ${d.notes ? `<div style="margin-top:12px;"><div class="dt">備註</div><div class="dd">${linkifyText(d.notes)}</div></div>` : ''}
         ${d.relatedLink ? `<div style="margin-top:12px;"><a href="${escapeHtml(d.relatedLink)}" target="_blank" rel="noopener" style="color:var(--blue); font-size:12.5px; font-weight:700;">🔗 相關連結</a></div>` : ''}
         ${issues.length ? `<div style="margin-top:16px; border-top:1px dashed var(--border); padding-top:12px;"><div class="dt" style="color:var(--rose);">🔧 相關技術問題 (${issues.length})</div>${issues.map(t => `<div style="margin-top:8px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px;"><div style="display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); font-family:var(--mono);"><span>${escapeHtml(t.reportedDate)}</span><span style="color:${t.status === '已解決' ? 'var(--accent)' : 'var(--amber)'}; font-weight:700;">${escapeHtml(t.status) || '處理中'}</span></div><div style="margin-top:4px;">${escapeHtml(t.issue)}</div></div>`).join('')}</div>` : ''}
-        <span class="edit-toggle" data-editid="${d.id}">&#9998; 編輯此案件</span>
+        <span class="edit-toggle" data-editid="${d.id}">&#9998; 編輯此案件(不使用)</span>
         <div class="edit-fields" id="edit-${d.id}" style="display:none;">
           <div><label>階段</label><select class="ef-stage">${STAGE_ORDER.map(s => `<option value="${s}" ${s === d.stage ? 'selected' : ''}>${STAGE_LABELS[s]}</option>`).join('')}</select></div>
           <div><label>時程</label><input class="ef-date" value="${escapeHtml(d.keyDate)}"></div>
