@@ -26,29 +26,16 @@
   --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
 }
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--sans);
-  -webkit-font-smoothing: antialiased;
-}
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
 .wrap { max-width: 1320px; margin: 0 auto; padding: 28px 24px 60px; }
-
-/* ===== Header ===== */
 .hdr { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 22px; flex-wrap: wrap; gap: 16px; }
 .hdr .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
 .hdr h1 { font-size: 26px; margin: 0; font-weight: 800; letter-spacing: -0.01em; }
 .hdr .sub { color: var(--ink-soft); font-size: 13px; margin-top: 4px; }
 .hdr-right { text-align: right; font-family: var(--mono); font-size: 12px; color: var(--ink-soft); }
 .hdr-right .big { font-size: 20px; color: var(--ink); font-weight: 700; font-family: var(--sans); }
-
-/* ===== Funnel / stage strip ===== */
 .funnel { display:flex; gap: 10px; margin-bottom: 22px; }
-.funnel-step {
-  flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
-  padding: 14px 16px; cursor: pointer; position: relative; transition: transform .15s ease, box-shadow .15s ease;
-}
+.funnel-step { flex: 1; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; cursor: pointer; position: relative; transition: transform .15s ease, box-shadow .15s ease; }
 .funnel-step:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(27,43,35,0.08); }
 .funnel-step.active { border-color: var(--stage-color); box-shadow: 0 0 0 2px var(--stage-color) inset; }
 .funnel-step .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--stage-color); display:inline-block; margin-right: 6px; }
@@ -56,98 +43,70 @@ body {
 .funnel-step .count { font-size: 26px; font-weight: 800; font-family: var(--mono); margin-top: 6px; color: var(--ink); }
 .funnel-step .amt { font-size: 11px; color: var(--ink-soft); font-family: var(--mono); margin-top: 2px; }
 .funnel-arrow { align-self:center; color: var(--border); font-size: 18px; }
-
-/* ===== Summary cards ===== */
 .cards { display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 22px; }
 .card { background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 16px 18px; }
 .card .k { font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .06em; font-family: var(--mono);}
 .card .v { font-size: 22px; font-weight: 800; margin-top: 6px; }
-.card .v small { font-size: 12px; font-weight: 500; color: var(--ink-soft); }
 .rep-bars { margin-top: 10px; display:flex; flex-direction:column; gap:6px; }
 .rep-bar-row { display:flex; align-items:center; gap:8px; font-size:11px; }
 .rep-bar-row .name { width: 62px; flex-shrink:0; color: var(--ink-soft); font-family: var(--mono); }
 .rep-bar-row .track { flex:1; background: var(--grey-soft); border-radius: 4px; height: 8px; overflow:hidden; }
 .rep-bar-row .fill { background: var(--accent); height: 100%; border-radius: 4px; }
 .rep-bar-row .num { font-family: var(--mono); color: var(--ink-soft); width: 22px; text-align:right; }
-
-/* ===== Filter bar ===== */
 .filters { display:flex; gap: 10px; align-items:center; margin-bottom: 14px; flex-wrap: wrap; background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
-.filters input[type=text] {
-  flex: 1; min-width: 180px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px;
-  font-family: var(--sans); background: var(--bg);
-}
-.filters select {
-  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: var(--sans);
-  background: var(--bg); color: var(--ink);
-}
+.filters input[type=text] { flex: 1; min-width: 180px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-family: var(--sans); background: var(--bg); }
+.filters select { border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 13px; font-family: var(--sans); background: var(--bg); color: var(--ink); }
 .filters .reset { font-size: 12px; color: var(--accent); cursor: pointer; font-weight: 600; white-space: nowrap; }
 .filters .count-badge { font-family: var(--mono); font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
-
-/* ===== Table ===== */
 .table-wrap { background: var(--panel); border:1px solid var(--border); border-radius: 10px; overflow: hidden; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-thead th {
-  text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft);
-  padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--grey-soft); font-family: var(--mono);
-  cursor: pointer; user-select: none; white-space: nowrap;
-}
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: fixed; }
+thead th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); padding: 10px 14px; border-bottom: 1px solid var(--border); background: var(--grey-soft); font-family: var(--mono); cursor: pointer; user-select: none; white-space: nowrap; }
 thead th:hover { color: var(--ink); }
 tbody tr { border-bottom: 1px solid var(--border); cursor: pointer; }
 tbody tr:hover { background: var(--accent-soft); }
 tbody tr:last-child { border-bottom: none; }
-td { padding: 10px 14px; vertical-align: top; }
+td { padding: 10px 14px; vertical-align: top; word-wrap: break-word; overflow-wrap: break-word; }
 .tag { display:inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
 .cust { font-weight: 700; }
 .partner { color: var(--ink-soft); font-size: 12px; }
-.amt-cell { font-family: var(--mono); font-weight: 700; white-space: normal; word-break: break-word; max-width: 180px; }
+.amt-cell { font-family: var(--mono); font-weight: 700; white-space: normal; word-break: break-word; }
 .amt-cell.empty { color: var(--ink-soft); font-weight: 400; }
-.progress-cell { max-width: 340px; color: var(--ink-soft); font-size: 12.5px; line-height: 1.5; }
-.progress-cell.expanded { max-width: none; }
+.progress-cell { color: var(--ink-soft); font-size: 12.5px; line-height: 1.5; white-space: normal; word-break: break-word; }
 .detail-row td { background: var(--bg); padding: 16px 20px; font-size: 12.5px; line-height: 1.7; }
 .detail-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 .detail-grid .dt { font-family: var(--mono); font-size: 10px; text-transform:uppercase; color: var(--ink-soft); letter-spacing:.05em; margin-bottom:2px;}
 .detail-grid .dd { color: var(--ink); }
 .empty-state { text-align:center; padding: 60px 20px; color: var(--ink-soft); }
-
-/* ===== Rep detail panel ===== */
-.rep-panel {
-  background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px;
-  padding: 16px 20px; margin-bottom: 14px; display:flex; gap: 28px; align-items:center; flex-wrap: wrap;
-}
+#caseTable col.col-stage { width: 7%; }
+#caseTable col.col-rep { width: 6%; }
+#caseTable col.col-customer { width: 12%; }
+#caseTable col.col-partner { width: 9%; }
+#caseTable col.col-contact { width: 8%; }
+#caseTable col.col-date { width: 7%; }
+#caseTable col.col-amount { width: 9%; }
+#caseTable col.col-product { width: 12%; }
+#caseTable col.col-progress { width: 30%; }
+.rep-panel { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 10px; padding: 16px 20px; margin-bottom: 14px; display:flex; gap: 28px; align-items:center; flex-wrap: wrap; }
 .rep-panel .who { font-size: 15px; font-weight: 800; color: var(--accent); min-width: 90px; }
 .rep-panel .stat { text-align:center; }
 .rep-panel .stat .k { font-size: 10px; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; font-family: var(--mono); }
 .rep-panel .stat .v { font-size: 20px; font-weight: 800; font-family: var(--mono); }
 .rep-panel .stage-breakdown { display:flex; gap: 10px; flex-wrap: wrap; flex:1; }
-.rep-panel .stage-chip {
-  display:flex; align-items:center; gap: 6px; background: var(--panel); border-radius: 999px;
-  padding: 5px 12px; font-size: 12px; border: 1px solid var(--border);
-}
+.rep-panel .stage-chip { display:flex; align-items:center; gap: 6px; background: var(--panel); border-radius: 999px; padding: 5px 12px; font-size: 12px; border: 1px solid var(--border); }
 .rep-panel .stage-chip .dot { width: 7px; height: 7px; border-radius: 50%; }
 .rep-panel .stage-chip b { font-family: var(--mono); }
-
-/* ===== Tabs ===== */
 .tabbar { display:flex; gap: 4px; margin-bottom: 20px; border-bottom: 1px solid var(--border); }
-.tabbtn {
-  padding: 10px 4px; margin-right: 22px; font-size: 14px; font-weight: 700; color: var(--ink-soft);
-  background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: var(--sans);
-}
+.tabbtn { padding: 10px 4px; margin-right: 22px; font-size: 14px; font-weight: 700; color: var(--ink-soft); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: var(--sans); }
 .tabbtn.active { color: var(--accent); border-bottom-color: var(--accent); }
 .view { display:none; }
 .view.active { display:block; }
-
-/* ===== Dealer stats tab ===== */
 .toggle-group { display:inline-flex; background: var(--grey-soft); border-radius: 8px; padding: 3px; margin-bottom: 16px; }
-.toggle-group button {
-  border:none; background:none; padding: 7px 16px; font-size: 13px; font-weight:700; color: var(--ink-soft);
-  border-radius: 6px; cursor:pointer; font-family: var(--sans);
-}
+.toggle-group button { border:none; background:none; padding: 7px 16px; font-size: 13px; font-weight:700; color: var(--ink-soft); border-radius: 6px; cursor:pointer; font-family: var(--sans); }
 .toggle-group button.active { background: var(--panel); color: var(--accent); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-
 .entity-list { display:grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; align-items:start; }
 .entity-card { background: var(--panel); border:1px solid var(--border); border-radius: 10px; overflow:hidden; }
 .entity-card.open { grid-column: 1 / -1; }
-.entity-hdr { display:flex; flex-direction:column; align-items:flex-start; gap: 8px; padding: 14px 16px; cursor:pointer; }
+.entity-hdr { display:flex; flex-direction:column; align-items:flex-start; gap: 8px; padding: 14px 16px; cursor:pointer; position:relative; }
 .entity-card.open .entity-hdr { flex-direction:row; align-items:center; flex-wrap:wrap; gap:20px; }
 .entity-hdr:hover { background: var(--accent-soft); }
 .entity-hdr .name { font-weight: 800; font-size: 14px; }
@@ -161,86 +120,48 @@ td { padding: 10px 14px; vertical-align: top; }
 .entity-card.open .entity-hdr .chips { flex:1; justify-content:flex-end; }
 .entity-hdr .chips .stage-chip { font-size: 10.5px; padding: 2px 8px; }
 .entity-hdr .caret { color: var(--ink-soft); font-size: 11px; position:absolute; top:14px; right:14px; }
-.entity-hdr { position:relative; }
 .entity-body { display:none; padding: 4px 18px 16px; border-top: 1px solid var(--border); }
 .entity-body.open { display:block; }
-.entity-body table { font-size: 12.5px; width:100%; }
+.entity-body table { font-size: 12.5px; width:100%; table-layout: auto; }
 .entity-body th { background: transparent; padding: 8px 10px; }
 .entity-body td { padding: 8px 10px; }
 .entity-body .rep-list { font-size: 12px; color: var(--ink-soft); padding: 10px 0 4px; }
-
-/* ===== Sync / edit UI ===== */
-.sync-bar {
-  display:flex; align-items:center; gap:12px; background: var(--blue-soft); border:1px solid var(--blue);
-  border-radius: 10px; padding: 10px 16px; margin-bottom: 14px; font-size: 12.5px; color: var(--ink);
-}
+.sync-bar { display:flex; align-items:center; gap:12px; background: var(--blue-soft); border:1px solid var(--blue); border-radius: 10px; padding: 10px 16px; margin-bottom: 14px; font-size: 12.5px; color: var(--ink); }
 .sync-bar b { color: var(--blue); }
-.sync-bar button, .sync-bar .sync-link-btn {
-  border:1px solid var(--blue); background:var(--panel); color:var(--blue); font-weight:700;
-  border-radius: 7px; padding: 6px 14px; font-size:12px; cursor:pointer; font-family: var(--sans); white-space:nowrap;
-  text-decoration:none; display:inline-block;
-}
+.sync-bar button, .sync-bar .sync-link-btn { border:1px solid var(--blue); background:var(--panel); color:var(--blue); font-weight:700; border-radius: 7px; padding: 6px 14px; font-size:12px; cursor:pointer; font-family: var(--sans); white-space:nowrap; text-decoration:none; display:inline-block; }
 .sync-bar .sync-link-btn { margin-left:auto; }
-.addcase-btn {
-  border:1px solid var(--accent); background:var(--accent); color:#fff; font-weight:700;
-  border-radius: 8px; padding: 8px 16px; font-size:13px; cursor:pointer; font-family: var(--sans); margin-bottom: 12px;
-}
-.addcase-form {
-  display:none; background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px;
-  grid-template-columns: repeat(4, 1fr); gap: 10px;
-}
+.addcase-btn { border:1px solid var(--accent); background:var(--accent); color:#fff; font-weight:700; border-radius: 8px; padding: 8px 16px; font-size:13px; cursor:pointer; font-family: var(--sans); margin-bottom: 12px; }
+.addcase-form { display:none; background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 14px; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .addcase-form.open { display:grid; }
 .addcase-form label { font-size: 10px; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-soft); font-family: var(--mono); display:block; margin-bottom:3px; }
-.addcase-form input, .addcase-form select, .addcase-form textarea {
-  width:100%; border:1px solid var(--border); border-radius:6px; padding:7px 9px; font-size:13px; font-family: var(--sans); background: var(--bg);
-}
+.addcase-form input, .addcase-form select, .addcase-form textarea { width:100%; border:1px solid var(--border); border-radius:6px; padding:7px 9px; font-size:13px; font-family: var(--sans); background: var(--bg); }
 .addcase-form .full { grid-column: 1 / -1; }
 .addcase-form .actions { grid-column: 1 / -1; display:flex; gap:10px; justify-content:flex-end; }
 .addcase-form .actions button { border-radius:7px; padding:8px 16px; font-size:13px; font-weight:700; cursor:pointer; border:1px solid var(--border); background:var(--bg); font-family: var(--sans); }
 .addcase-form .actions button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-
 .edit-fields { display:grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 6px; }
 .edit-fields .full { grid-column: 1 / -1; }
 .edit-fields label { font-size: 10px; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-soft); font-family: var(--mono); display:block; margin-bottom:3px; }
-.edit-fields input, .edit-fields select, .edit-fields textarea {
-  width:100%; border:1px solid var(--border); border-radius:6px; padding:6px 9px; font-size:12.5px; font-family: var(--sans); background: var(--panel);
-}
+.edit-fields input, .edit-fields select, .edit-fields textarea { width:100%; border:1px solid var(--border); border-radius:6px; padding:6px 9px; font-size:12.5px; font-family: var(--sans); background: var(--panel); }
 .edit-actions { display:flex; gap:8px; margin-top:10px; }
 .edit-actions button { border-radius:6px; padding:6px 14px; font-size:12px; font-weight:700; cursor:pointer; border:1px solid var(--border); background:var(--panel); font-family: var(--sans); }
 .edit-actions button.primary { background: var(--accent); border-color: var(--accent); color:#fff; }
 .edit-toggle { font-size:11px; color: var(--accent); cursor:pointer; font-weight:700; margin-top:8px; display:inline-block; }
-.edited-flag { font-size: 10px; background: var(--amber-soft); color: var(--amber); padding: 2px 7px; border-radius: 999px; margin-left: 6px; font-weight:700; }
 .tech-badge { font-size: 11px; background: var(--rose); color: #fff; padding: 1px 7px; border-radius: 999px; font-weight: 700; }
 tbody tr.row-updated { background: #FFFDF0; }
 tbody tr.row-updated:hover { background: #FFF9DE; }
 tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
-.updated-tag {
-  display:inline-flex; align-items:center; gap:4px; font-size: 10px; font-weight: 700; color: #8A6D1A;
-  background: #FFF3C4; padding: 2px 8px; border-radius: 999px; margin-left: 6px; white-space: nowrap;
-}
+.updated-tag { display:inline-flex; align-items:center; gap:4px; font-size: 10px; font-weight: 700; color: #8A6D1A; background: #FFF3C4; padding: 2px 8px; border-radius: 999px; margin-left: 6px; white-space: nowrap; }
 .updated-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: #E8C547; }
 .rules-toggle { font-size: 11px; color: var(--accent); cursor: pointer; font-weight: 700; font-family: var(--sans); }
-.rules-panel {
-  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
-  padding: 16px 20px; margin-bottom: 20px; font-size: 12.5px; line-height: 1.7; color: var(--ink-soft);
-}
+.rules-panel { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; font-size: 12.5px; line-height: 1.7; color: var(--ink-soft); }
 .rules-panel b { color: var(--ink); }
 .rules-panel ul { margin: 4px 0 12px 18px; padding: 0; }
 .rules-panel ul:last-child { margin-bottom: 0; }
-.rules-panel li { margin-bottom: 4px; }
-.task-card { background: var(--panel); border:1px solid var(--border); border-radius: 10px; padding: 14px 18px; }
-.task-card .owner { font-weight: 800; font-size: 13px; color: var(--accent); margin-bottom: 8px; }
-.task-item { padding: 8px 0; border-top: 1px solid var(--border); font-size: 12.5px; }
-.task-item:first-child { border-top: none; }
-.task-item .topic { font-weight: 700; }
-.task-item .meta { color: var(--ink-soft); font-size: 11px; margin-top: 2px; }
-.task-item .prog { color: var(--ink-soft); margin-top: 4px; line-height: 1.5; }
-.owner-chip {
-  display:inline-block; font-size: 10.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft);
-  padding: 1px 8px; border-radius: 999px; margin-left: 6px; cursor: pointer;
-}
+.owner-chip { display:inline-block; font-size: 10.5px; font-weight: 700; color: var(--accent); background: var(--accent-soft); padding: 1px 8px; border-radius: 999px; margin-left: 6px; cursor: pointer; }
 .owner-chip:hover { background: var(--accent); color: #fff; }
-
+.link-btn { display:inline-block; background: var(--blue-soft); color: var(--blue); font-weight:700; font-size:11.5px; padding: 2px 10px; border-radius: 999px; text-decoration:none; margin: 2px 4px 2px 0; white-space: nowrap; }
+.link-btn:hover { background: var(--blue); color:#fff; }
 @media (max-width: 900px) {
   .cards { grid-template-columns: repeat(2,1fr); }
   .funnel { flex-wrap: wrap; }
@@ -250,34 +171,26 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
   .addcase-form { grid-template-columns: repeat(2, 1fr); }
   .edit-fields { grid-template-columns: 1fr; }
 }
-
 /* ===== 手機版（640px 以下）===== */
 @media (max-width: 640px) {
   .wrap { padding: 16px 12px 48px; }
   .hdr { flex-direction: column; align-items: flex-start; gap: 8px; }
   .hdr h1 { font-size: 21px; }
   .hdr-right { text-align: left; }
-
   .funnel { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
   .funnel-step { min-width: 0; padding: 12px 14px; }
   .funnel-step .count { font-size: 22px; }
-
   .cards { grid-template-columns: 1fr; }
   .cards .card { grid-column: auto !important; }
-
   .tabbar { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .tabbtn { white-space: nowrap; margin-right: 16px; }
-
   .filters { flex-direction: column; align-items: stretch; }
   .filters select, .filters input[type=text] { width: 100%; min-width: 0; padding: 10px 12px; }
   .filters .count-badge, .filters .reset { align-self: flex-end; }
-
   .sync-bar { flex-wrap: wrap; }
   .sync-bar .sync-link-btn { margin-left: 0; }
   .rep-panel { gap: 14px; padding: 14px 16px; }
-
   .addcase-form { grid-template-columns: 1fr; }
-
   /* 主表格 → 卡片式排版 */
   #view-cases .table-wrap { background: transparent; border: none; overflow: visible; }
   #view-cases .table-wrap > table,
@@ -307,7 +220,6 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     margin-top: -12px; border-top-left-radius: 0; border-top-right-radius: 0; border-top: none;
   }
   .detail-row td { padding: 14px 14px !important; }
-
   /* 經銷商／任務分頁 */
   .entity-list { grid-template-columns: 1fr; }
   .entity-body { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -319,12 +231,11 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
 </head>
 <body>
 <div class="wrap">
-
   <div class="hdr">
     <div>
-      <div class="eyebrow">VerdiMind &middot; 業務週會快照</div>
+      <div class="eyebrow">DBSAFER & FaceLocker & AppGuard &middot; 業務週會快照</div>
       <h1>業務案件儀表板</h1>
-      <div class="sub">報告日期：2026/7/3　週報表 7.3</div>
+      <div class="sub" id="hdrSub">載入中...</div>
     </div>
     <div class="hdr-right">
       <div class="big" id="totalCasesHdr">-- 件案件</div>
@@ -332,75 +243,27 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
       <div><span class="rules-toggle" id="rulesToggle">ⓘ 呈現規則說明</span></div>
     </div>
   </div>
-
-  <div class="rules-panel" id="rulesPanel" style="display:none;">
-    <b>資料與更新</b>
-    <ul>
-      <li>本頁資料是 Google Sheet 的<b>快照</b>，不會即時連動；請告知我「更新到最新」，我會重新抓取並重建整份儀表板。</li>
-      <li><span class="updated-tag"><span class="dot"></span>本週更新</span> 標籤的判斷方式：<b>逐格比對本週分頁與上週分頁的內容</b>（不是看儲存格顏色）——只要該筆資料任一欄位文字與上週不同，或是本週新增的項目，就會標記。</li>
-    </ul>
-    <b>案件分類</b>
-    <ul>
-      <li>DVS專案（VerdiTwin／WEMB RENOBIT／COSAP／儀錶板／智慧大樓）預設<b>收合不顯示</b>於案件列表，點擊上方漏斗的「DVS專案」卡片即可展開查看。</li>
-      <li>產品分類：DAM、PAM、CloudSafer 均歸類為 <b>DBSAFER</b>；FaceLocker 獨立分類；DVS 類案件依實際產品命名（VerdiTwin／WEMB RENOBIT／COSAP等）。</li>
-      <li>🔧 技術問題標籤：以「客戶名稱＋產品線（DBSAFER／DVS）」雙重比對，避免同名客戶但不同產品線的案件互相誤連。</li>
-    </ul>
-    <b>經銷商統計</b>
-    <ul>
-      <li>經銷商名稱以「經銷商-業務窗口」慣例取第一段作為代表名（例如「北祥-Alley」歸類為「北祥」）。</li>
-      <li>已知別名對照表：<b>CK＝Ckmates</b>、<b>BIGC＝博鉅</b>、<b>PIC＝統一資</b>（自動合併統計）。若有其他同一經銷商不同寫法，歡迎告訴我，我會加進對照表。</li>
-    </ul>
-    <b>其他</b>
-    <ul>
-      <li>「📄 查看原始表格」按鈕可直接開啟原始 Google Sheet。</li>
-      <li>「＋新增案件／編輯案件」使用 Claude 共用儲存，同一份 artifact 連結下的所有使用者都能看到彼此的更新，跟 Google Sheet 本身不互通。</li>
-    </ul>
-    <b>Google Apps Script 方案（規劃中，尚未實作）</b>
-    <ul>
-      <li><b>動機</b>：目前的做法是「Claude 讀取 Sheet → 人工轉譯 → 寫成靜態網頁」，轉譯這一關容易出錯（例如經銷商名稱打錯字、漏抓超連結）。改用 Apps Script 可以讓 Sheet 與網頁之間沒有人工轉譯步驟，資料來源改什麼、網頁就顯示什麼，也能做到多人即時共用查看。</li>
-      <li><b>架構</b>：Google Sheet →（Apps Script 即時讀取＋運算分類）→ 部署成 Web App 固定網址 → 團隊隨時打開都是最新資料。</li>
-      <li><b>如何自動抓「本週」分頁</b>：分頁命名格式固定為「週報表M.D」；Script 會解析所有分頁名稱中的日期，自動選<b>日期最新</b>的一個當作本週資料（不依賴分頁順序）。若解析失敗，退回抓「最左邊的分頁」當保險。</li>
-      <li><b>跨年判斷</b>：因分頁名稱不含年份，若解析出的日期比今天晚超過約 2 週，會自動判定為「去年」而非「今年」，避免 12 月底／1 月初交界時判斷錯年份。</li>
-      <li><b>部署方式</b>：需要你自己到 Google Sheet「擴充功能→Apps Script」貼上程式碼，並「部署→新增部署作業→網頁應用程式」設定存取權限；之後我調整功能時，一樣需要你重新貼上並部署一次才會生效。</li>
-      <li><b>維持不變的操作習慣</b>：業務仍舊每週新增一個「週報表M.D」分頁、複製上週內容修改即可，不需要額外通知或改變填寫方式。</li>
-      <li><b>狀態</b>：目前尚未開始撰寫程式碼，這裡先記錄討論結論，之後决定要做時可以直接依此規格繼續。</li>
-    </ul>
-  </div>
-
+  <div class="rules-panel" id="rulesPanel" style="display:none;">載入中...</div>
   <div class="tabbar">
     <button class="tabbtn active" data-view="cases">業務案件</button>
     <button class="tabbtn" data-view="dealers">經銷商統計</button>
     <button class="tabbtn" data-view="tasks">行銷/PM任務</button>
   </div>
-
   <div class="view active" id="view-cases">
-
   <div class="sync-bar">
-    <span>&#128257; 共用編輯已啟用 &mdash; <b id="syncStatus">載入中...</b></span>
-    <a href="https://docs.google.com/spreadsheets/d/1-lhZnyMXyGOZlHYiIyk2DnRm_C34zUkI/edit" target="_blank" rel="noopener" class="sync-link-btn">&#128196; 查看原始表格</a>
+    <span>&#128257; 即時連接 GAS 後端 &mdash; <b id="syncStatus">載入中...</b></span>
+    <a href="#" id="sourceSheetBtn" class="sync-link-btn">&#128196; 查看原始表格</a>
     <button id="refreshBtn">重新整理共享資料</button>
   </div>
-
   <div class="funnel" id="funnel"></div>
   <div style="font-size:11px; color:var(--ink-soft); margin: -14px 0 18px; font-family: var(--mono);">
-    ＊ DVS專案預設不顯示於下方列表，點擊上方「DVS專案」卡片即可展開查看
+    ＊ DVS專案案件已從此清單移除
   </div>
-
   <div class="cards">
-    <div class="card">
-      <div class="k">有金額案件加總</div>
-      <div class="v" id="totalAmount">--</div>
-    </div>
-    <div class="card">
-      <div class="k">平均案件金額</div>
-      <div class="v" id="avgAmount">--</div>
-    </div>
-    <div class="card" style="grid-column: span 2;">
-      <div class="k">各業務案件數</div>
-      <div class="rep-bars" id="repBars"></div>
-    </div>
+    <div class="card"><div class="k">有金額案件加總</div><div class="v" id="totalAmount">--</div></div>
+    <div class="card"><div class="k">平均案件金額</div><div class="v" id="avgAmount">--</div></div>
+    <div class="card" style="grid-column: span 2;"><div class="k">各業務案件數</div><div class="rep-bars" id="repBars"></div></div>
   </div>
-
   <div class="filters">
     <select id="stageFilter"><option value="">全部階段</option></select>
     <select id="repFilter"><option value="">全部業務</option></select>
@@ -409,10 +272,9 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     <span class="count-badge" id="resultCount"></span>
     <span class="reset" id="resetBtn">清除篩選</span>
   </div>
-
   <div class="rep-panel" id="repPanel" style="display:none;"></div>
-
-  <button class="addcase-btn" id="addCaseBtn">＋ 新增案件</button>
+  <button class="addcase-btn" id="addCaseBtn">＋ 新增(不使用)</button>
+  <span style="font-size:11px; color:var(--ink-soft); margin-left:8px;">＊ 本頁僅供會議展示與查詢，新增／編輯請回原始表格調整</span>
   <div class="addcase-form" id="addCaseForm">
     <div><label>階段</label><select id="nc_stage"></select></div>
     <div><label>業務</label><input id="nc_rep" placeholder="例如 Chloe"></div>
@@ -424,18 +286,22 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     <div class="full"><label>進度說明</label><textarea id="nc_progress" rows="2"></textarea></div>
     <div class="actions">
       <button id="nc_cancel">取消</button>
-      <button class="primary" id="nc_submit">儲存案件</button>
+      <button class="primary" id="nc_submit">儲存案件(不使用)</button>
     </div>
   </div>
-
   <div class="table-wrap">
-    <table>
+    <table id="caseTable">
+      <colgroup>
+        <col class="col-stage"><col class="col-rep"><col class="col-customer"><col class="col-partner">
+        <col class="col-contact"><col class="col-date"><col class="col-amount"><col class="col-product"><col class="col-progress">
+      </colgroup>
       <thead>
         <tr>
           <th data-key="stage">階段</th>
           <th data-key="rep">業務</th>
           <th data-key="customer">終端客戶</th>
           <th data-key="partner">經銷商</th>
+          <th data-key="contact">經銷商業務</th>
           <th data-key="date">時程</th>
           <th data-key="amount_num">預估金額</th>
           <th data-key="product">方案</th>
@@ -446,9 +312,7 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     </table>
     <div class="empty-state" id="emptyState" style="display:none;">找不到符合條件的案件</div>
   </div>
-
   </div>
-
   <div class="view" id="view-dealers">
     <div class="toggle-group">
       <button class="active" data-mode="rep">依業務檢視</button>
@@ -456,7 +320,6 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     </div>
     <div class="entity-list" id="entityList"></div>
   </div>
-
   <div class="view" id="view-tasks">
     <div class="toggle-group">
       <button class="active" data-taskmode="category">依產品分類</button>
@@ -469,555 +332,289 @@ tbody tr.row-updated td:first-child { box-shadow: inset 3px 0 0 #E8C547; }
     </div>
     <div class="entity-list" id="taskList"></div>
   </div>
-
 </div>
-
 <script>
-const DATA = [{"id": 0, "stage": "測試中", "line": "DBSAFER", "rep": "Terus", "customer": "糖蛙", "partner": "直銷", "date": "Q1", "amount": "NT$720,000", "amount_num": 720000, "competitor": "無", "keyman": "斌哥", "procurement": "獨家議價", "product": "CloudSafer(月付)", "product_category": "DBSAFER", "progress": "HA切換有異常，有部份沒有設定好。", "notes": "", "link": null, "updated": true}, {"id": 1, "stage": "測試中", "line": "DBSAFER", "rep": "Uming", "customer": "柏克斯科技", "partner": "北祥科技-Anita", "date": "2026.08", "amount": "NT$1,020,000", "amount_num": 1020000, "competitor": "無", "keyman": "總經理Joe", "procurement": "獨家議價", "product": "報價10DB (含技術服務費用)，增購8DB", "product_category": "DBSAFER", "progress": "跟追cocloud-北祥訂單流程，預計下周提供北祥訂單；柏克斯回覆撤除POC時間預計八月。", "notes": "", "link": null, "updated": true}, {"id": 2, "stage": "測試中", "line": "DBSAFER", "rep": "Chloe", "customer": "國家住宅及都市更新中心", "partner": "MIngo顧問／SI博鉅／技術北祥", "date": "Q2", "amount": "(工業局軟體標價格參考)", "amount_num": null, "competitor": "PAM已使用但無DAM", "keyman": "住都明立組長／DBA-Josh", "procurement": "價格標/工業局", "product": "DB x10台以內+server agent1+U x5，報價1/3年", "product_category": "DBSAFER", "progress": "5/4 Josh line群回覆：功能邏輯與內部流程不一致，整合難度高，暫無進一步導入計畫（婉拒）。", "notes": "", "link": null, "updated": true}, {"id": 3, "stage": "測試中", "line": "DBSAFER", "rep": "Chloe", "customer": "農糧署糧政系統", "partner": "漢昕", "date": "Q2", "amount": "NT$500,000", "amount_num": 500000, "competitor": "replace: DBAegis", "keyman": "漢昕老闆", "procurement": "價格標/工業局", "product": "DBSAFER 1DB＋10U+Server Agent*1+Works", "product_category": "DBSAFER", "progress": "tcp/udp已嘗試，log仍卡著；如案子急，客戶可能要求用自家SIEM抓log。", "notes": "", "link": null, "updated": true}, {"id": 4, "stage": "測試中", "line": "DBSAFER", "rep": "Chloe", "customer": "台灣產物保險", "partner": "金宣-Aron", "date": "Q2", "amount": "NT$1,650,000", "amount_num": 1650000, "competitor": "PAM已用Anchor五年(買斷)", "keyman": "謝宏志-副理／DBA-協民", "procurement": "專案", "product": "10db+20u+1server agent+works", "product_category": "DBSAFER", "progress": "找Cindy了解狀況；已提供RFP規格說明，客戶關注異常存取預警與即時阻斷機制。", "notes": "", "link": null, "updated": true}, {"id": 5, "stage": "測試中", "line": "DBSAFER", "rep": "Woody", "customer": "藍新", "partner": "－", "date": "2026/2/23", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "－", "procurement": "專案", "product": "(專案評估中)", "product_category": "DBSAFER", "progress": "每周四下午與藍新DEMO，下週先進行架構確認與驗收文件討論；6情境共29項目，每週向總經理回報。", "notes": "", "link": null, "updated": true}, {"id": 6, "stage": "排測中", "line": "DBSAFER", "rep": "Chloe", "customer": "台中光田", "partner": "采威-Steven (10-15%)", "date": "－", "amount": "去年深耕計畫拿到7000多／150萬", "amount_num": null, "competitor": "幾年前聽過guardian", "keyman": "林政杰部長", "procurement": "－", "product": "10u，db5，1server agent", "product_category": "DBSAFER", "progress": "跟客戶喬時間安排POC；經費來源為醫療深耕計畫，逾150萬須走政府採購公開招標。", "notes": "", "link": null, "updated": true}, {"id": 7, "stage": "排測中", "line": "DBSAFER", "rep": "Chloe", "customer": "台中銀保險經紀人股份", "partner": "漢昕-Coin", "date": "年底or明年Q1", "amount": "NT$1,500,000", "amount_num": 1500000, "competitor": "無", "keyman": "陳立軒", "procurement": "開標", "product": "目前預計收集4資料庫", "product_category": "DBSAFER", "progress": "架構調整完才會POC，年底或明年Q1；結案：2026 Q4合規、開標。", "notes": "", "link": null, "updated": false}, {"id": 8, "stage": "排測中", "line": "DBSAFER", "rep": "Chloe", "customer": "疾管署CDC(衛福部疾病管制署)", "partner": "漢昕-Cindy", "date": "2026 Q3", "amount": "－", "amount_num": null, "competitor": "有用Anchor作側錄功能", "keyman": "－", "procurement": "政府", "product": "－", "product_category": "DBSAFER", "progress": "安排POC需要橋時間；1/7已前往介紹DBSAFER，已提供相關表單。", "notes": "", "link": null, "updated": false}, {"id": 9, "stage": "排測中", "line": "DBSAFER", "rep": "Chloe", "customer": "台象股份有限公司", "partner": "訊揚-Jenny", "date": "2026.Q3-4", "amount": "－", "amount_num": null, "competitor": "cyberark", "keyman": "丁煒宸-資訊部", "procurement": "－", "product": "特權帳號管理-200U", "product_category": "DBSAFER", "progress": "產品介紹＋POC前置作業；Facelocker產品介紹客戶亦表興趣，特權這塊Q4/明年Q1定案。", "notes": "", "link": null, "updated": true}, {"id": 10, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "高技企業股份有限公司(資安展名單)", "partner": "北祥-黃靖詠Eugene", "date": "2026.6.7", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "黃文成", "procurement": "－", "product": "DBSafer", "product_category": "DBSAFER", "progress": "booking form已mail給Woody；之前介紹過因預算問題未購買，需了解客戶預算。", "notes": "", "link": null, "updated": false}, {"id": 11, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "和泰汽車(資安展名單)", "partner": "北祥-黃靖詠Eugene", "date": "2026.6.7", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "何宜霖", "procurement": "－", "product": "Facelocker", "product_category": "FaceLocker", "progress": "booking form已mail給Woody；魚姐認識該窗口。", "notes": "", "link": null, "updated": false}, {"id": 12, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "台灣松下電器(資安展名單)", "partner": "北祥-黃靖詠Eugene", "date": "2026.6.7", "amount": "－", "amount_num": null, "competitor": "CyberArk", "keyman": "邱柏傑", "procurement": "－", "product": "DBSafer", "product_category": "DBSAFER", "progress": "6/16拜訪回覆：採購需日本總公司同意，PAM由日本統一採購(CyberArk)；待機房搬遷告一段落後評估。", "notes": "", "link": null, "updated": false}, {"id": 13, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "宏匯集團(資安展名單)", "partner": "北祥-Alley", "date": "2026.6.8", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "盧柏瑋", "procurement": "－", "product": "DAM+PAM", "product_category": "DBSAFER", "progress": "booking form已mail給Woody。", "notes": "", "link": null, "updated": false}, {"id": 14, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "犇亞證券(資安展名單)", "partner": "北祥-Alley", "date": "2026.6.8", "amount": "－", "amount_num": null, "competitor": "無使用臉部辨識產品", "keyman": "張立昌", "procurement": "－", "product": "Facelocker", "product_category": "FaceLocker", "progress": "booking form已mail給Woody。", "notes": "", "link": null, "updated": false}, {"id": 15, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "同欣電子工業股份有限公司", "partner": "北祥-Alley", "date": "2026.6.4", "amount": "－", "amount_num": null, "competitor": "CyberArk & Delinea", "keyman": "馬百欣", "procurement": "－", "product": "DBSafer", "product_category": "DBSAFER", "progress": "5/27已介紹，客戶對PAM有需求，已排CyberArk&Delinea POC，需提供計價方式與折扣爭取排入第三順位POC。", "notes": "", "link": null, "updated": true}, {"id": 16, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "前電科創股份有限公司(資安展名單)", "partner": "北祥-Anita", "date": "2026.6.11", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "曾財敏", "procurement": "－", "product": "(特權帳號需求)", "product_category": "DBSAFER", "progress": "已線上介紹，追蹤錄音檔。", "notes": "", "link": null, "updated": false}, {"id": 17, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "萊爾富國際股份有限公司(資安展名單)", "partner": "北祥-Anita", "date": "2026.6.1", "amount": "－", "amount_num": null, "competitor": "對資料庫防護有需求，尚未選型", "keyman": "蔣清吉", "procurement": "－", "product": "Pam", "product_category": "DBSAFER", "progress": "booking form已mail給Woody；7月初早上安排產品介紹。", "notes": "", "link": null, "updated": false}, {"id": 18, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "凱基人壽保險股份有限公司", "partner": "北祥-Anita", "date": "年底", "amount": "－", "amount_num": null, "competitor": "DAM測過別家不符合；PAM用CyberArk不換", "keyman": "余淑慧-資安經理", "procurement": "－", "product": "Dam-100個DB，2個HA，4個server", "product_category": "DBSAFER", "progress": "目前無進度，請Anita多聯繫客戶；SI對客戶不夠熟。", "notes": "", "link": null, "updated": true}, {"id": 19, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "虎尾科技大學(資安展名單)", "partner": "漢昕-Mandy(台中)", "date": "2026.5.29", "amount": "今年沒預算", "amount_num": null, "competitor": "有聽過Anchor", "keyman": "劉嘉峻", "procurement": "－", "product": "DBSAFER特權帳號", "product_category": "DBSAFER", "progress": "承辦仍在了解階段，尚無預算，預計採購時程2027/Q3。", "notes": "", "link": null, "updated": false}, {"id": 20, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "泓德能源科技股份有限公司(資安展名單)", "partner": "漢昕-Mandy(台中)", "date": "2026.5.29 (Q3)", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "蔡均毅", "procurement": "－", "product": "PAM", "product_category": "DBSAFER", "progress": "與主管討論過想了解特權帳號管理，近期優先處理其他專案，預計Q3後才開始Survey。", "notes": "", "link": null, "updated": false}, {"id": 21, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "伸興工業股份有限公司(資安展名單)", "partner": "漢昕-Mandy(台中)", "date": "2026.6.10 (Q3)", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "賴均曜", "procurement": "－", "product": "DBsafer特權", "product_category": "DBSAFER", "progress": "資安展了解，其他專案在執行中，可能Q3之後再安排介紹。", "notes": "", "link": null, "updated": false}, {"id": 22, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "可恩迪股份有限公司(資安展名單)", "partner": "漢昕-Judy(台北)", "date": "2026.6.10", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "梁偉銓", "procurement": "－", "product": "DBSAFER", "product_category": "DBSAFER", "progress": "7/13安排產品介紹(jamson一起)。", "notes": "", "link": null, "updated": false}, {"id": 23, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "盛微先進科技股份有限公司(資安展名單)", "partner": "漢昕-Judy(台北)", "date": "2026.6.10", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "胡凱軒", "procurement": "－", "product": "DBSAFER", "product_category": "DBSAFER", "progress": "2026/4Q，待7月拜訪需求訪談。", "notes": "", "link": null, "updated": false}, {"id": 24, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "康那香企業股份有限公司(資安展名單)", "partner": "漢昕-Judy(台北)", "date": "2026.6.10", "amount": "－", "amount_num": null, "competitor": "CyberArk", "keyman": "李宜和", "procurement": "－", "product": "DBSAFER", "product_category": "DBSAFER", "progress": "2027/1-2Q，6月底安排拜訪需求訪談。", "notes": "", "link": null, "updated": false}, {"id": 25, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "國防部軍事情報局", "partner": "旭聯-Jason", "date": "2026.5.15", "amount": "－", "amount_num": null, "competitor": "沒有", "keyman": "許碌", "procurement": "共契", "product": "Facelocker", "product_category": "FaceLocker", "progress": "7/8 9:30到場、10點開會，現場產品介紹+DEMO；規格需第三方軟體監測與弱掃報告，攝影機需排除中國製造。", "notes": "", "link": null, "updated": false}, {"id": 26, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "向上國際科技股份有限公司", "partner": "北祥-Alley", "date": "2026/5/12", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "張忠和", "procurement": "－", "product": "(方案未定)", "product_category": "DBSAFER", "progress": "在push客戶測POC；博弈產業客戶，需原廠提供HA架構GW切換延遲數據。", "notes": "", "link": null, "updated": false}, {"id": 27, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "富蘭克林投信", "partner": "訊揚-Wendy", "date": "2026/3/23，2026/6/18", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "鄭煒翰 Ian", "procurement": "－", "product": "特權帳號管理", "product_category": "DBSAFER", "progress": "持續push Wendy。", "notes": "", "link": null, "updated": true}, {"id": 28, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "安邦生技", "partner": "尚贏-Tom", "date": "2026/3/11，2026/6/18", "amount": "－", "amount_num": null, "competitor": "無", "keyman": "王相立 資安副總", "procurement": "企業", "product": "PAM+DAM", "product_category": "DBSAFER", "progress": "ERP專案排第一位，在測；三個月沒進度就OPEN。", "notes": "", "link": null, "updated": false}, {"id": 29, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "中國醫院大學附設醫院", "partner": "漢昕-Mandy", "date": "2026/1/19 Q4，2026/6/18", "amount": "－", "amount_num": null, "competitor": "個資遮罩需求(身分證放DB)", "keyman": "陳含迷", "procurement": "－", "product": "可申請遠端環境AD365(想整合)", "product_category": "DBSAFER", "progress": "POC先暫緩，客戶正重新訂政策且多專案在忙。", "notes": "", "link": null, "updated": true}, {"id": 30, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "全盈支付", "partner": "北祥-Anita", "date": "2026/3/20", "amount": "－", "amount_num": null, "competitor": "原用Cyberark太貴，已換Safeguard", "keyman": "資安官 沈任勇", "procurement": "－", "product": "－", "product_category": "DBSAFER", "progress": "追POC前置工作；預算被砍，正評估性價比高產品。", "notes": "", "link": null, "updated": true}, {"id": 31, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "台安醫院", "partner": "北祥-Anita", "date": "2026/3/20", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "陳恭民", "procurement": "－", "product": "2DB+5U", "product_category": "DBSAFER", "progress": "3/28已拜訪(資安展邀請)；醫院現有5個PAM使用者授權未用，馬偕事件後提前半年部署資安。", "notes": "", "link": null, "updated": true}, {"id": 32, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "兆豐證卷", "partner": "北祥-黃靖詠Eugene", "date": "2026底/2027", "amount": "－", "amount_num": null, "competitor": "目前預算全用在硬體", "keyman": "古協理", "procurement": "－", "product": "80U", "product_category": "DBSAFER", "progress": "已使用IBM Guardium(AIX/Informix/Sybase IQ/MSSQL)；痛點為簽核卡關、報表客製費用不透明、續約成本高。", "notes": "", "link": "https://secureki.com", "updated": true}, {"id": 33, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "和信醫院", "partner": "擎昊-Darren", "date": "2026/1/20", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "YuYu(資訊部主任)", "procurement": "政府", "product": "10u+1db+1server agent", "product_category": "DBSAFER", "progress": "深耕計畫加分項目，客戶明確點名重點在「資料遮罩」，需支撐稽核驗收對外說明。", "notes": "", "link": null, "updated": true}, {"id": 34, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "永進機械", "partner": "采威-Steven", "date": "2026/1/19 (Q3第3個月)", "amount": "先提FY26年度預算規劃", "amount_num": null, "competitor": "目前無採購相關產品，內推MFA(gotrust)POC中", "keyman": "－", "procurement": "－", "product": "－", "product_category": "DBSAFER", "progress": "因特權帳號遭暴力破解；同時導入ISMS/ISO27001，預計Q2/Q3初完成。", "notes": "", "link": null, "updated": false}, {"id": 35, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "Maicoin", "partner": "待定", "date": "Pending", "amount": "－", "amount_num": null, "competitor": "中菲 BeyondTrust", "keyman": "技術-Tom", "procurement": "－", "product": "－", "product_category": "DBSAFER", "progress": "公司內部規劃與優先順序調整，專案暫pending；確認AWS IAM控管時程，Q2 POC。", "notes": "", "link": null, "updated": false}, {"id": 36, "stage": "報備清單", "line": "DBSAFER", "rep": "Chloe", "customer": "健康網路平台", "partner": "待定", "date": "2025", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "KPMG/Mingo", "procurement": "－", "product": "－", "product_category": "DBSAFER", "progress": "才進場，先了解。", "notes": "", "link": null, "updated": false}, {"id": 37, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "板信商業", "partner": "待定", "date": "待確認", "amount": "待確認", "amount_num": null, "competitor": "imperva(中菲電腦)／IBM Guardium(朋昶)／DBAgies(擎昊)", "keyman": "梁副理／李雅雄科長", "procurement": "待討論", "product": "DSBSAFER", "product_category": "DBSAFER", "progress": "客戶：現階段定位與傳統產品重合，優先考量傳統產品因應金檢，暫不導入；需包裝成功案例、金管會推薦。", "notes": "", "link": null, "updated": true}, {"id": 38, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "大同股份", "partner": "Ckmates-Amanda", "date": "－", "amount": "－", "amount_num": null, "competitor": "精誠資訊代理 BeyondTrust PAM", "keyman": "－", "procurement": "獨家議價", "product": "特權帳號管理與操作軌跡稽核(PAM)", "product_category": "DBSAFER", "progress": "BeyondTrust PAM測試中，預計至六月底；DBSAFER預計七月底才有時間評估。", "notes": "", "link": null, "updated": true}, {"id": 39, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "遠雄房地產", "partner": "Ckmates-Amanda", "date": "2026/4/21", "amount": "2027年預算", "amount_num": null, "competitor": "CyberArk", "keyman": "－", "procurement": "－", "product": "特權帳號管理", "product_category": "DBSAFER", "progress": "RDS加密無解密權限則無法查詢紀錄，待確認技術支援；CyberArk現況先確認。", "notes": "", "link": null, "updated": true}, {"id": 40, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "盛群半導體", "partner": "Ckmates-Cola交接給Yunnie", "date": "2026/4/29", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "－", "procurement": "－", "product": "特權帳號管理", "product_category": "DBSAFER", "progress": "需求待Yunnie確認。", "notes": "", "link": null, "updated": true}, {"id": 41, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "全鋒事業", "partner": "CK-Amanda", "date": "2025", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "－", "procurement": "－", "product": "－", "product_category": "DBSAFER", "progress": "全鋒六月再確認下半年預算，內部確認資料庫管理需求，峰值過後安排測試。", "notes": "", "link": null, "updated": false}, {"id": 42, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "東捷資訊", "partner": "CK-Amanda", "date": "2026 (2027年預算)", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "－", "procurement": "－", "product": "想替換Cyberark特權管理", "product_category": "DBSAFER", "progress": "若今年有剩餘預算可先跑DAM測試，主看明年度預算，今年先安排PoC。", "notes": "", "link": null, "updated": true}, {"id": 43, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "安心食品服務股份有限公司", "partner": "CK-Amanda", "date": "5/27", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "Jonathan", "procurement": "－", "product": "PAM", "product_category": "DBSAFER", "progress": "已提供CK報價，預計七月中安排POC會議討論。", "notes": "", "link": null, "updated": true}, {"id": 44, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "黑貓宅急便", "partner": "PIC-孟光", "date": "2025", "amount": "NTD1,600,000/三年約", "amount_num": 1600000, "competitor": "Imperva約270萬／智安Dataisec約210萬", "keyman": "PM爵成", "procurement": "－", "product": "－", "product_category": "DBSAFER", "progress": "過完清明節安排拜訪；log shipping待原廠。", "notes": "", "link": null, "updated": true}, {"id": 45, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "統智科技", "partner": "PIC-孟光", "date": "2026", "amount": "初步勾預算，1月底前提報", "amount_num": null, "competitor": "無", "keyman": "PM爵成", "procurement": "－", "product": "去年被集團內稽核，需採購PAM+DAM", "product_category": "DBSAFER", "progress": "提供產品介紹及相關資訊，盼複製到集團其他企業客戶。", "notes": "", "link": null, "updated": false}, {"id": 46, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "美而快實業", "partner": "BGIC-Alie", "date": "3/17~3/27", "amount": "先測試後編列", "amount_num": null, "competitor": "無", "keyman": "資訊部", "procurement": "企業", "product": "PAM 10U報價", "product_category": "DBSAFER", "progress": "客戶卡一個專案，PoC是否可展延至Q1需再確認；若無多餘預算則建議先撤DBSAFER。", "notes": "", "link": null, "updated": false}, {"id": 47, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "國原院", "partner": "BGIC-Irene", "date": "26/8 (續約)", "amount": "續約增購案(待議)", "amount_num": null, "competitor": "imperva", "keyman": "秀玲", "procurement": "共契", "product": "(續約)", "product_category": "DBSAFER", "progress": "續約到2027/11，主要納管DB所有行為；提供正式報價 50萬+5%。", "notes": "", "link": null, "updated": true}, {"id": 48, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "國立空中大學", "partner": "BGIC-Peter", "date": "26/9 (續約)", "amount": "續約(待議)", "amount_num": null, "competitor": "N/A", "keyman": "Sunny", "procurement": "共契", "product": "(確認續約項目)", "product_category": "DBSAFER", "progress": "空大遮罩Policy設定預計下周完成。", "notes": "", "link": null, "updated": true}, {"id": 49, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "中磊電子", "partner": "BGIC-Irene", "date": "2026", "amount": "－", "amount_num": null, "competitor": "cyberArk", "keyman": "John Eric", "procurement": "－", "product": "PAM預估10~15U需求", "product_category": "DBSAFER", "progress": "已測試完Cyberark，客戶需網頁版管理功能，下週跟博鉅了解需求；目前機會不高。", "notes": "", "link": null, "updated": true}, {"id": 50, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "神準科技", "partner": "BGIC-Irene", "date": "2026", "amount": "先測試同時進行報價", "amount_num": null, "competitor": "cyberArk", "keyman": "Chris", "procurement": "企業", "product": "PAM需求", "product_category": "DBSAFER", "progress": "預計安排7/23 POC線上會議；價格為主要考量。", "notes": "", "link": null, "updated": true}, {"id": 51, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "基隆二信", "partner": "BGIC-Irene", "date": "2026", "amount": "先測試後編列", "amount_num": null, "competitor": "cyberArk／Anchor", "keyman": "翁文邦(主任)／楊志誠(副主任)", "procurement": "企業", "product": "5U+3DB", "product_category": "DBSAFER", "progress": "需求：登入前後留審查/軌跡紀錄；6/15技術問題已回覆，待客戶確認下次會議。", "notes": "", "link": null, "updated": true}, {"id": 52, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "超穎電子", "partner": "BGIC-Vincent", "date": "2026", "amount": "預算待確認", "amount_num": null, "competitor": "－", "keyman": "March Huang黃士誠", "procurement": "－", "product": "針對特權+遮罩需求", "product_category": "DBSAFER", "progress": "客戶需提撥2027年預算；已提供Facelocker系統平台+10U報價NT$320,000(未稅)。", "notes": "", "link": null, "updated": true}, {"id": 53, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "高雄市政府警察局(資安展名單)", "partner": "BGIC-Vincent", "date": "2026/6/5", "amount": "預算待確認", "amount_num": null, "competitor": "－", "keyman": "朱萱怡", "procurement": "－", "product": "Facelocker(先提供產品介紹)", "product_category": "FaceLocker", "progress": "待博鉅業務安排產品介紹。", "notes": "", "link": null, "updated": false}, {"id": 54, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "屏東榮民總醫院(資安展名單)", "partner": "BGIC-Vincent", "date": "2026/6/5", "amount": "預算待確認", "amount_num": null, "competitor": "－", "keyman": "－", "procurement": "－", "product": "(線上會議安排)", "product_category": "DBSAFER", "progress": "待博鉅業務安排產品介紹。", "notes": "", "link": null, "updated": false}, {"id": 55, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "擷發科技", "partner": "盛合網路-Kerry", "date": "2026/6/25", "amount": "預算待確認", "amount_num": null, "competitor": "－", "keyman": "Martin", "procurement": "－", "product": "(線上會議安排)", "product_category": "DBSAFER", "progress": "測過CyberArk因價格太高，預計7/23進行產品介紹。", "notes": "", "link": null, "updated": true}, {"id": 56, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "Wow Gaming", "partner": "恆創-Ingrid", "date": "2026", "amount": "N/A", "amount_num": null, "competitor": "－", "keyman": "CTO Eden／BOSS Audi", "procurement": "獨家議價", "product": "PAM／Facelocker", "product_category": "FaceLocker", "progress": "4/10提供5U PAM報價NTD651,450(未稅)；客戶執行專案中，七月確認需求。", "notes": "", "link": null, "updated": true}, {"id": 57, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "神達電腦", "partner": "BGIC-Angela", "date": "2026.2.2", "amount": "今年採購預算待確認", "amount_num": null, "competitor": "FortiPAM(成本140萬 vs DBSAFER 150萬)", "keyman": "李權修先生", "procurement": "－", "product": "PAM 150U需求", "product_category": "DBSAFER", "progress": "需7*24服務，博鉅第一線、我方支援第二線；6/15客戶未決標。", "notes": "", "link": null, "updated": false}, {"id": 58, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "新光醫院", "partner": "BGIC-Irene", "date": "Q3", "amount": "NT$1,500,000", "amount_num": 1500000, "competitor": "無", "keyman": "資訊處主任", "procurement": "獨家議價", "product": "安排PAM測試，DAM遮罩已解", "product_category": "DBSAFER", "progress": "Infra部門做資產清冊/組態稽核專案，預計七月底安排PAM需求規劃；深耕計畫第二階段年底提列。", "notes": "", "link": null, "updated": true}, {"id": 59, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "太平洋醫材", "partner": "詮睿-Benjamin", "date": "2026/4/2", "amount": "預算不高，待確認", "amount_num": null, "competitor": "Cyberark", "keyman": "資訊室課長 施志偉", "procurement": "獨家議價 NTD750,000", "product": "PAM 5U", "product_category": "DBSAFER", "progress": "已報價PAM5U+server agent10台NT$75萬；6/17送內部專案預算，詢問三年合約優惠，七月拜訪討論。", "notes": "", "link": null, "updated": false}, {"id": 60, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "街口支付", "partner": "極風雲創-Charles", "date": "2027", "amount": "待報價討論", "amount_num": null, "competitor": "Cyberark", "keyman": "Robin", "procurement": "企業", "product": "特權帳號(PAM)管理", "product_category": "DBSAFER", "progress": "需求含密碼自動輪替、Session Recording、符合金管會稽核；先提供白皮書，三場域安裝報價下周提供。", "notes": "", "link": null, "updated": true}, {"id": 61, "stage": "報備清單", "line": "DBSAFER", "rep": "Uming", "customer": "聯華電子股有限公司(資安展)", "partner": "待定", "date": "－", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "－", "procurement": "企業", "product": "Facelocker(人員拍攝畫面控管)", "product_category": "FaceLocker", "progress": "預計安排7/14 Facelocker+DBSAFER產品介紹會議。", "notes": "", "link": null, "updated": false}, {"id": 62, "stage": "報備清單", "line": "DBSAFER", "rep": "Woody", "customer": "全支付", "partner": "－", "date": "2025", "amount": "預算三年350萬", "amount_num": null, "competitor": "CyberArk", "keyman": "－", "procurement": "企業", "product": "方案尚未確定", "product_category": "DBSAFER", "progress": "預算簽呈：50萬以下總經理、50萬董事長、500萬以上董事會；DBSAFER需待新任資安長到任。", "notes": "", "link": null, "updated": false}, {"id": 63, "stage": "成交待驗收", "line": "DBSAFER", "rep": "Terus", "customer": "淮南(Why-Not)", "partner": "－", "date": "訂單:2025/8/1", "amount": "NT$300,000", "amount_num": 300000, "competitor": "－", "keyman": "－", "procurement": "－", "product": "(續約)", "product_category": "DBSAFER", "progress": "6/25下午DEMO，部分功能需調整；續約報價單已簽回，智雲跑採購流程中。", "notes": "", "link": null, "updated": false}, {"id": 64, "stage": "成交待驗收", "line": "DBSAFER", "rep": "Uming/Woody", "customer": "陽信銀行", "partner": "凌群Michael", "date": "訂閱起算:待調整", "amount": "NT$1,200,000", "amount_num": 1200000, "competitor": "－", "keyman": "－", "procurement": "－", "product": "(既有導入)", "product_category": "DBSAFER", "progress": "陽信5/20已付款給凌群，凌群預計七月付款給智雲；7/2討論弱掃修復時間與LOG蒐集功能上線時間。", "notes": "", "link": null, "updated": true}, {"id": 65, "stage": "成交待驗收", "line": "DBSAFER", "rep": "Chloe", "customer": "中國信託投信", "partner": "訊揚-Wendy", "date": "訂閱起算:2026.5.1", "amount": "NT$300,000", "amount_num": 300000, "competitor": "－", "keyman": "－", "procurement": "－", "product": "10u+1server agent", "product_category": "DBSAFER", "progress": "6/30入帳。", "notes": "", "link": "https://drive.google.com/drive/folders/1GgjIQt90_c_0Pc8gcVP4Il7Bk4dBudKN", "updated": false}, {"id": 66, "stage": "成交待驗收", "line": "DBSAFER", "rep": "Uming/Woody", "customer": "台中三信", "partner": "凌群-Jason", "date": "預計7月驗收", "amount": "NT$3,559,106", "amount_num": 3559106, "competitor": "－", "keyman": "－", "procurement": "－", "product": "10U+11DB+11server agent+HA+WORKS/3年", "product_category": "DBSAFER", "progress": "6/17凌群提出合約修改新增履約保證金要求(10%)；驗收條件新增AP-DB遮罩及log功能確認。", "notes": "", "link": null, "updated": true}, {"id": 67, "stage": "DVS專案", "line": "DVS", "rep": "Angel.C", "customer": "台北市交通局", "partner": "客戶/博堯哥", "date": "2027,Q1", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "謝銘鴻局長", "procurement": "政府", "product": "VerdiTwin", "product_category": "VerdiTwin", "progress": "1/26至局長辦公室簡報。", "notes": "", "link": null, "updated": false}, {"id": 68, "stage": "DVS專案", "line": "DVS", "rep": "Angel.C", "customer": "台北市政府", "partner": "王特助", "date": "－", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "市長", "procurement": "政府", "product": "VerdiTwin", "product_category": "VerdiTwin", "progress": "4/22已與台智雲業務/presales介紹智慧交通提案，待北市科專案通知；本週尚未回覆。", "notes": "", "link": null, "updated": false}, {"id": 69, "stage": "DVS專案", "line": "DVS", "rep": "Angel.C", "customer": "崇偉營造", "partner": "客戶", "date": "2026,Q3", "amount": "NT$16,500,000", "amount_num": 16500000, "competitor": "中興保全", "keyman": "潘大興董事長", "procurement": "企業", "product": "VerdiTwin智慧營造", "product_category": "VerdiTwin", "progress": "4/21會議提案討論，崇偉統整3家(綠橋/台塑網/鼎新)向董事長彙報，4月底前確定廠商；成大智慧醫院方案待安排。", "notes": "", "link": null, "updated": false}, {"id": 70, "stage": "DVS專案", "line": "DVS", "rep": "Angel.C", "customer": "數享科技(教育部計劃案)", "partner": "小峰博士", "date": "2026,Q3", "amount": "NT$2,000,000", "amount_num": 2000000, "competitor": "－", "keyman": "教育部", "procurement": "政府", "product": "VerdiTwin", "product_category": "VerdiTwin", "progress": "尚未更新；3/20交構想書(A類)/計劃書(B類，限30頁)。", "notes": "", "link": null, "updated": false}, {"id": 71, "stage": "DVS專案", "line": "DVS", "rep": "Ann", "customer": "國防部", "partner": "竣盟", "date": "2026,Q2", "amount": "預計200萬(分鎰威20萬工程師)", "amount_num": null, "competitor": "－", "keyman": "國防部", "procurement": "政府", "product": "儀錶板", "product_category": "儀錶板", "progress": "產品簡報排資安展後；國防部DEMO，資安展未展出Renobit產品。", "notes": "", "link": null, "updated": false}, {"id": 72, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "台北富邦銀行-Phase3", "partner": "客戶", "date": "2026/5", "amount": "NT$903,866", "amount_num": 903866, "competitor": "－", "keyman": "賴協理", "procurement": "企業", "product": "WEMB RENOBIT", "product_category": "WEMB RENOBIT", "progress": "6月底前確認專案範圍。", "notes": "", "link": null, "updated": false}, {"id": 73, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "台北富邦銀行-MA(2026-2029)", "partner": "客戶", "date": "2026/6", "amount": "NT$1,860,000/1,500,000", "amount_num": 1860000, "competitor": "－", "keyman": "賴協理", "procurement": "企業", "product": "WEMB RENOBIT", "product_category": "WEMB RENOBIT", "progress": "待富邦簽回。", "notes": "", "link": null, "updated": false}, {"id": 74, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "台灣鐵路-TIDS", "partner": "客戶<凌群<雲力橘子", "date": "2026/1/23", "amount": "NT$5,985,714/2,135,714", "amount_num": 5985714, "competitor": "－", "keyman": "－", "procurement": "政府", "product": "WEMB RENOBIT", "product_category": "WEMB RENOBIT", "progress": "6/25發票開立第二期。", "notes": "", "link": "https://docs.google.com/spreadsheets/d/12d6WIMGHkK9s17jB4L0WF1c1Lb1oeiTJnwp7nYgSIAc/edit?usp=sharing", "updated": false}, {"id": 75, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "財金資訊中心", "partner": "客戶<雲力橘子", "date": "2026,Q2", "amount": "NT$4,200,000", "amount_num": 4200000, "competitor": "遠傳電信", "keyman": "－", "procurement": "政府", "product": "WEMB RENOBIT", "product_category": "WEMB RENOBIT", "progress": "7/6評選簡報。", "notes": "", "link": null, "updated": false}, {"id": 76, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "台灣鐵路-EOS", "partner": "客戶<中華<凌群", "date": "2026,Q3", "amount": "NT$5,000,000", "amount_num": 5000000, "competitor": "－", "keyman": "－", "procurement": "政府", "product": "WEMB RENOBIT", "product_category": "WEMB RENOBIT", "progress": "預計下月公告。", "notes": "", "link": null, "updated": false}, {"id": 77, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "陽信銀行-MA(2026)", "partner": "客戶<淮南", "date": "2026,Q1", "amount": "NT$300,000", "amount_num": 300000, "competitor": "－", "keyman": "陳啟文經理", "procurement": "企業", "product": "WEMB RENOBIT", "product_category": "WEMB RENOBIT", "progress": "淮南寰宇已提供訂單。", "notes": "", "link": null, "updated": false}, {"id": 78, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "巨禾(模板)", "partner": "供應商", "date": "－", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "陳毅夫董事長", "procurement": "政府", "product": "VerdiTwin智慧營造", "product_category": "VerdiTwin", "progress": "持續連繫中。", "notes": "", "link": null, "updated": false}, {"id": 79, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "Aiii VBIM", "partner": "供應商", "date": "－", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "Andy", "procurement": "企業", "product": "VerdiTwin", "product_category": "VerdiTwin", "progress": "－", "notes": "", "link": null, "updated": false}, {"id": 80, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "東華龍產發園區", "partner": "合作夥伴", "date": "2026", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "閻董", "procurement": "企業", "product": "智慧大樓", "product_category": "智慧大樓", "progress": "待5月初安排。", "notes": "", "link": null, "updated": false}, {"id": 81, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "岱宇(健身器材)", "partner": "客戶", "date": "2026,Q3", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "林英俊總裁", "procurement": "企業", "product": "OSAP (AI-BI)", "product_category": "COSAP", "progress": "過完年見面了解ERP/專案管理系統現況；3月Demo畫面；持續連繫中。", "notes": "", "link": null, "updated": false}, {"id": 82, "stage": "DVS專案", "line": "DVS", "rep": "Angel.T", "customer": "楷輝(照明)", "partner": "供應商", "date": "－", "amount": "－", "amount_num": null, "competitor": "－", "keyman": "吳限執行長", "procurement": "企業", "product": "OSAP (AI-BI)", "product_category": "COSAP", "progress": "3/13楷輝(易榮)展示AI-BI產品-企業AI決策平台。", "notes": "", "link": null, "updated": false}];
-const TECH_ISSUES = [{"status": "", "rep": "Woody", "customer": "藍新", "engineer": "", "date": "2026/3/13", "issue": "預計每周四下午與藍新進行DEMO，下週四先進行架構確認跟驗收文件討論", "background": "", "progress": "", "notes": "", "line": "DBSAFER", "updated": true}, {"status": "", "rep": "Uming", "customer": "柏克斯", "engineer": "David", "date": "2026/3/13", "issue": "VIP訪問到MSSQL，MONGO DB cluster issue", "background": "原廠技術回覆No.134：建議客戶先提供側錄封包給原廠分析。", "progress": "", "notes": "", "line": "DBSAFER", "updated": false}, {"status": "已解決", "rep": "Terus", "customer": "糖蛙", "engineer": "", "date": "2026/3/13", "issue": "客戶登出DBSAFER，PC Assist的跳出訊息為空白(待PM追蹤原廠可交付時間)", "background": "4/13工程師表示原廠修正了英文版，但中文版仍有相同問題，已回覆原廠修正。", "progress": "已修正完成交付客戶，測試過後沒問題了。", "notes": "", "line": "DBSAFER", "updated": false}, {"status": "已解決", "rep": "Chloe", "customer": "農糧署", "engineer": "Webber", "date": "2026/4/23", "issue": "Log蒐集問題已經解決，智雲工程師也將資料拋給竣盟跟金宣，請他們幫忙將資料呈現", "background": "", "progress": "", "notes": "欄位含：connection time、login account、ip address、server ip address、application instance、user name、query result rows、table、request time、response elapsed、result details", "line": "DBSAFER", "updated": false}, {"status": "", "rep": "Chloe", "customer": "農糧署", "engineer": "Webber", "date": "2026/6/18", "issue": "給了ip，等白名單，拋log", "background": "", "progress": "", "notes": "", "line": "DBSAFER", "updated": false}, {"status": "", "rep": "Uming/woody", "customer": "陽信", "engineer": "David", "date": "2026/4/29", "issue": "1. 陽信內部評估HA架構 2. 陽信先等資安課確認弱掃報告 3. 預計在web manager釋出之前先進行Rocky 9升級，可能抓9~10月完成 4. 預計十月底前原廠提供並完成新版功能上線", "background": "", "progress": "", "notes": "", "line": "DBSAFER", "updated": true}];
-const TASKS = [{"owner": "Alisa", "topic": "資安展", "partner": "", "date": "2025/5/5-5/7", "amount": "", "kpi": "240個名單、24個POC、5個客戶成交", "plan": "", "progress": "已結案", "notes": "", "category": "展會／活動", "links": [], "updated": false}, {"owner": "Uming/Woody/Chloe/Ann", "topic": "台北國際電玩展TGS", "partner": "", "date": "2025/1/29-1/30", "amount": "NT$15,000", "kpi": "50個CloudSafer名單", "plan": "問卷Qrcode列印", "progress": "已結案", "notes": "", "category": "展會／活動", "links": [], "updated": false}, {"owner": "Uming", "topic": "PCB證照待補考", "partner": "銓鍇", "date": "", "amount": "", "kpi": "4/8，Benny/Allen/Oliver沒考過", "plan": "", "progress": "下一梯次補考", "notes": "", "category": "PCB認證／教育訓練", "links": [], "updated": false}, {"owner": "Woody/Ann", "topic": "CloudSafer", "partner": "Mycard", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "進行中", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Woody", "topic": "radware", "partner": "博鉅合作案", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "進行中", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Chloe", "topic": "PCB證照待補考", "partner": "漢昕", "date": "", "amount": "", "kpi": "補考預計1人", "plan": "", "progress": "", "notes": "", "category": "PCB認證／教育訓練", "links": [], "updated": false}, {"owner": "Ann", "topic": "Inca", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "AWS INFRA僅BuildServer可落地，其它無法，已詢問對方是否可用其雲/開master帳號；最低規格確認中", "notes": "已收到Trainning待追蹤項目、模組價格表；原廠伺服器/檢測/心跳驗證等安全機制待內部培訓", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/file/d/1t5SnyKDZB8g3yqaPzbQxRfz_QA7jdzNC/view?usp=sharing"}], "updated": true}, {"owner": "Ann", "topic": "China Joy", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "DM完成，待確認影片02:06提及INCA處", "notes": "", "category": "展會／活動", "links": [{"label": "相關連結", "url": "https://drive.google.com/file/d/1HQo11GQ7_O5dPAEOMScIc0aaiNpOO1fX/view?usp=sharing"}], "updated": true}, {"owner": "Ann", "topic": "教育訓練", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "7/8測驗，請加速報名", "notes": "", "category": "PCB認證／教育訓練", "links": [], "updated": true}, {"owner": "Ann", "topic": "App 法規面白皮書", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "結合林顧問回覆，思考產品控制項需建立國際標準(ISO)與台灣法規對應", "notes": "", "category": "行銷企劃", "links": [], "updated": false}, {"owner": "Ann", "topic": "簽呈", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "進行中", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Ann", "topic": "EDM", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "預計下周一發布", "notes": "", "category": "行銷企劃", "links": [], "updated": false}, {"owner": "Ann", "topic": "Inca推廣時程", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "WBS規劃中", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/13H0qbF-8dPEoVNTtzcbdyNQi10q0ex6mcQfUhhzCFXU/edit?gid=845489564"}], "updated": true}, {"owner": "Alisa", "topic": "代理商開發名單進度", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "北祥/漢昕/博鉅兩周回收名單再讓別人繼續打，這1000筆轉換率待產品介紹完成後才知道", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/folders/1FuQd4M_ngjO2Mr_3AY6JcbkOwIoFs47Y"}], "updated": false}, {"owner": "Woody", "topic": "DBSAFER簡報", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1rxZ8lRXUIhWa-ToSKb19zA4BENQc384l"}], "updated": false}, {"owner": "Woody", "topic": "DBSAFER DM", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1rxZ8lRXUIhWa-ToSKb19zA4BENQc384l"}], "updated": false}, {"owner": "Woody", "topic": "DBSAFER產業白皮書", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1rxZ8lRXUIhWa-ToSKb19zA4BENQc384l"}], "updated": false}, {"owner": "Woody", "topic": "DBSAFER RFP", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1rxZ8lRXUIhWa-ToSKb19zA4BENQc384l"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker簡報", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1rxZ8lRXUIhWa-ToSKb19zA4BENQc384l"}], "updated": true}, {"owner": "Woody", "topic": "FaceLocker DM", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1rxZ8lRXUIhWa-ToSKb19zA4BENQc384l"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker簡報加台詞", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1gPOyZiaVKzu8QbyHjjubp_thKSYil1bT"}], "updated": false}, {"owner": "Woody", "topic": "INCA簡報", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "雲端資料夾已提供", "notes": "", "category": "INCA(PNP合作)", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1rxZ8lRXUIhWa-ToSKb19zA4BENQc384l"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker攝影機", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "接洽展碁與圓展，並與羅技討論需求，羅技會找適合產品，考量預算再確認", "notes": "", "category": "FaceLocker", "links": [], "updated": true}, {"owner": "Woody", "topic": "FaceLocker合約", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "合約連結已提供", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://docs.google.com/document/d/1Twycv9MWZvXYEeNCb_n9IoqV0etem-OM/edit"}], "updated": true}, {"owner": "Woody", "topic": "FaceLocker下單機制", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "PNP收到訂單約1-2周提供Key，License要等內部流程跑完", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker臨時增加人數", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "臨時增加人數需換Key，申請流程同訂單，一年不可申請兩次以上；建議客戶多抓使用數量", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker功能分享", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "可自行設定暫時關閉鎖屏；浮水印功能新增可於違規時才顯示，降低日常操作影響", "notes": "", "category": "FaceLocker", "links": [], "updated": true}, {"owner": "Woody", "topic": "FaceLocker問題集", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "彙整中", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1fcpFVt9k8M78ld-s_p52c57a0DjMjHZk"}], "updated": true}, {"owner": "Woody", "topic": "FaceLocker簡報調整(18、19頁)", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "簡報調整中", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1gPOyZiaVKzu8QbyHjjubp_thKSYil1bT"}], "updated": true}, {"owner": "Woody", "topic": "DBSAFER、FaceLocker情境", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "應用情境彙整", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/10RPAb7x4nq3JJzv_LNxQjOVsq0Zg9uob"}], "updated": true}, {"owner": "Ann/Alisa", "topic": "資安展", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "人員安排：影片後製、DM(Ann)、Facelocker設備(Woody)、Facelocker竣盟確認取消(Ann)、經銷商PPT、資安展後續；漢昕名單表", "notes": "", "category": "展會／活動", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1WgSwbsyLWJjogutAKzoioBT5iu1eMwQF/edit?usp=share_link"}, {"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/13ELAzcuUSI1V0zXDhg-y9kz_aVQUJRPU/edit?gid=1935242325"}, {"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1xZqQWFZdUmZ81gJCeo6jyICuU8EVvH97/edit?usp=share_link"}], "updated": false}, {"owner": "阿政/Ann", "topic": "加盟協會", "partner": "- 圓圈(Pos) - 串串KABOB", "date": "", "amount": "", "kpi": "10月總統獎", "plan": "", "progress": "3/2廣告模組說明，Stark與對方洽談合作，智雲角色為廣告代理商", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Alisa", "topic": "綠界金流", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "綠界2026轉型一站式加值服務；已提供白皮書協助內部提報；規劃協助主辦新服務茶會", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "", "topic": "DBSAFER PCB", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "3月PCB課程開放報名(7人)；累計上課27人、累計認證18人", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1PvBKZw_uN1DNyu4ZXH7aJ_mUbtrkyd4BmPP2J288EJw/edit?gid=2047391788"}], "updated": false}, {"owner": "阿政/Alisa", "topic": "外部專案項目", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "3/27~29桃園「大人國」成人展(已結案)；4/10~12高雄成人展活動(已結案)", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker FIDO進度", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "PNP規劃今年底前啟動FIDO認證，因內部其他優先專案，目前仍在規劃階段", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker情境應用", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "整理情境給Peter，確認解法及需與韓國討論內容", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1mhbW3N0Yt3-Mlx7dM4JNlyo3jQ0Cyh5N/edit?rtpof=true&gid=186271307"}], "updated": false}, {"owner": "Woody", "topic": "PNP業務會議", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "6/18上午與PNP業務會議(Uming、Chloe)", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1LV3NaRfiMhYRC99Fs_S61WSnwSZJAyOsTvBkTyC72UI/edit?gid=769299894#gid=769299894"}], "updated": false}, {"owner": "Woody", "topic": "同客戶不同產品的BOOKING方式", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "每個產品分開Booking，或同張皆可", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://docs.google.com/document/d/1yfj60zfy5S9l5iF6QH7DHBosFHNRulbc/edit"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker正式安裝流程", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "安裝→查看HWID→提供PnP技術代表→發放序號→Web管理員註冊(無需重啟服務)", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker經銷商利潤", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "政府客戶走共契20%，一般客戶25%", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker測試設定", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "臨時許可期限固定90天，不可延期；額外測試需申請額外許可(增加30天)", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "PNP來台行程", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "行程確認中", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1eChdoHIy92AfMM_xAX6LH4H6enkvjqX0"}], "updated": false}, {"owner": "Woody", "topic": "1150201價格", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "DBSAFER Price List及報價單已更新", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1A6qqdhTDP45CR4diSqzLwebdf-utEulp"}], "updated": true}, {"owner": "Woody", "topic": "PNP討論", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "PNP想調整規格、價格", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker力悅推廣計畫", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "Mark 6/4前往聯慷資訊科技(內湖)介紹FL，提供產業應用簡介", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker相機採購", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "規劃由PNP統一供貨，客戶支付相關費用，細節與YUNA確認", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker分批授權", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "臨時新增人員License可分開重新提供金鑰，業務流程待YUNA確認韓國銷售方式", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker適用規格", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "須x86架構CPU(Intel/AMD)，建議i5第11代以上、記憶體16GB以上", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker相機技術", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "PNP鏡頭技術利用平面鏡頭學習而非魚眼廣角，因此不挑相機", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker相機規格", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "自購攝影機需支援UVC標準；最低720P/100萬畫素，建議1080P/200萬畫素", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "China Joy FaceLocker DM", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "設計情境故事放上去", "notes": "", "category": "FaceLocker", "links": [], "updated": true}, {"owner": "Woody", "topic": "DBSAFER訂閱制訊息分享", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "韓國DBSAFER亦有訂閱制，到期不續約PNP會現場移除，目前尚無License", "notes": "", "category": "DBSAFER", "links": [], "updated": false}, {"owner": "Woody", "topic": "DBSAFER已成交客戶到期時間", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "陽信商業銀行2026/10/31；國立空中大學2026/9/25；國原院2026/8/24；淮南寰宇2026/7/31", "notes": "", "category": "DBSAFER", "links": [], "updated": false}, {"owner": "Woody", "topic": "經銷商DBSAFER DEMO測試申請書", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "法務已回覆可提供給客戶", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://docs.google.com/document/d/1wh3gMXAcw8HhGKKfMA2YhEldsuy0QO_R/edit"}], "updated": false}, {"owner": "Woody", "topic": "功能Check LIST", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "新增功能需求，位置：PM-POC-功能check list", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1XPpl0dZ8_mPqeGLFccHHrZKZJBbnige4"}], "updated": false}, {"owner": "Woody", "topic": "夥伴申請安裝DBSAFER合約", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "流程：業務提供經銷商填寫→智冠法務→出浮水印PDF給客戶確認→用印", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1jWv58u29TTEmxJ_J-Bw8FX7PjcyfRdHN"}], "updated": false}, {"owner": "Woody", "topic": "夥伴申請進入智雲環境測試DBSAFER", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "位置：Sales-06申請書", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1kVoCiVtxmxIMtGTQxQXlFONePZxt6lXy"}], "updated": false}, {"owner": "Woody", "topic": "三信銀行會議", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "時間表及驗收清單", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1kwt42mcwXorR1NwJ0t3p-M5RE09TKLc7"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker合作合約", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "MOU、NDA-PNP已用印寄回台灣；智雲正式合約已提供並待法務確認", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "獎勵計畫討論", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "規劃中", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/10XVrgzrcgndLndPLtfirZqEGMpOqV8r4"}], "updated": false}, {"owner": "Woody", "topic": "報備資料", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "報備清單，之後報備單直接寄給Woody，展延需在清單上寫明展延時間", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1eAjSwfD_c_U5dduQquSyPiq7Qtvb-_DZ/edit?gid=173174912"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker競品", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "與PNP回饋比較彙整", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1Jb6xYkjSBuKo7V1dcL3dpjAXc5tUOQM9"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker白皮書", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "設計修改完畢", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1IFDmKd9iHwENXVA-cl2qSKo1ZhOd3esJ"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker安裝問題", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "智雲可自行安裝在客戶端，License規則待Peter確認；因技術教育訓練尚未完成，已安排Peter赴韓受訓(6/15-6/19)", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "INCA合作合約", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "已用印寄回並歸檔", "notes": "", "category": "INCA(PNP合作)", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker資安展MOU合作合約", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "已完成", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "力悅價格討論", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "策略研擬中", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1gGYK2gwuWItYs3G9W_yYcpkSY0QxGC8VOZYqYv8JCyo/edit?gid=0"}], "updated": false}, {"owner": "Woody", "topic": "DBSAFER DAM方向告知經銷夥伴", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "已請業務對負責經銷夥伴說明", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1uRV-zsEGi2vGNGnsTN10c3fAzYKwkGF_"}], "updated": false}, {"owner": "Woody", "topic": "DBSAFER DAM調整版簡報", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "簡報製作中", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://docs.google.com/presentation/d/1GR1egkVTXC75JkPQoDaTkpGw24rK0-YK/edit?slide=id.p1"}], "updated": false}, {"owner": "Woody", "topic": "FaceLocker原廠影片", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "PNP已提供台詞，中文翻譯確認調整中，PNP整理好影片後會提供台灣端", "notes": "", "category": "FaceLocker", "links": [], "updated": false}, {"owner": "Woody", "topic": "INCA會議討論", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "地端服務4月底測完、5月提供台灣；Myserver不接觸遊戲產業但博弈可以；INCA將提供成功案例、吉祥物AI檔案、競品分析、產業白皮書、客戶名單", "notes": "", "category": "INCA(PNP合作)", "links": [], "updated": false}, {"owner": "Woody", "topic": "INCA資安展來台人員", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "CEO與太俊5/4抵台(桃園T1)，5/6離台", "notes": "", "category": "INCA(PNP合作)", "links": [], "updated": false}, {"owner": "Woody", "topic": "PNP 7*24服務", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "PNP內部系統工單編號僅供PNP內部查閱，問題透過線上表單討論", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Woody", "topic": "FaceLocker產品上市", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "Price List位置：PM＞Facelocker＞價格", "notes": "", "category": "FaceLocker", "links": [{"label": "相關連結", "url": "https://gamma.app/docs/FaceLocker-20260309-335w9yo7t1u2kll?mode=doc"}, {"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1ticeNCuD7z7tNupSuLUgHyqZbo65HBYg"}], "updated": false}, {"owner": "阿政/Alisa/Woody", "topic": "PNP行銷費用申請", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "韓國政府國家補助案，未錄取", "notes": "", "category": "其他／內部行政", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/folders/1uQVYtkk4eUiOccysl5w8LLhT9NACoFtb?usp=sharing"}], "updated": false}, {"owner": "Woody/Ann", "topic": "集團產品宣導", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "3/19前往介紹完成", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Woody", "topic": "DBSAFER price list更新", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "已完成更新", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://drive.google.com/drive/u/1/folders/1U5VpnPDXXgB16EgkUpYWTOgnJZXT2dDk"}], "updated": false}, {"owner": "Woody", "topic": "DBSAFER案例分享", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "案例分享彙整中", "notes": "", "category": "DBSAFER", "links": [{"label": "相關連結", "url": "https://gamma.app/docs/DBSAFER-8or10yt8myiulun?mode=doc"}], "updated": false}, {"owner": "Woody/Ann", "topic": "智冠推廣計畫", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "藍新已進入測試階段；MyCard個資需求低、智冠遊戲代理業務資安需求相對低、集團整體成本控管嚴謹", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Ann", "topic": "特助-通用影片", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "2/25影片優化", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "Ann/Alisa", "topic": "台北國際電玩展影片", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "已完成", "notes": "", "category": "展會／活動", "links": [{"label": "相關連結", "url": "https://drive.google.com/file/d/1hKKC8ZgWM3gQGo1OPtC8dO6grTQ4xSK1/view?usp=drive_link"}], "updated": false}, {"owner": "Ann", "topic": "智冠集團春酒", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "注意事項確認", "notes": "", "category": "展會／活動", "links": [{"label": "相關連結", "url": "https://docs.google.com/presentation/d/1KvMxCKY0rRA5rOcNx_z4-Pan2Ld-WB_pDhr6aBnTxJk/edit?slide=id.p"}], "updated": false}, {"owner": "Ann", "topic": "藍金金流", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "藍新與綠界金流比較調查", "notes": "", "category": "其他／內部行政", "links": [], "updated": false}, {"owner": "阿政/Ann", "topic": "AI補助", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "AI補助計畫申請中", "notes": "", "category": "行銷企劃", "links": [{"label": "相關連結", "url": "https://docs.google.com/spreadsheets/d/1Pu8wlhAQOhJw4pl9Jzdv4RjLJgYKWh0P83s0hhAKKck/edit?gid=0"}], "updated": false}, {"owner": "Alisa", "topic": "AppGuard", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "行銷計畫Ver.1", "notes": "", "category": "行銷企劃", "links": [{"label": "相關連結", "url": "https://docs.google.com/presentation/d/1QKuywv-4CFu4JpxhAvLKKCGAKzCfb6za/edit?usp=sharing"}], "updated": true}, {"owner": "Alisa", "topic": "社群/吉祥物", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "原DBSAFER社群帳號整合提案、吉祥物設計", "notes": "", "category": "行銷企劃", "links": [{"label": "相關連結", "url": "https://docs.google.com/presentation/d/1FcI1wNnrnTS50cJ1DSXtw86YYvBO3a2s/edit?usp=sharing"}], "updated": false}, {"owner": "Alisa", "topic": "成功案例建議案", "partner": "", "date": "", "amount": "", "kpi": "", "plan": "", "progress": "規劃中", "notes": "", "category": "行銷企劃", "links": [{"label": "相關連結", "url": "https://docs.google.com/presentation/d/1Jpxyf7oFAdOaCMtJAQbof1bmiAr02FSrCT9Zqe9tb78/edit?usp=sharing"}], "updated": false}];
-const STAGE_ORDER = ["報備清單", "排測中", "測試中", "成交待驗收", "DVS專案"];
-const STAGE_COLOR = {"報備清單": "#8A8F87", "排測中": "#C97A2B", "測試中": "#1F7A5C", "成交待驗收": "#2B6CB0", "DVS專案": "#6B4E9E"};
-const STAGE_TARGET = {"報備清單": 125, "排測中": 50, "測試中": 12.5, "成交待驗收": null, "DVS專案": null};
-const GENERIC_PARTNERS = new Set(["", "—", "−", "－", "-", "待定", "客戶", "供應商", "合作夥伴", "直銷", "Pending"]);
-const DEALER_ALIASES = { "CK": "Ckmates", "BGIC": "博鉅", "PIC": "統一資" };
-
-function dealerBase(partner) {
-  if (!partner) return null;
-  let p = partner.trim();
-  if (GENERIC_PARTNERS.has(p)) return null;
-  let m = p.split(/[-：:（(\s]/)[0].trim();
-  if (!m) m = p;
-  if (DEALER_ALIASES[m]) m = DEALER_ALIASES[m];
-  return m;
-}
-
-function findTechIssues(customer, line) {
-  if (!customer) return [];
-  return TECH_ISSUES.filter(t => {
-    if (!t.customer) return false;
-    if (t.line && line && t.line !== line) return false;
-    return customer.includes(t.customer) || t.customer.includes(customer);
-  });
-}
-
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbz8IK9359EtuoLEIM9oSqVPzECGZmea2azSXeu5YbtUkfQDjHeHwi7bEscFW3QFoDqQog/exec';
+const SOURCE_FILE_ID = '1-lhZnyMXyGOZlHYiIyk2DnRm_C34zUkI';
+const STAGE_ORDER = ['registered', 'queued', 'testing', 'closed_pending'];
+const STAGE_LABELS = { registered: '報備清單', queued: '排測中', testing: '測試中', closed_pending: '成交待驗收', dvs: 'DVS專案' };
+const STAGE_COLOR = { registered: '#8A8F87', queued: '#C97A2B', testing: '#1F7A5C', closed_pending: '#2B6CB0', dvs: '#6B4E9E' };
+const STAGE_TARGET = { registered: 125, queued: 50, testing: 12.5, closed_pending: null, dvs: null };
+let dashboardData = null;
 let dealerMode = 'rep';
 let openEntities = new Set();
 let taskQuery = '';
 let taskMode = 'category';
 let openTaskGroups = new Set();
 let taskOwnerFilter = '';
-
-let state = { stage: "", rep: "", category: "", q: "", sortKey: null, sortDir: 1, expanded: new Set() };
-
-function fmtAmt(n) {
-  if (n === null || n === undefined) return null;
-  return "NT$" + n.toLocaleString('en-US');
-}
-
+let state = { stage: '', rep: '', category: '', q: '', sortKey: null, sortDir: 1, expanded: new Set() };
+function fmtAmt(n) { if (n === null || n === undefined) return null; return 'NT$' + n.toLocaleString('en-US'); }
 function parseAmt(s) {
   if (!s) return null;
-  let m = s.match(/(?:NT\$|NTD)\s*([\d,]{4,})/);
-  if (!m) m = s.match(/(\d{1,3}(?:,\d{3})+)/);
-  if (m) { const n = parseInt(m[1].replace(/,/g,'')); return isNaN(n) ? null : n; }
+  let m = String(s).match(/(?:NT\$|NTD)\s*([\d,]{4,})/);
+  if (!m) m = String(s).match(/(\d{1,3}(?:,\d{3})+)/);
+  if (m) { const n = parseInt(m[1].replace(/,/g, '')); return isNaN(n) ? null : n; }
   return null;
 }
-
-/* ===== Shared storage sync ===== */
+function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m])); }
+// 偵測文字中的網址，轉換成藍底按鈕，不直接顯示原始網址字串
+function linkifyText(text) {
+  if (!text) return '';
+  const parts = String(text).split(/(https?:\/\/[^\s，。；、]+)/g);
+  return parts.map(part => {
+    if (/^https?:\/\//.test(part)) {
+      return `<a href="${part}" target="_blank" rel="noopener" class="link-btn">🔗 相關連結</a>`;
+    }
+    return escapeHtml(part);
+  }).join('');
+}
 async function loadSharedData() {
   const statusEl = document.getElementById('syncStatus');
+  statusEl.textContent = '載入中...';
   try {
-    const ov = await window.storage.get('overrides', true);
-    if (ov && ov.value) {
-      const overrides = JSON.parse(ov.value);
-      DATA.forEach(d => {
-        if (overrides[d.id]) Object.assign(d, overrides[d.id], { amount_num: parseAmt(overrides[d.id].amount !== undefined ? overrides[d.id].amount : d.amount) });
-      });
-    }
-  } catch (e) { /* no overrides yet */ }
-
-  try {
-    const nc = await window.storage.get('new_cases', true);
-    if (nc && nc.value) {
-      const added = JSON.parse(nc.value);
-      added.forEach(c => { if (!DATA.find(d => d.id === c.id)) DATA.push(c); });
-    }
-  } catch (e) { /* no new cases yet */ }
-
-  statusEl.textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW');
-  populateSelects();
-  renderCards();
-  render();
+    const res = await fetch(GAS_URL + '?_t=' + Date.now(), { cache: 'no-store' });
+    const data = await res.json();
+    if (data.error) throw new Error(data.message);
+    data.cases.forEach(c => { c.amount_num = parseAmt(c.amount); });
+    dashboardData = data;
+    document.getElementById('hdrSub').textContent = '報告日期／分頁：' + data.meta.sourceSheetName;
+    document.getElementById('sourceSheetBtn').onclick = (e) => { e.preventDefault(); window.open('https://docs.google.com/spreadsheets/d/' + SOURCE_FILE_ID + '/edit', '_blank'); };
+    statusEl.textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW');
+    populateSelects(); renderCards(); renderRules(); render();
+  } catch (err) { statusEl.textContent = '載入失敗：' + err.message; }
 }
-
-async function saveOverride(id, fields) {
-  let overrides = {};
-  try {
-    const ov = await window.storage.get('overrides', true);
-    if (ov && ov.value) overrides = JSON.parse(ov.value);
-  } catch (e) {}
-  overrides[id] = { ...(overrides[id]||{}), ...fields };
-  try {
-    await window.storage.set('overrides', JSON.stringify(overrides), true);
-    return true;
-  } catch (e) {
-    alert('儲存失敗，請確認網路連線後重試');
-    return false;
-  }
+async function postToGas(payload) {
+  const res = await fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+  return res.json();
 }
-
-async function addNewCase(caseObj) {
-  let added = [];
-  try {
-    const nc = await window.storage.get('new_cases', true);
-    if (nc && nc.value) added = JSON.parse(nc.value);
-  } catch (e) {}
-  caseObj.id = 'new-' + Date.now();
-  added.push(caseObj);
-  try {
-    await window.storage.set('new_cases', JSON.stringify(added), true);
-    DATA.push(caseObj);
-    return true;
-  } catch (e) {
-    alert('新增失敗，請確認網路連線後重試');
-    return false;
-  }
-}
-
+function getData() { return dashboardData ? dashboardData.cases : []; }
 function getFiltered() {
-  return DATA.filter(d => {
-    if (!state.stage && d.stage === 'DVS專案') return false; // collapsed by default; use stage filter to view
+  return getData().filter(d => {
+    if (d.stage === 'dvs') return false; // DVS專案已從業務案件清單移除
     if (state.stage && d.stage !== state.stage) return false;
-    if (state.rep && d.rep !== state.rep) return false;
-    if (state.category && d.product_category !== state.category) return false;
+    if (state.rep && d.salesRep !== state.rep) return false;
+    if (state.category && !(d.productCategories || [d.productCategory]).includes(state.category)) return false;
     if (state.q) {
-      const hay = [d.customer, d.partner, d.product, d.competitor, d.keyman, d.progress, d.notes, d.rep].join(' ').toLowerCase();
+      const hay = [d.customer, d.dealer, d.product, d.competitor, d.keyMan, d.progress, d.notes, d.salesRep].join(' ').toLowerCase();
       if (!hay.includes(state.q.toLowerCase())) return false;
     }
     return true;
   });
 }
-
 function renderFunnel() {
-  const el = document.getElementById('funnel');
-  el.innerHTML = '';
+  const el = document.getElementById('funnel'); el.innerHTML = '';
+  const DATA = getData();
   STAGE_ORDER.forEach((stage, i) => {
     const items = DATA.filter(d => d.stage === stage);
-    const amt = items.reduce((s,d) => s + (d.amount_num||0), 0);
-    const target = STAGE_TARGET[stage];
+    const amt = items.reduce((s, d) => s + (d.amount_num || 0), 0);
+    const target = STAGE_TARGET[stage]; const label = STAGE_LABELS[stage];
     const div = document.createElement('div');
     div.className = 'funnel-step' + (state.stage === stage ? ' active' : '');
     div.style.setProperty('--stage-color', STAGE_COLOR[stage]);
-    div.innerHTML = `
-      <div class="label"><span class="dot"></span>${stage}${target ? ' <span style="opacity:.6">／目標 '+target+'</span>' : ''}</div>
-      <div class="count">${items.length}</div>
-      <div class="amt">${amt > 0 ? fmtAmt(amt) : '—'}</div>
-    `;
-    div.onclick = () => { state.stage = (state.stage === stage) ? "" : stage; syncControls(); render(); };
+    div.innerHTML = `<div class="label"><span class="dot"></span>${label}${target ? ' <span style="opacity:.6">／目標 ' + target + '</span>' : ''}</div><div class="count">${items.length}</div><div class="amt">${amt > 0 ? fmtAmt(amt) : '—'}</div>`;
+    div.onclick = () => { state.stage = (state.stage === stage) ? '' : stage; syncControls(); render(); };
     el.appendChild(div);
-    if (i < STAGE_ORDER.length - 1) {
-      const arrow = document.createElement('div');
-      arrow.className = 'funnel-arrow';
-      arrow.textContent = '→';
-      el.appendChild(arrow);
-    }
+    if (i < STAGE_ORDER.length - 1) { const arrow = document.createElement('div'); arrow.className = 'funnel-arrow'; arrow.textContent = '→'; el.appendChild(arrow); }
   });
 }
-
 function renderCards() {
+  const DATA = getData();
   const withAmt = DATA.filter(d => d.amount_num);
-  const total = withAmt.reduce((s,d) => s + d.amount_num, 0);
-  document.getElementById('totalAmount').textContent = fmtAmt(total);
-  document.getElementById('avgAmount').textContent = withAmt.length ? fmtAmt(Math.round(total/withAmt.length)) : '—';
+  const total = withAmt.reduce((s, d) => s + d.amount_num, 0);
+  document.getElementById('totalAmount').textContent = fmtAmt(total) || '—';
+  document.getElementById('avgAmount').textContent = withAmt.length ? fmtAmt(Math.round(total / withAmt.length)) : '—';
   document.getElementById('totalCasesHdr').textContent = DATA.length + ' 件案件';
-
   const repCounts = {};
-  DATA.forEach(d => { repCounts[d.rep] = (repCounts[d.rep]||0) + 1; });
-  const maxCount = Math.max(...Object.values(repCounts));
-  const sorted = Object.entries(repCounts).sort((a,b) => b[1]-a[1]);
-  const bars = document.getElementById('repBars');
-  bars.innerHTML = '';
+  DATA.forEach(d => { repCounts[d.salesRep] = (repCounts[d.salesRep] || 0) + 1; });
+  const maxCount = Math.max(...Object.values(repCounts), 1);
+  const sorted = Object.entries(repCounts).sort((a, b) => b[1] - a[1]);
+  const bars = document.getElementById('repBars'); bars.innerHTML = '';
   sorted.forEach(([rep, count]) => {
-    const row = document.createElement('div');
-    row.className = 'rep-bar-row';
-    row.innerHTML = `<div class="name">${rep}</div><div class="track"><div class="fill" style="width:${(count/maxCount*100)}%"></div></div><div class="num">${count}</div>`;
+    const row = document.createElement('div'); row.className = 'rep-bar-row';
+    row.innerHTML = `<div class="name">${escapeHtml(rep)}</div><div class="track"><div class="fill" style="width:${(count / maxCount * 100)}%"></div></div><div class="num">${count}</div>`;
     bars.appendChild(row);
   });
 }
-
 function populateSelects() {
-  const stageSel = document.getElementById('stageFilter');
-  stageSel.innerHTML = '<option value="">全部階段</option>';
-  STAGE_ORDER.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s; opt.textContent = s;
-    stageSel.appendChild(opt);
-  });
-  const reps = [...new Set(DATA.map(d => d.rep))].sort();
-  const repSel = document.getElementById('repFilter');
-  repSel.innerHTML = '<option value="">全部業務</option>';
-  reps.forEach(r => {
-    const opt = document.createElement('option');
-    opt.value = r; opt.textContent = r;
-    repSel.appendChild(opt);
-  });
-  const cats = [...new Set(DATA.map(d => d.product_category))].sort();
-  const catSel = document.getElementById('categoryFilter');
-  catSel.innerHTML = '<option value="">全部產品</option>';
-  cats.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c; opt.textContent = c;
-    catSel.appendChild(opt);
-  });
+  const DATA = getData();
+  const stageSel = document.getElementById('stageFilter'); stageSel.innerHTML = '<option value="">全部階段</option>';
+  STAGE_ORDER.forEach(s => stageSel.appendChild(new Option(STAGE_LABELS[s], s)));
+  const reps = [...new Set(DATA.map(d => d.salesRep))].filter(Boolean).sort();
+  const repSel = document.getElementById('repFilter'); repSel.innerHTML = '<option value="">全部業務</option>';
+  reps.forEach(r => repSel.appendChild(new Option(r, r)));
+  const cats = [...new Set(DATA.flatMap(d => d.productCategories || [d.productCategory]))].filter(Boolean).sort();
+  const catSel = document.getElementById('categoryFilter'); catSel.innerHTML = '<option value="">全部產品</option>';
+  cats.forEach(c => catSel.appendChild(new Option(c, c)));
+  const ncStage = document.getElementById('nc_stage');
+  if (!ncStage.options.length) { STAGE_ORDER.forEach(s => ncStage.appendChild(new Option(STAGE_LABELS[s], s))); }
 }
-
 function syncControls() {
   document.getElementById('stageFilter').value = state.stage;
   document.getElementById('repFilter').value = state.rep;
   document.getElementById('categoryFilter').value = state.category;
   document.getElementById('searchBox').value = state.q;
 }
-
-function stageBadgeStyle(stage) {
-  const c = STAGE_COLOR[stage];
-  return `background:${c}1A; color:${c};`;
-}
-
+function stageBadgeStyle(stage) { const c = STAGE_COLOR[stage]; return `background:${c}1A; color:${c};`; }
+const SORT_KEY_MAP = { rep: 'salesRep', partner: 'dealer', contact: 'dealerContact', date: 'keyDate' };
 function renderTable() {
   let rows = getFiltered();
   if (state.sortKey) {
-    rows = rows.slice().sort((a,b) => {
-      let av = a[state.sortKey], bv = b[state.sortKey];
-      if (av === null || av === undefined) av = state.sortKey === 'amount_num' ? -1 : '';
-      if (bv === null || bv === undefined) bv = state.sortKey === 'amount_num' ? -1 : '';
+    const field = SORT_KEY_MAP[state.sortKey] || state.sortKey;
+    rows = rows.slice().sort((a, b) => {
+      let av = a[field], bv = b[field];
+      if (av === null || av === undefined) av = field === 'amount_num' ? -1 : '';
+      if (bv === null || bv === undefined) bv = field === 'amount_num' ? -1 : '';
       if (typeof av === 'string') { av = av.toLowerCase(); bv = bv.toLowerCase(); }
-      if (av < bv) return -1 * state.sortDir;
-      if (av > bv) return 1 * state.sortDir;
-      return 0;
+      if (av < bv) return -1 * state.sortDir; if (av > bv) return 1 * state.sortDir; return 0;
     });
   }
-  document.getElementById('resultCount').textContent = `顯示 ${rows.length} / ${DATA.length} 筆`;
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = '';
+  document.getElementById('resultCount').textContent = `顯示 ${rows.length} / ${getData().length} 筆`;
+  const tbody = document.getElementById('tbody'); tbody.innerHTML = '';
   document.getElementById('emptyState').style.display = rows.length ? 'none' : 'block';
-
   rows.forEach((d, idx) => {
     const key = d.stage + '|' + d.customer + '|' + idx;
     const tr = document.createElement('tr');
-    if (d.updated) tr.className = 'row-updated';
-    const issues = findTechIssues(d.customer, d.line);
+    if (d.isWeeklyUpdate) tr.className = 'row-updated';
+    const issues = d.techIssues || [];
     const badges = [
       issues.length ? `<span class="tech-badge" title="有相關技術問題">🔧 ${issues.length}</span>` : '',
-      d.updated ? `<span class="updated-tag"><span class="dot"></span>本週更新</span>` : ''
+      d.isWeeklyUpdate ? `<span class="updated-tag"><span class="dot"></span>本週更新</span>` : ''
     ].filter(Boolean).join(' ');
     tr.innerHTML = `
-      <td data-label="階段"><span class="tag" style="${stageBadgeStyle(d.stage)}">${d.stage}</span></td>
-      <td data-label="業務">${d.rep}</td>
-      <td data-label="終端客戶" class="cust"><div>${d.customer}</div>${badges ? `<div style="margin-top:4px;">${badges}</div>` : ''}</td>
-      <td data-label="經銷商" class="partner">${d.partner || '—'}</td>
-      <td data-label="時程">${d.date || '—'}</td>
-      <td data-label="預估金額" class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (d.amount || '—')}</td>
-      <td data-label="方案"><span class="tag" style="background:var(--grey-soft); color:var(--ink-soft); font-weight:600;">${d.product_category}</span> ${d.product || '—'}</td>
-      <td data-label="進度說明" class="progress-cell">${d.progress || '—'}</td>
+      <td data-label="階段"><span class="tag" style="${stageBadgeStyle(d.stage)}">${STAGE_LABELS[d.stage] || escapeHtml(d.stage)}</span></td>
+      <td data-label="業務">${escapeHtml(d.salesRep)}</td>
+      <td data-label="終端客戶" class="cust"><div>${escapeHtml(d.customer)}</div>${badges ? `<div style="margin-top:4px;">${badges}</div>` : ''}</td>
+      <td data-label="經銷商" class="partner">${escapeHtml(d.dealer) || '—'}</td>
+      <td data-label="經銷商業務" class="partner">${escapeHtml(d.dealerContact) || '—'}</td>
+      <td data-label="時程">${escapeHtml(d.keyDate) || '—'}</td>
+      <td data-label="預估金額" class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (escapeHtml(d.amount) || '—')}</td>
+      <td data-label="方案">${(d.productCategories || [d.productCategory]).map(cat => `<span class="tag" style="background:var(--grey-soft); color:var(--ink-soft); font-weight:600; margin-right:3px;">${escapeHtml(cat)}</span>`).join('')} ${escapeHtml(d.product) || '—'}</td>
+      <td data-label="進度說明" class="progress-cell">${escapeHtml(d.progress) || '—'}</td>
     `;
-    tr.onclick = () => {
-      if (state.expanded.has(key)) state.expanded.delete(key); else state.expanded.add(key);
-      render();
-    };
+    tr.onclick = () => { if (state.expanded.has(key)) state.expanded.delete(key); else state.expanded.add(key); render(); };
     tbody.appendChild(tr);
-
     if (state.expanded.has(key)) {
-      const dtr = document.createElement('tr');
-      dtr.className = 'detail-row';
-      dtr.innerHTML = `<td colspan="8">
+      const dtr = document.createElement('tr'); dtr.className = 'detail-row';
+      dtr.innerHTML = `<td colspan="9">
         <div class="detail-grid">
-          <div><div class="dt">競爭對手</div><div class="dd">${d.competitor || '—'}</div></div>
-          <div><div class="dt">Key Man</div><div class="dd">${d.keyman || '—'}</div></div>
-          <div><div class="dt">採購方式</div><div class="dd">${d.procurement || '—'}</div></div>
+          <div><div class="dt">競爭對手</div><div class="dd">${escapeHtml(d.competitor) || '—'}</div></div>
+          <div><div class="dt">Key Man</div><div class="dd">${escapeHtml(d.keyMan) || '—'}</div></div>
+          <div><div class="dt">採購方式</div><div class="dd">${escapeHtml(d.procurement) || '—'}</div></div>
         </div>
-        <div style="margin-top:12px;"><div class="dt">進度說明</div><div class="dd">${d.progress || '—'}</div></div>
-        ${d.notes ? `<div style="margin-top:12px;"><div class="dt">備註</div><div class="dd">${d.notes}</div></div>` : ''}
-        ${d.link ? `<div style="margin-top:12px;"><a href="${d.link}" target="_blank" rel="noopener" style="color:var(--blue); font-size:12.5px; font-weight:700;">🔗 相關連結</a></div>` : ''}
-        ${issues.length ? `
-          <div style="margin-top:16px; border-top:1px dashed var(--border); padding-top:12px;">
-            <div class="dt" style="color:var(--rose);">🔧 相關技術問題 (${issues.length})</div>
-            ${issues.map(t => `
-              <div style="margin-top:8px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px;">
-                <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); font-family:var(--mono);">
-                  <span>${t.date || ''}${t.engineer ? '　工程師：'+t.engineer : ''}</span>
-                  <span style="color:${t.status==='已解決' ? 'var(--accent)' : 'var(--amber)'}; font-weight:700;">${t.status || '處理中'}</span>${t.updated ? ` <span class="updated-tag"><span class="dot"></span>本週更新</span>` : ''}
-                </div>
-                <div style="margin-top:4px;">${t.issue}</div>
-                ${t.background ? `<div style="margin-top:4px; color:var(--ink-soft); font-size:12px;">背景：${t.background}</div>` : ''}
-                ${t.progress ? `<div style="margin-top:4px; color:var(--ink-soft); font-size:12px;">進度：${t.progress}</div>` : ''}
-              </div>
-            `).join('')}
-          </div>
-        ` : ''}
-        <span class="edit-toggle" data-editid="${d.id}">&#9998; 編輯此案件</span>
+        ${d.notes ? `<div style="margin-top:12px;"><div class="dt">備註</div><div class="dd">${linkifyText(d.notes)}</div></div>` : ''}
+        ${d.relatedLink ? `<div style="margin-top:12px;"><a href="${escapeHtml(d.relatedLink)}" target="_blank" rel="noopener" style="color:var(--blue); font-size:12.5px; font-weight:700;">🔗 相關連結</a></div>` : ''}
+        ${issues.length ? `<div style="margin-top:16px; border-top:1px dashed var(--border); padding-top:12px;"><div class="dt" style="color:var(--rose);">🔧 相關技術問題 (${issues.length})</div>${issues.map(t => `<div style="margin-top:8px; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:10px 12px;"><div style="display:flex; justify-content:space-between; font-size:11px; color:var(--ink-soft); font-family:var(--mono);"><span>${escapeHtml(t.reportedDate)}</span><span style="color:${t.status === '已解決' ? 'var(--accent)' : 'var(--amber)'}; font-weight:700;">${escapeHtml(t.status) || '處理中'}</span></div><div style="margin-top:4px;">${escapeHtml(t.issue)}</div></div>`).join('')}</div>` : ''}
+        <span class="edit-toggle" data-editid="${d.id}">&#9998; 編輯此案件(不使用)</span>
         <div class="edit-fields" id="edit-${d.id}" style="display:none;">
-          <div><label>階段</label><select class="ef-stage">${STAGE_ORDER.map(s=>`<option value="${s}" ${s===d.stage?'selected':''}>${s}</option>`).join('')}</select></div>
-          <div><label>時程</label><input class="ef-date" value="${(d.date||'').replace(/"/g,'&quot;')}"></div>
-          <div><label>預估金額</label><input class="ef-amount" value="${(d.amount||'').replace(/"/g,'&quot;')}"></div>
-          <div class="full"><label>進度說明</label><textarea class="ef-progress" rows="2">${d.progress||''}</textarea></div>
-          <div class="full"><label>備註</label><textarea class="ef-notes" rows="2">${d.notes||''}</textarea></div>
-          <div class="edit-actions">
-            <button class="ef-cancel">取消</button>
-            <button class="primary ef-save" data-id="${d.id}">儲存更新</button>
-          </div>
+          <div><label>階段</label><select class="ef-stage">${STAGE_ORDER.map(s => `<option value="${s}" ${s === d.stage ? 'selected' : ''}>${STAGE_LABELS[s]}</option>`).join('')}</select></div>
+          <div><label>時程</label><input class="ef-date" value="${escapeHtml(d.keyDate)}"></div>
+          <div><label>預估金額</label><input class="ef-amount" value="${escapeHtml(d.amount)}"></div>
+          <div class="full"><label>進度說明</label><textarea class="ef-progress" rows="2">${escapeHtml(d.progress)}</textarea></div>
+          <div class="full"><label>備註</label><textarea class="ef-notes" rows="2">${escapeHtml(d.notes)}</textarea></div>
+          <div class="edit-actions"><button class="ef-cancel">取消</button><button class="primary ef-save" data-id="${d.id}">儲存更新</button></div>
         </div>
       </td>`;
       tbody.appendChild(dtr);
-
-      dtr.querySelector('.edit-toggle').onclick = (ev) => {
-        ev.stopPropagation();
-        const box = dtr.querySelector('.edit-fields');
-        box.style.display = box.style.display === 'none' ? 'grid' : 'none';
-      };
+      dtr.querySelector('.edit-toggle').onclick = (ev) => { ev.stopPropagation(); const box = dtr.querySelector('.edit-fields'); box.style.display = box.style.display === 'none' ? 'grid' : 'none'; };
       dtr.querySelector('.ef-cancel').onclick = (ev) => { ev.stopPropagation(); dtr.querySelector('.edit-fields').style.display = 'none'; };
       dtr.querySelector('.ef-save').onclick = async (ev) => {
         ev.stopPropagation();
-        const fields = {
-          stage: dtr.querySelector('.ef-stage').value,
-          date: dtr.querySelector('.ef-date').value,
-          amount: dtr.querySelector('.ef-amount').value,
-          progress: dtr.querySelector('.ef-progress').value,
-          notes: dtr.querySelector('.ef-notes').value,
-        };
+        const fields = { stage: dtr.querySelector('.ef-stage').value, keyDate: dtr.querySelector('.ef-date').value, amount: dtr.querySelector('.ef-amount').value, progress: dtr.querySelector('.ef-progress').value, notes: dtr.querySelector('.ef-notes').value };
         Object.assign(d, fields, { amount_num: parseAmt(fields.amount) });
-        const ok = await saveOverride(d.id, fields);
-        if (ok) { document.getElementById('syncStatus').textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW'); }
+        const result = await postToGas({ action: 'edit', caseId: d.id, fields });
+        if (result.success) { document.getElementById('syncStatus').textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW'); } else { alert('儲存失敗：' + result.message); }
         renderCards(); render();
       };
     }
   });
 }
-
 function renderRepPanel() {
   const panel = document.getElementById('repPanel');
   if (!state.rep) { panel.style.display = 'none'; return; }
-  const repItems = DATA.filter(d => d.rep === state.rep);
-  const dealers = new Set(
-    repItems.map(d => (d.partner || '').trim())
-            .filter(p => p && p !== '—' && p !== '−' && p !== '－' && p !== '-' && p !== '待定')
-  );
-  const stageCounts = {};
-  STAGE_ORDER.forEach(s => stageCounts[s] = 0);
-  repItems.forEach(d => { stageCounts[d.stage] = (stageCounts[d.stage]||0) + 1; });
-
-  const chips = STAGE_ORDER.map(s => `
-    <div class="stage-chip">
-      <span class="dot" style="background:${STAGE_COLOR[s]}"></span>${s} <b>${stageCounts[s]}</b>
-    </div>
-  `).join('');
-
+  const DATA = getData();
+  const repItems = DATA.filter(d => d.salesRep === state.rep);
+  const dealers = new Set(repItems.map(d => d.dealer).filter(Boolean));
+  const stageCounts = {}; STAGE_ORDER.forEach(s => stageCounts[s] = 0);
+  repItems.forEach(d => { stageCounts[d.stage] = (stageCounts[d.stage] || 0) + 1; });
+  const chips = STAGE_ORDER.map(s => `<div class="stage-chip"><span class="dot" style="background:${STAGE_COLOR[s]}"></span>${STAGE_LABELS[s]} <b>${stageCounts[s]}</b></div>`).join('');
   panel.style.display = 'flex';
-  panel.innerHTML = `
-    <div class="who">${state.rep}</div>
-    <div class="stat"><div class="k">合作經銷商</div><div class="v">${dealers.size}</div></div>
-    <div class="stat"><div class="k">總案件數</div><div class="v">${repItems.length}</div></div>
-    <div class="stage-breakdown">${chips}</div>
-  `;
+  panel.innerHTML = `<div class="who">${escapeHtml(state.rep)}</div><div class="stat"><div class="k">合作經銷商</div><div class="v">${dealers.size}</div></div><div class="stat"><div class="k">總案件數</div><div class="v">${repItems.length}</div></div><div class="stage-breakdown">${chips}</div>`;
 }
-
-function render() {
-  renderFunnel();
-  renderRepPanel();
-  renderTable();
-}
-
+function render() { renderFunnel(); renderRepPanel(); renderTable(); }
 document.getElementById('stageFilter').onchange = e => { state.stage = e.target.value; render(); };
 document.getElementById('repFilter').onchange = e => { state.rep = e.target.value; render(); };
 document.getElementById('categoryFilter').onchange = e => { state.category = e.target.value; render(); };
 document.getElementById('searchBox').oninput = e => { state.q = e.target.value; render(); };
-document.getElementById('resetBtn').onclick = () => { state = {...state, stage:"", rep:"", category:"", q:""}; syncControls(); render(); };
-document.querySelectorAll('thead th[data-key]').forEach(th => {
-  th.onclick = () => {
-    const key = th.dataset.key;
-    if (state.sortKey === key) state.sortDir *= -1; else { state.sortKey = key; state.sortDir = 1; }
-    render();
-  };
-});
-
-function stageChipsHtml(stageCounts) {
-  return STAGE_ORDER.map(s => `
-    <div class="stage-chip"><span class="dot" style="background:${STAGE_COLOR[s]}"></span>${s} <b>${stageCounts[s]||0}</b></div>
-  `).join('');
-}
-
-function caseRowHtml(d) {
-  return `<tr>
-    <td><span class="tag" style="${stageBadgeStyle(d.stage)}">${d.stage}</span></td>
-    <td>${d.rep}</td>
-    <td class="cust">${d.customer}</td>
-    <td class="partner">${d.partner || '—'}</td>
-    <td class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (d.amount || '—')}</td>
-    <td>${d.product || '—'}</td>
-  </tr>`;
-}
-
-function caseTableHtml(items) {
-  return `<table><thead><tr><th>階段</th><th>業務</th><th>終端客戶</th><th>經銷商</th><th>預估金額</th><th>方案</th></tr></thead>
-  <tbody>${items.map(caseRowHtml).join('')}</tbody></table>`;
-}
-
+document.getElementById('resetBtn').onclick = () => { state = { ...state, stage: '', rep: '', category: '', q: '' }; syncControls(); render(); };
+document.querySelectorAll('thead th[data-key]').forEach(th => { th.onclick = () => { const key = th.dataset.key; if (state.sortKey === key) state.sortDir *= -1; else { state.sortKey = key; state.sortDir = 1; } render(); }; });
+function stageChipsHtml(stageCounts) { return STAGE_ORDER.map(s => `<div class="stage-chip"><span class="dot" style="background:${STAGE_COLOR[s]}"></span>${STAGE_LABELS[s]} <b>${stageCounts[s] || 0}</b></div>`).join(''); }
+function caseRowHtml(d) { return `<tr><td><span class="tag" style="${stageBadgeStyle(d.stage)}">${STAGE_LABELS[d.stage] || escapeHtml(d.stage)}</span></td><td>${escapeHtml(d.salesRep)}</td><td class="cust">${escapeHtml(d.customer)}</td><td class="partner">${escapeHtml(d.dealer) || '—'}</td><td class="amt-cell ${d.amount_num ? '' : 'empty'}">${d.amount_num ? fmtAmt(d.amount_num) : (escapeHtml(d.amount) || '—')}</td><td>${escapeHtml(d.product) || '—'}</td></tr>`; }
+function caseTableHtml(items) { return `<table><thead><tr><th>階段</th><th>業務</th><th>終端客戶</th><th>經銷商</th><th>預估金額</th><th>方案</th></tr></thead><tbody>${items.map(caseRowHtml).join('')}</tbody></table>`; }
 function renderEntityList() {
-  const list = document.getElementById('entityList');
-  list.innerHTML = '';
-
+  const list = document.getElementById('entityList'); list.innerHTML = '';
+  const DATA = getData();
   if (dealerMode === 'rep') {
-    const reps = [...new Set(DATA.map(d => d.rep))];
+    const reps = [...new Set(DATA.map(d => d.salesRep))];
     const rows = reps.map(rep => {
-      const items = DATA.filter(d => d.rep === rep);
-      const dealers = new Set(items.map(d => dealerBase(d.partner)).filter(Boolean));
-      const stageCounts = {};
-      items.forEach(d => stageCounts[d.stage] = (stageCounts[d.stage]||0)+1);
+      const items = DATA.filter(d => d.salesRep === rep);
+      const dealers = new Set(items.map(d => d.dealer).filter(Boolean));
+      const stageCounts = {}; items.forEach(d => stageCounts[d.stage] = (stageCounts[d.stage] || 0) + 1);
       return { key: rep, label: rep, items, dealerCount: dealers.size, stageCounts };
-    }).sort((a,b) => b.items.length - a.items.length);
-
+    }).sort((a, b) => b.items.length - a.items.length);
     rows.forEach(r => {
       const isOpen = openEntities.has(r.key);
-      const card = document.createElement('div');
-      card.className = 'entity-card' + (isOpen ? ' open' : '');
-      card.innerHTML = `
-        <div class="entity-hdr">
-          <div class="caret">${isOpen ? '▾' : '▸'}</div>
-          <div class="name">${r.label}</div>
-          <div class="statrow">
-            <div class="stat"><div class="k">經銷商</div><div class="v">${r.dealerCount}</div></div>
-            <div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div>
-          </div>
-          <div class="chips">${stageChipsHtml(r.stageCounts)}</div>
-        </div>
-        <div class="entity-body ${isOpen ? 'open' : ''}">
-          ${caseTableHtml(r.items)}
-        </div>
-      `;
-      card.querySelector('.entity-hdr').onclick = () => {
-        if (openEntities.has(r.key)) openEntities.delete(r.key); else openEntities.add(r.key);
-        renderEntityList();
-      };
+      const card = document.createElement('div'); card.className = 'entity-card' + (isOpen ? ' open' : '');
+      card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(r.label)}</div><div class="statrow"><div class="stat"><div class="k">經銷商</div><div class="v">${r.dealerCount}</div></div><div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div></div><div class="chips">${stageChipsHtml(r.stageCounts)}</div></div><div class="entity-body ${isOpen ? 'open' : ''}">${caseTableHtml(r.items)}</div>`;
+      card.querySelector('.entity-hdr').onclick = () => { if (openEntities.has(r.key)) openEntities.delete(r.key); else openEntities.add(r.key); renderEntityList(); };
       list.appendChild(card);
     });
-
   } else {
     const dealerMap = {};
-    DATA.forEach(d => {
-      const base = dealerBase(d.partner);
-      if (!base) return;
-      if (!dealerMap[base]) dealerMap[base] = [];
-      dealerMap[base].push(d);
-    });
+    DATA.forEach(d => { if (!d.dealer) return; if (!dealerMap[d.dealer]) dealerMap[d.dealer] = []; dealerMap[d.dealer].push(d); });
     const rows = Object.entries(dealerMap).map(([base, items]) => {
-      const reps = [...new Set(items.map(d => d.rep))];
-      const stageCounts = {};
-      items.forEach(d => stageCounts[d.stage] = (stageCounts[d.stage]||0)+1);
+      const reps = [...new Set(items.map(d => d.salesRep))];
+      const stageCounts = {}; items.forEach(d => stageCounts[d.stage] = (stageCounts[d.stage] || 0) + 1);
       return { key: base, label: base, items, reps, stageCounts };
-    }).sort((a,b) => b.items.length - a.items.length);
-
+    }).sort((a, b) => b.items.length - a.items.length);
     rows.forEach(r => {
       const isOpen = openEntities.has(r.key);
-      const card = document.createElement('div');
-      card.className = 'entity-card' + (isOpen ? ' open' : '');
-      card.innerHTML = `
-        <div class="entity-hdr">
-          <div class="caret">${isOpen ? '▾' : '▸'}</div>
-          <div class="name">${r.label}<div class="sub-tag">${r.reps.length>1 ? '多位業務共同處理' : r.reps[0]}</div></div>
-          <div class="statrow">
-            <div class="stat"><div class="k">合作業務</div><div class="v">${r.reps.length}</div></div>
-            <div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div>
-          </div>
-          <div class="chips">${stageChipsHtml(r.stageCounts)}</div>
-        </div>
-        <div class="entity-body ${isOpen ? 'open' : ''}">
-          <div class="rep-list">合作業務：${r.reps.join('、')}</div>
-          ${caseTableHtml(r.items)}
-        </div>
-      `;
-      card.querySelector('.entity-hdr').onclick = () => {
-        if (openEntities.has(r.key)) openEntities.delete(r.key); else openEntities.add(r.key);
-        renderEntityList();
-      };
+      const card = document.createElement('div'); card.className = 'entity-card' + (isOpen ? ' open' : '');
+      card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(r.label)}<div class="sub-tag">${escapeHtml(r.reps.join('、'))}</div></div><div class="statrow"><div class="stat"><div class="k">合作業務</div><div class="v">${r.reps.length}</div></div><div class="stat"><div class="k">總案件</div><div class="v">${r.items.length}</div></div></div><div class="chips">${stageChipsHtml(r.stageCounts)}</div></div><div class="entity-body ${isOpen ? 'open' : ''}">${caseTableHtml(r.items)}</div>`;
+      card.querySelector('.entity-hdr').onclick = () => { if (openEntities.has(r.key)) openEntities.delete(r.key); else openEntities.add(r.key); renderEntityList(); };
       list.appendChild(card);
     });
   }
 }
-
-function ownerChipsHtml(owner) {
-  return owner.split('/').map(o => o.trim()).filter(Boolean).map(o => `<span class="owner-chip" data-owner="${o}">${o}</span>`).join('');
-}
-
-function taskItemHtml(t) {
-  const linksHtml = (t.links && t.links.length)
-    ? `<div style="margin-top:4px; display:flex; gap:10px; flex-wrap:wrap;">${t.links.map((l,i) => `<a href="${l.url}" target="_blank" rel="noopener" style="color:var(--blue); font-size:11.5px; font-weight:700;">🔗 ${t.links.length>1 ? l.label+'#'+(i+1) : l.label}</a>`).join('')}</div>`
-    : '';
-  return `
-    <div class="task-item">
-      <div class="topic">${t.topic} ${ownerChipsHtml(t.owner)} ${t.updated ? `<span class="updated-tag"><span class="dot"></span>本週更新</span>` : ''}</div>
-      <div class="meta">${[t.partner, t.date, t.amount, t.kpi].filter(Boolean).join('　')}</div>
-      <div class="prog">${t.progress || ''}</div>
-      ${linksHtml}
-    </div>
-  `;
-}
-
-function wireOwnerChips(container) {
-  container.querySelectorAll('.owner-chip').forEach(chip => {
-    chip.onclick = (ev) => {
-      ev.stopPropagation();
-      taskOwnerFilter = chip.dataset.owner;
-      document.getElementById('taskOwnerResetBtn').style.display = 'inline';
-      renderTaskList();
-    };
-  });
-}
-
+function ownerChipsHtml(owner) { return String(owner || '').split('/').map(o => o.trim()).filter(Boolean).map(o => `<span class="owner-chip" data-owner="${escapeHtml(o)}">${escapeHtml(o)}</span>`).join(''); }
+function taskItemHtml(t) { return `<div class="task-item" style="padding:8px 0; border-top:1px solid var(--border); font-size:12.5px;"><div class="topic" style="font-weight:700;">${escapeHtml(t.item || t.activity)} ${ownerChipsHtml(t.owner || t.salesRep)}</div><div class="meta" style="color:var(--ink-soft); font-size:11px; margin-top:2px;">${[t.dealer, t.dueDate || t.period, t.amount].filter(Boolean).map(escapeHtml).join('　')}</div><div class="prog" style="color:var(--ink-soft); margin-top:4px; line-height:1.5;">${linkifyText(t.notes) || ''}</div></div>`; }
+function wireOwnerChips(container) { container.querySelectorAll('.owner-chip').forEach(chip => { chip.onclick = (ev) => { ev.stopPropagation(); taskOwnerFilter = chip.dataset.owner; document.getElementById('taskOwnerResetBtn').style.display = 'inline'; renderTaskList(); }; }); }
 function renderTaskList() {
   const list = document.getElementById('taskList');
+  const TASKS = dashboardData ? dashboardData.tasks : [];
   const q = taskQuery.toLowerCase();
   let filtered = TASKS.filter(t => {
-    if (q && !([t.owner, t.topic, t.partner, t.progress, t.notes].join(' ').toLowerCase().includes(q))) return false;
-    if (taskOwnerFilter && !t.owner.includes(taskOwnerFilter)) return false;
+    const owner = t.owner || t.salesRep || '';
+    if (q && !([owner, t.item, t.activity, t.dealer, t.notes].join(' ').toLowerCase().includes(q))) return false;
+    if (taskOwnerFilter && !owner.includes(taskOwnerFilter)) return false;
     return true;
   });
   document.getElementById('taskCount').textContent = `顯示 ${filtered.length} / ${TASKS.length} 筆` + (taskOwnerFilter ? `　（負責人：${taskOwnerFilter}）` : '');
-
-  const groupKey = taskMode === 'category' ? 'category' : 'owner';
+  const groupKey = taskMode === 'category' ? 'productCategory' : 'owner';
   const groups = {};
   filtered.forEach(t => {
-    const keys = groupKey === 'owner' ? t.owner.split('/').map(o=>o.trim()) : [t.category];
-    keys.forEach(k => {
-      if (!groups[k]) groups[k] = [];
-      groups[k].push(t);
-    });
+    const keys = groupKey === 'owner' ? String(t.owner || t.salesRep || '未指定').split('/').map(o => o.trim()) : [t.productCategory || '未分類'];
+    keys.forEach(k => { if (!groups[k]) groups[k] = []; groups[k].push(t); });
   });
-
   list.innerHTML = '';
-  Object.entries(groups).sort((a,b) => b[1].length - a[1].length).forEach(([key, items]) => {
+  Object.entries(groups).sort((a, b) => b[1].length - a[1].length).forEach(([key, items]) => {
     const isOpen = openTaskGroups.has(key);
-    const card = document.createElement('div');
-    card.className = 'entity-card' + (isOpen ? ' open' : '');
-    card.innerHTML = `
-      <div class="entity-hdr">
-        <div class="caret">${isOpen ? '▾' : '▸'}</div>
-        <div class="name">${key}</div>
-        <div class="statrow">
-          <div class="stat"><div class="k">項目數</div><div class="v">${items.length}</div></div>
-        </div>
-      </div>
-      <div class="entity-body ${isOpen ? 'open' : ''}">
-        ${items.map(taskItemHtml).join('')}
-      </div>
-    `;
-    card.querySelector('.entity-hdr').onclick = () => {
-      if (openTaskGroups.has(key)) openTaskGroups.delete(key); else openTaskGroups.add(key);
-      renderTaskList();
-    };
+    const card = document.createElement('div'); card.className = 'entity-card' + (isOpen ? ' open' : '');
+    card.innerHTML = `<div class="entity-hdr"><div class="caret">${isOpen ? '▾' : '▸'}</div><div class="name">${escapeHtml(key)}</div><div class="statrow"><div class="stat"><div class="k">項目數</div><div class="v">${items.length}</div></div></div></div><div class="entity-body ${isOpen ? 'open' : ''}">${items.map(taskItemHtml).join('')}</div>`;
+    card.querySelector('.entity-hdr').onclick = () => { if (openTaskGroups.has(key)) openTaskGroups.delete(key); else openTaskGroups.add(key); renderTaskList(); };
     wireOwnerChips(card);
     list.appendChild(card);
   });
 }
-
 document.querySelectorAll('.tabbtn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
@@ -1028,71 +625,45 @@ document.querySelectorAll('.tabbtn').forEach(btn => {
     if (btn.dataset.view === 'tasks') { renderTaskList(); }
   };
 });
-
 document.getElementById('taskSearch').oninput = e => { taskQuery = e.target.value; renderTaskList(); };
 document.getElementById('taskOwnerResetBtn').onclick = () => { taskOwnerFilter = ''; document.getElementById('taskOwnerResetBtn').style.display = 'none'; renderTaskList(); };
-
-document.querySelectorAll('#view-dealers .toggle-group button').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('#view-dealers .toggle-group button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    dealerMode = btn.dataset.mode;
-    openEntities = new Set();
-    renderEntityList();
-  };
-});
-
-document.querySelectorAll('#view-tasks .toggle-group button').forEach(btn => {
-  btn.onclick = () => {
-    document.querySelectorAll('#view-tasks .toggle-group button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    taskMode = btn.dataset.taskmode;
-    openTaskGroups = new Set();
-    renderTaskList();
-  };
-});
-
+document.querySelectorAll('#view-dealers .toggle-group button').forEach(btn => { btn.onclick = () => { document.querySelectorAll('#view-dealers .toggle-group button').forEach(b => b.classList.remove('active')); btn.classList.add('active'); dealerMode = btn.dataset.mode; openEntities = new Set(); renderEntityList(); }; });
+document.querySelectorAll('#view-tasks .toggle-group button').forEach(btn => { btn.onclick = () => { document.querySelectorAll('#view-tasks .toggle-group button').forEach(b => b.classList.remove('active')); btn.classList.add('active'); taskMode = btn.dataset.taskmode; openTaskGroups = new Set(); renderTaskList(); }; });
 document.getElementById('refreshBtn').onclick = () => loadSharedData();
-
-document.getElementById('addCaseBtn').onclick = () => {
-  document.getElementById('addCaseForm').classList.toggle('open');
-};
+document.getElementById('addCaseBtn').onclick = () => { document.getElementById('addCaseForm').classList.toggle('open'); };
 document.getElementById('nc_cancel').onclick = () => document.getElementById('addCaseForm').classList.remove('open');
 document.getElementById('nc_submit').onclick = async () => {
   const stage = document.getElementById('nc_stage').value;
-  const rep = document.getElementById('nc_rep').value.trim();
+  const salesRep = document.getElementById('nc_rep').value.trim();
   const customer = document.getElementById('nc_customer').value.trim();
-  if (!rep || !customer) { alert('請至少填寫「業務」與「終端客戶」'); return; }
-  const amount = document.getElementById('nc_amount').value.trim();
-  const caseObj = {
-    stage, rep, customer,
-    partner: document.getElementById('nc_partner').value.trim(),
-    date: document.getElementById('nc_date').value.trim(),
-    amount, amount_num: parseAmt(amount),
-    competitor: '', keyman: '', procurement: '',
-    product: document.getElementById('nc_product').value.trim(),
-    progress: document.getElementById('nc_progress').value.trim(),
-    notes: '',
-  };
-  const ok = await addNewCase(caseObj);
-  if (ok) {
+  if (!salesRep || !customer) { alert('請至少填寫「業務」與「終端客戶」'); return; }
+  const payload = { action: 'create', stage, salesRep, customer, dealerRaw: document.getElementById('nc_partner').value.trim(), keyDate: document.getElementById('nc_date').value.trim(), amount: document.getElementById('nc_amount').value.trim(), product: document.getElementById('nc_product').value.trim(), progress: document.getElementById('nc_progress').value.trim(), competitor: '', keyMan: '', procurement: '', notes: '', managerComment: '', relatedLink: '' };
+  const result = await postToGas(payload);
+  if (result.success) {
     document.getElementById('addCaseForm').classList.remove('open');
-    ['nc_rep','nc_customer','nc_partner','nc_date','nc_amount','nc_product','nc_progress'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('syncStatus').textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW');
-    populateSelects(); renderCards(); render();
-  }
+    ['nc_rep', 'nc_customer', 'nc_partner', 'nc_date', 'nc_amount', 'nc_product', 'nc_progress'].forEach(id => document.getElementById(id).value = '');
+    await loadSharedData();
+  } else { alert('新增失敗：' + result.message); }
 };
-STAGE_ORDER.forEach(s => {
-  const opt = document.createElement('option');
-  opt.value = s; opt.textContent = s;
-  document.getElementById('nc_stage').appendChild(opt);
-});
-
-document.getElementById('rulesToggle').onclick = () => {
-  const p = document.getElementById('rulesPanel');
-  p.style.display = p.style.display === 'none' ? 'block' : 'none';
-};
-
+function renderRules() {
+  const rules = dashboardData.rules;
+  const panel = document.getElementById('rulesPanel');
+  let html = '<b>用途與限制</b><ul>';
+  html += '<li>本頁僅供會議展示與方便查詢案件使用，<b>不適合</b>進行任何新增或編輯操作；如需異動資料，仍請回到原始表格（週工作事項2026.xlsx）調整。</li>';
+  html += '<li>「新增(不使用)」與「編輯此案件」目前僅作為介面保留，實際儲存的內容不會寫回原始 xlsx，僅存在獨立的暫存區，容易造成資料來源不一致，暫不建議使用。</li>';
+  html += '</ul><b>資料與更新</b><ul>';
+  html += '<li>本頁資料即時讀取 Google Drive 上的原始 xlsx，不需要人工轉譯，按「重新整理共享資料」即可拿到最新內容。</li>';
+  html += '<li><span class="updated-tag"><span class="dot"></span>本週更新</span> 標籤的判斷方式：逐格比對本週分頁與上週分頁的內容，任一欄位不同或本週新增即標記。</li>';
+  html += '</ul><b>產品分類規則</b><ul>';
+  rules.categories.forEach(c => { html += `<li><b>${escapeHtml(c.name)}</b>：${escapeHtml(c.desc)}</li>`; });
+  html += '</ul><b>經銷商別名對照</b><ul>';
+  rules.dealerAlias.forEach(d => { html += `<li>${escapeHtml(d.alias)} → ${escapeHtml(d.name)}</li>`; });
+  html += '</ul><b>其他判讀規則</b><ul>';
+  rules.notes.forEach(n => { html += `<li>${escapeHtml(n)}</li>`; });
+  html += '</ul>';
+  panel.innerHTML = html;
+}
+document.getElementById('rulesToggle').onclick = () => { const p = document.getElementById('rulesPanel'); p.style.display = p.style.display === 'none' ? 'block' : 'none'; };
 loadSharedData();
 </script>
 </body>
