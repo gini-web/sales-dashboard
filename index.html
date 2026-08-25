@@ -525,26 +525,49 @@ function parseAmt(s) {
 
 /* ===== Shared storage sync ===== */
 async function loadSharedData() {
-  const statusEl = document.getElementById('syncStatus');
-  try {
-    const ov = await window.storage.get('overrides', true);
-    if (ov && ov.value) {
-      const overrides = JSON.parse(ov.value);
-      DATA.forEach(d => {
-        if (overrides[d.id]) Object.assign(d, overrides[d.id], { amount_num: parseAmt(overrides[d.id].amount !== undefined ? overrides[d.id].amount : d.amount) });
-      });
-    }
-  } catch (e) { /* no overrides yet */ }
+  const statusEl = document.getElementById("syncStatus");
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbz8IK9359EtuoLEIM9oSqVPzECGZmea2azSXeu5YbtUkfQDjHeHwi7bEscFW3QFoDqQog/exec";
+
+  statusEl.textContent = "正在讀取最新資料…";
 
   try {
-    const nc = await window.storage.get('new_cases', true);
-    if (nc && nc.value) {
-      const added = JSON.parse(nc.value);
-      added.forEach(c => { if (!DATA.find(d => d.id === c.id)) DATA.push(c); });
-    }
-  } catch (e) { /* no new cases yet */ }
+    const response = await fetch(API_URL);
+    const payload = await response.json();
 
-  statusEl.textContent = '已同步・最後更新 ' + new Date().toLocaleTimeString('zh-TW');
+    if (!response.ok || payload.error) {
+      throw new Error(payload.error || "後端讀取失敗");
+    }
+
+    if (!Array.isArray(payload.cases) || !Array.isArray(payload.tasks)) {
+      throw new Error("後端回傳格式不正確");
+    }
+
+    const latestCases = payload.cases.map(c => ({
+      ...c,
+      line: c.line || c.product_category || "",
+      amount_num: parseAmt(c.amount),
+      updated: false,
+    }));
+
+    const latestTasks = payload.tasks.map(t => ({
+      ...t,
+      plan: t.plan || "",
+      updated: false,
+    }));
+
+    DATA.splice(0, DATA.length, ...latestCases);
+    TASKS.splice(0, TASKS.length, ...latestTasks);
+
+    const source = payload.sourceSheetName || "最新分頁";
+    statusEl.textContent =
+      "已同步・" + source + "・" +
+      new Date().toLocaleTimeString("zh-TW");
+  } catch (e) {
+    console.error("載入失敗：", e);
+    statusEl.textContent = "載入失敗：" + e.message;
+  }
+
   populateSelects();
   renderCards();
   render();
